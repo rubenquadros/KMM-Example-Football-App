@@ -29,3 +29,4 @@ local.properties
 /build
 /androidApp/build
 /shared/build
+/data/build

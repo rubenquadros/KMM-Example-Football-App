@@ -19,10 +19,10 @@ kotlin {
     iosTarget("ios") {}
 
     cocoapods {
-        summary = "Domain layer code shared between android and ios app"
+        summary = "Data layer code shared between android and ios app"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
+        frameworkName = "data"
         podfile = project.file("../iosApp/Podfile")
     }
     

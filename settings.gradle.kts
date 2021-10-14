@@ -9,3 +9,4 @@ pluginManagement {
 rootProject.name = "FootieScore"
 include(":androidApp")
 include(":shared")
+include(":data")
