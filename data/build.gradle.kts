@@ -23,7 +23,7 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = Versions.IosVersions.deploymentTarget
         framework {
-            baseName = "shared"
+            baseName = "data"
         }
         podfile = project.file("../iosApp/Podfile")
     }

@@ -1,4 +1,4 @@
-package com.ruben.footiescore.android
+package com.ruben.footiescore.android.di
 
 import com.ruben.footiescore.android.ui.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

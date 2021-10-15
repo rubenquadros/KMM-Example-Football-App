@@ -1,7 +1,7 @@
 package com.ruben.footiescore.android.base
 
 import android.app.Application
-import com.ruben.footiescore.android.viewModelModule
+import com.ruben.footiescore.android.di.viewModelModule
 import com.ruben.injection.initKoin
 
 /**
