@@ -6,7 +6,7 @@ import java.io.*
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
-    kotlin("plugin.serialization") version "1.5.30"
+    kotlin("plugin.serialization") version Versions.Shared.kotlinVersion
     id("com.codingfeline.buildkonfig")
     id("com.android.library")
 }

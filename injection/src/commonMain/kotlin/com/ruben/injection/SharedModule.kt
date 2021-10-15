@@ -8,12 +8,12 @@ import org.koin.dsl.module
 /**
  * Created by Ruben Quadros on 15/10/21
  **/
-val useCaseModule = module {
+internal val useCaseModule = module {
     factory {
         GetAllCompetitionsUseCase(get())
     }
 }
 
-val sharedModule = module {
+internal val sharedModule = module {
     single<DispatcherProvider> { DispatcherProviderImpl() }
 }

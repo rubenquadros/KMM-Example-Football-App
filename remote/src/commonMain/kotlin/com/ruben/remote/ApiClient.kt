@@ -25,12 +25,7 @@ class ApiClient {
             }
             ApiResponse.Success(response)
         } catch (e: RemoteException) {
-            return when (e) {
-                is RemoteException.ServerError -> ApiResponse.ErrorNoBody(e.code)
-                is RemoteException.ClientError -> ApiResponse.ErrorNoBody(e.code)
-                is RemoteException.RedirectError -> ApiResponse.ErrorNoBody(e.code)
-                else -> ApiResponse.UnknownError
-            }
+            mapError(e)
         }
     }
 
@@ -44,12 +39,16 @@ class ApiClient {
             }
             ApiResponse.Success(response)
         } catch (e: RemoteException) {
-            return when (e) {
-                is RemoteException.ServerError -> ApiResponse.ErrorNoBody(e.code)
-                is RemoteException.ClientError -> ApiResponse.ErrorNoBody(e.code)
-                is RemoteException.RedirectError -> ApiResponse.ErrorNoBody(e.code)
-                else -> ApiResponse.UnknownError
-            }
+            return mapError(e)
+        }
+    }
+
+    fun <RESPONSE, ERROR>mapError(exception: RemoteException): ApiResponse<RESPONSE, ERROR> {
+        return when (exception) {
+            is RemoteException.ServerError -> ApiResponse.ErrorNoBody(exception.code)
+            is RemoteException.ClientError -> ApiResponse.ErrorNoBody(exception.code)
+            is RemoteException.RedirectError -> ApiResponse.ErrorNoBody(exception.code)
+            else -> ApiResponse.UnknownError
         }
     }
 }

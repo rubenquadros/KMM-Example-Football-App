@@ -12,17 +12,17 @@ import org.koin.dsl.module
 /**
  * Created by Ruben Quadros on 15/10/21
  **/
-val dataModule = module {
+internal val dataModule = module {
     single<DataSource> { DataSourceImpl(get()) }
 }
 
-val repositoryModule = module {
+internal val repositoryModule = module {
     single<FootballRepository> {
         FootballRepositoryImpl(get(), get())
     }
 }
 
-val remoteModule =  module {
+internal val remoteModule =  module {
     single<RestApi> { RestApiImpl(get()) }
 
     single { ApiClient() }

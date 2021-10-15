@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = 'Some description for the Shared Module'
+    spec.summary                  = 'Dependency injection code shared between android and ios app'
 
     spec.vendored_frameworks      = "build/cocoapods/framework/injection.framework"
     spec.libraries                = "c++"

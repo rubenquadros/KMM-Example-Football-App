@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
     spec.license                  = ''
     spec.summary                  = 'Data layer code shared between android and ios app'
 
-    spec.vendored_frameworks      = "build/cocoapods/framework/data.framework"
+    spec.vendored_frameworks      = "build/cocoapods/framework/shared.framework"
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 

@@ -4,14 +4,24 @@ plugins {
 }
 
 dependencies {
+    //modules
     implementation(project(Dependencies.Modules.shared))
     implementation(project(Dependencies.Modules.injection))
+
     implementation(Dependencies.Android.koin)
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.activity:activity-ktx:1.3.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha02")
+    implementation(Dependencies.Android.materialDesign)
+
+    //compose
+    implementation(Dependencies.Android.Compose.ui)
+    implementation(Dependencies.Android.Compose.material)
+    implementation(Dependencies.Android.Compose.tooling)
+    implementation(Dependencies.Android.Compose.navigation)
+    implementation(Dependencies.Android.Compose.activity)
+    implementation(Dependencies.Android.Compose.constraintLayout)
+    implementation(Dependencies.Android.Compose.coil)
+    implementation(Dependencies.Android.Compose.viewmodel)
+    debugImplementation(Dependencies.Android.Compose.uiTooling)
+    debugImplementation(Dependencies.Android.Compose.uiTest)
 }
 
 android {
@@ -22,6 +32,27 @@ android {
         targetSdk = Versions.AndroidVersions.targetSdk
         versionCode = Versions.AndroidVersions.versionCode
         versionName = Versions.AndroidVersions.versionName
+
+        testInstrumentationRunner = Dependencies.Android.testInstrumentationRunner
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
+        composeOptions {
+            kotlinCompilerExtensionVersion = Versions.Android.composeVersion
+        }
+
+        buildFeatures {
+            compose = true
+        }
+
+        testOptions {
+            unitTests {
+                isReturnDefaultValues = true
+                isIncludeAndroidResources = true
+            }
+        }
     }
     buildTypes {
         getByName("release") {

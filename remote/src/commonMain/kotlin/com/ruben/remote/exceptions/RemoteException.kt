@@ -12,5 +12,4 @@ sealed class RemoteException(val code: Int, override val message: String?): Exce
     class RedirectError(code: Int): RemoteException(code, "The resource has been moved")
 
     object UnknownError: RemoteException(-1, "There was an unexpected error")
-
 }
