@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":injection"))
-    implementation(project(":shared"))
-    implementation("io.insert-koin:koin-android:3.1.2")
+    implementation(project(Dependencies.Modules.shared))
+    implementation(project(Dependencies.Modules.injection))
+    implementation(Dependencies.Android.koin)
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
@@ -15,13 +15,13 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = Versions.AndroidVersions.compileSdk
     defaultConfig {
         applicationId = "com.ruben.footiescore.android"
-        minSdkVersion(21)
-        targetSdkVersion(31)
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Versions.AndroidVersions.minSdk
+        targetSdk = Versions.AndroidVersions.targetSdk
+        versionCode = Versions.AndroidVersions.versionCode
+        versionName = Versions.AndroidVersions.versionName
     }
     buildTypes {
         getByName("release") {

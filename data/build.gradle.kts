@@ -21,30 +21,35 @@ kotlin {
     cocoapods {
         summary = "Data layer code shared between android and ios app"
         homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        frameworkName = "data"
+        ios.deploymentTarget = Versions.IosVersions.deploymentTarget
+        framework {
+            baseName = "shared"
+        }
         podfile = project.file("../iosApp/Podfile")
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":shared"))
-                api(project(":remote"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+                //modules
+                api(project(Dependencies.Modules.shared))
+                api(project(Dependencies.Modules.remote))
+
+                //dependencies
+                implementation(Dependencies.Shared.coroutines)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin(Dependencies.Test.kotlinTestCommon))
+                implementation(kotlin(Dependencies.Test.kotlinTestAnnotations))
             }
         }
         val androidMain by getting
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation(kotlin(Dependencies.Test.androidJunit))
+                implementation(Dependencies.Android.junit)
             }
         }
         val iosMain by getting
@@ -53,10 +58,10 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = Versions.AndroidVersions.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(31)
+        minSdk = Versions.AndroidVersions.minSdk
+        targetSdk = Versions.AndroidVersions.targetSdk
     }
 }

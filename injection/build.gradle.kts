@@ -19,20 +19,22 @@ kotlin {
     iosTarget("ios") {}
 
     cocoapods {
-        summary = "Some description for the Shared Module"
+        summary = "Dependency injection code shared between android and ios app"
         homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        frameworkName = "injection"
-        // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
+        ios.deploymentTarget = Versions.IosVersions.deploymentTarget
+        framework {
+            baseName = "injection"
+        }
+        podfile = project.file("../iosApp/Podfile")
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":shared"))
-                api(project(":remote"))
-                api(project(":data"))
-                implementation("io.insert-koin:koin-core:3.1.2")
+                api(project(Dependencies.Modules.shared))
+                api(project(Dependencies.Modules.remote))
+                api(project(Dependencies.Modules.data))
+                implementation(Dependencies.Shared.koin)
             }
         }
         val androidMain by getting
@@ -41,10 +43,10 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = Versions.AndroidVersions.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(31)
+        minSdk = Versions.AndroidVersions.minSdk
+        targetSdk = Versions.AndroidVersions.targetSdk
     }
 }

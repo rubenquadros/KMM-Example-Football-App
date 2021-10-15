@@ -32,3 +32,4 @@ local.properties
 /data/build
 /remote/build
 /injection/build
+/buildSrc/build

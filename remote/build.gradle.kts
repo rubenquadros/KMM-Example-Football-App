@@ -24,43 +24,45 @@ kotlin {
     iosTarget("ios") {}
 
     cocoapods {
-        summary = "Some description for the Shared Module"
+        summary = "Data layer code shared between android and ios app"
         homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        frameworkName = "remote"
-        // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
+        ios.deploymentTarget = Versions.IosVersions.deploymentTarget
+        framework {
+            baseName = "remote"
+        }
+        podfile = project.file("../iosApp/Podfile")
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-core:1.6.4")
-                implementation("io.ktor:ktor-client-cio:1.6.4")
-                implementation("io.ktor:ktor-client-logging:1.6.4")
-                implementation("io.ktor:ktor-client-serialization:1.6.4")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
+                implementation(Dependencies.Shared.ktor)
+                implementation(Dependencies.Shared.ktorEngine)
+                implementation(Dependencies.Shared.ktorLogging)
+                implementation(Dependencies.Shared.ktorSerialization)
+                implementation(Dependencies.Shared.kotlinSerialization)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin(Dependencies.Test.kotlinTestCommon))
+                implementation(kotlin(Dependencies.Test.kotlinTestAnnotations))
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:1.6.4")
+                implementation(Dependencies.Android.ktor)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation(kotlin(Dependencies.Test.androidJunit))
+                implementation(Dependencies.Android.junit)
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:1.6.4")
+                implementation(Dependencies.Ios.ktor)
             }
         }
         val iosTest by getting
@@ -68,11 +70,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = Versions.AndroidVersions.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(31)
+        minSdk = Versions.AndroidVersions.minSdk
+        targetSdk = Versions.AndroidVersions.targetSdk
     }
 }
 
