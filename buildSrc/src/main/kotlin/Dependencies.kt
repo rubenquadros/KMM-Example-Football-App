@@ -50,6 +50,7 @@ object Versions {
 object Dependencies {
     object GradlePlugin {
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Shared.kotlinVersion}"
+        const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.Shared.kotlinVersion}"
         const val gradle = "com.android.tools.build:gradle:${Versions.GradlePluginVersions.gradleVersion}"
         const val buildKonfig = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Versions.GradlePluginVersions.buildKonfigVersion}"
     }

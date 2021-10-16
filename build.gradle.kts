@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath(Dependencies.GradlePlugin.kotlin)
+        classpath(Dependencies.GradlePlugin.kotlinSerialization)
         classpath(Dependencies.GradlePlugin.gradle)
         classpath (Dependencies.GradlePlugin.buildKonfig)
     }

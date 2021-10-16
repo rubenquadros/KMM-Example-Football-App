@@ -1,4 +1,4 @@
-package com.ruben.footiescore.android.base
+package com.ruben.footiescore.android.ui.base
 
 import androidx.lifecycle.ViewModel
 import org.orbitmvi.orbit.Container
