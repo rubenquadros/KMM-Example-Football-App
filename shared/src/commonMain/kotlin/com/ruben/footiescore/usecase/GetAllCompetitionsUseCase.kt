@@ -1,4 +1,4 @@
-package com.ruben.footiescore.interactor
+package com.ruben.footiescore.usecase
 
 import com.ruben.footiescore.FootballRepository
 import com.ruben.footiescore.entity.AllCompetitionEntity

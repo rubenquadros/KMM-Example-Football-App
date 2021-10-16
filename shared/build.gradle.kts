@@ -33,7 +33,6 @@ kotlin {
             dependencies {
                 implementation(Dependencies.Shared.coroutines)
                 implementation(Dependencies.Shared.koin)
-                implementation(Dependencies.Shared.mvi)
             }
         }
         val commonTest by getting {

@@ -7,8 +7,9 @@ import kotlinx.coroutines.Dispatchers
  * Created by Ruben Quadros on 15/10/21
  **/
 class DispatcherProviderImpl: DispatcherProvider {
+    override val dispatcherDefault: CoroutineDispatcher
+        get() = Dispatchers.Default
 
-    override fun dispatcherDefault(): CoroutineDispatcher = Dispatchers.Default
-
-    override fun dispatcherMain(): CoroutineDispatcher = Dispatchers.Main
+    override val dispatcherMain: CoroutineDispatcher
+        get() = Dispatchers.Main
 }

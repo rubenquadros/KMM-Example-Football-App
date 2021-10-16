@@ -11,6 +11,10 @@ dependencies {
     implementation(Dependencies.Android.koin)
     implementation(Dependencies.Android.materialDesign)
 
+    //mvi orbit
+    implementation(Dependencies.Android.OrbitMvi.mviCore)
+    implementation(Dependencies.Android.OrbitMvi.mviViewmodel)
+
     //compose
     implementation(Dependencies.Android.Compose.ui)
     implementation(Dependencies.Android.Compose.material)

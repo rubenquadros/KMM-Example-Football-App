@@ -2,13 +2,13 @@ package com.ruben.footiescore.android.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ruben.footiescore.interactor.GetAllCompetitionsUseCase
+import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
 import kotlinx.coroutines.launch
 
 /**
  * Created by Ruben Quadros on 15/10/21
  **/
-class MainViewModel(private val useCase:GetAllCompetitionsUseCase): ViewModel() {
+class MainViewModel(private val useCase: GetAllCompetitionsUseCase): ViewModel() {
 
     init {
         getAllCompetitions()

@@ -30,7 +30,6 @@ object Versions {
         const val koinVersion = "3.1.2"
         const val ktorVersion = "1.6.4"
         const val kotlinSerializationVersion = "1.2.2"
-        const val mviOrbitVersion = "4.2.0"
     }
 
     //android
@@ -43,6 +42,7 @@ object Versions {
         const val composeActivityVersion = "1.3.1"
         const val composeConstraintLayout = "1.0.0-rc01"
         const val composeCoilVersion = "1.3.2"
+        const val mviOrbitVersion = "4.2.0"
     }
 }
 
@@ -73,6 +73,11 @@ object Dependencies {
             const val coil = "io.coil-kt:coil-compose:${Versions.Android.composeCoilVersion}"
             const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Android.lifecycleVersion}"
         }
+
+        object OrbitMvi {
+            const val mviCore = "org.orbit-mvi:orbit-core:${Versions.Android.mviOrbitVersion}"
+            const val mviViewmodel = "org.orbit-mvi:orbit-viewmodel:${Versions.Android.mviOrbitVersion}"
+        }
     }
 
     object Ios {
@@ -93,7 +98,6 @@ object Dependencies {
         const val ktorLogging = "io.ktor:ktor-client-logging:${Versions.Shared.ktorVersion}"
         const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.Shared.ktorVersion}"
         const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Shared.kotlinSerializationVersion}"
-        const val mvi = "org.orbit-mvi:orbit-core:${Versions.Shared.mviOrbitVersion}"
     }
 
     object Modules {

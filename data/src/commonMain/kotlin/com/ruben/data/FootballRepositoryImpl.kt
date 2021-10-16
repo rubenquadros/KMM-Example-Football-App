@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 class FootballRepositoryImpl(private val dataSource: DataSource, private val dispatcherProvider: DispatcherProvider): FootballRepository {
 
     override suspend fun getAllCompetitions(): BaseEntity<List<AllCompetitionEntity>, Nothing> {
-        return withContext(dispatcherProvider.dispatcherDefault()) {
+        return withContext(dispatcherProvider.dispatcherDefault) {
             when (val response = dataSource.api().getAllCompetitions()) {
                 is ApiResponse.Success -> {
                     BaseEntity.Success(response.body.toUIEntity())

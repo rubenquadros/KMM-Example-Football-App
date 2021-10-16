@@ -2,7 +2,7 @@ package com.ruben.injection
 
 import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.dispatcher.DispatcherProviderImpl
-import com.ruben.footiescore.interactor.GetAllCompetitionsUseCase
+import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
 import org.koin.dsl.module
 
 /**
