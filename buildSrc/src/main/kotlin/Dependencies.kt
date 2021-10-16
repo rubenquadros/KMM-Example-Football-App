@@ -43,6 +43,7 @@ object Versions {
         const val composeConstraintLayout = "1.0.0-rc01"
         const val composeCoilVersion = "1.3.2"
         const val mviOrbitVersion = "4.2.0"
+        const val splashScreenApiVersion = "1.0.0-alpha02"
     }
 }
 
@@ -60,6 +61,7 @@ object Dependencies {
         const val koin = "io.insert-koin:koin-android:${Versions.Shared.koinVersion}"
         const val koinTest = "io.insert-koin:koin-test:${Versions.Shared.koinVersion}"
         const val materialDesign = "com.google.android.material:material:${Versions.Android.materialDesignVersion}"
+        const val splashScreenApi = "androidx.core:core-splashscreen:${Versions.Android.splashScreenApiVersion}"
 
         object Compose {
             const val ui = "androidx.compose.ui:ui:${Versions.Android.composeVersion}"

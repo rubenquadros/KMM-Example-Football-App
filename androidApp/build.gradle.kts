@@ -10,6 +10,7 @@ dependencies {
 
     implementation(Dependencies.Android.koin)
     implementation(Dependencies.Android.materialDesign)
+    implementation(Dependencies.Android.splashScreenApi)
 
     //mvi orbit
     implementation(Dependencies.Android.OrbitMvi.mviCore)
