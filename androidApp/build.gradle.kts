@@ -8,7 +8,10 @@ dependencies {
     implementation(project(Dependencies.Modules.shared))
     implementation(project(Dependencies.Modules.injection))
 
+    //koin
     implementation(Dependencies.Android.koin)
+    implementation(Dependencies.Android.koinCompose)
+
     implementation(Dependencies.Android.materialDesign)
     implementation(Dependencies.Android.splashScreenApi)
 
@@ -63,5 +66,9 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 }

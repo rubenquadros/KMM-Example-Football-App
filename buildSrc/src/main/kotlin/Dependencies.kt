@@ -60,6 +60,7 @@ object Dependencies {
         const val junit = "junit:junit:${Versions.Android.junitVersion}"
         const val ktor = "io.ktor:ktor-client-android:${Versions.Shared.ktorVersion}"
         const val koin = "io.insert-koin:koin-android:${Versions.Shared.koinVersion}"
+        const val koinCompose = "io.insert-koin:koin-androidx-compose:${Versions.Shared.koinVersion}"
         const val koinTest = "io.insert-koin:koin-test:${Versions.Shared.koinVersion}"
         const val materialDesign = "com.google.android.material:material:${Versions.Android.materialDesignVersion}"
         const val splashScreenApi = "androidx.core:core-splashscreen:${Versions.Android.splashScreenApiVersion}"

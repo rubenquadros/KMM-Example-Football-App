@@ -1,6 +1,7 @@
-package com.ruben.footiescore.android.ui.base
+package com.ruben.footiescore.android.ui.base.theme
 
-import androidx.compose.material.lightColors
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 /**
@@ -15,17 +16,31 @@ val OnSurface = Color(0xFF607D8B)
 val BackgroundColor = Color(0xFF105b00)
 val OnBackground = Color(0xFFf8f277)
 
-val ColorPalette = lightColors(
-    primary = PrimaryColor,
-    primaryVariant = PrimaryVariant,
-    secondary = SecondaryColor,
-    secondaryVariant = SecondaryVariant,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    error = ErrorColor,
-    onError = Color.White,
-    surface = Color.Black,
-    onSurface = OnSurface,
-    background = BackgroundColor,
-    onBackground = OnBackground
+@Immutable
+data class FootieScoreColors(
+    val primary: Color,
+    val secondary: Color,
+    val primaryVariant: Color,
+    val secondaryVariant: Color,
+    val background: Color,
+    val onBackground: Color,
+    val surface: Color,
+    val onSurface: Color,
+    val error: Color,
+    val onPrimary: Color
 )
+
+val LocalFootieScoreColors = staticCompositionLocalOf {
+    FootieScoreColors(
+        primary = PrimaryColor,
+        secondary = SecondaryColor,
+        primaryVariant = PrimaryVariant,
+        secondaryVariant = SecondaryVariant,
+        background = BackgroundColor,
+        onBackground = OnBackground,
+        surface = Color.Black,
+        onSurface = OnSurface,
+        error = ErrorColor,
+        onPrimary = Color.White
+    )
+}

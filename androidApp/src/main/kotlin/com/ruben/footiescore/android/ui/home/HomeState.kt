@@ -5,4 +5,5 @@ package com.ruben.footiescore.android.ui.home
  **/
 sealed class HomeState {
     object InitialState: HomeState()
+    object DatState: HomeState()
 }

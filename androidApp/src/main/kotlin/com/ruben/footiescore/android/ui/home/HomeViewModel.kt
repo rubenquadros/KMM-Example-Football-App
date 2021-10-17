@@ -1,9 +1,9 @@
 package com.ruben.footiescore.android.ui.home
 
-import androidx.lifecycle.viewModelScope
 import com.ruben.footiescore.android.ui.base.BaseViewModel
 import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
-import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
 
 /**
  * Created by Ruben Quadros on 15/10/21
@@ -19,7 +19,10 @@ class HomeViewModel(
         getAllCompetitions()
     }
 
-    private fun getAllCompetitions() {
-        viewModelScope.launch { useCase.invoke(Unit) }
+    private fun getAllCompetitions() = intent {
+        val result = useCase.invoke(Unit)
+        reduce {
+            HomeState.DatState
+        }
     }
 }
