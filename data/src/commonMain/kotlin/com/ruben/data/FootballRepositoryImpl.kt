@@ -24,4 +24,16 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
         }
 
     }
+
+    override suspend fun getIsFirstTimeLaunch(): Boolean {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            dataSource.appStorage().getIsFirstTimeLaunch()
+        }
+    }
+
+    override suspend fun setFirstTimeLaunch(firstTimeLaunch: Boolean) {
+        withContext(dispatcherProvider.dispatcherDefault) {
+            dataSource.appStorage().storeFirstTime(firstTimeLaunch)
+        }
+    }
 }

@@ -44,6 +44,8 @@ object Versions {
         const val composeCoilVersion = "1.3.2"
         const val mviOrbitVersion = "4.2.0"
         const val splashScreenApiVersion = "1.0.0-alpha02"
+        const val dataStoreVersion = "1.0.0"
+        const val accompanistVersion = "0.20.0"
     }
 }
 
@@ -64,6 +66,7 @@ object Dependencies {
         const val koinTest = "io.insert-koin:koin-test:${Versions.Shared.koinVersion}"
         const val materialDesign = "com.google.android.material:material:${Versions.Android.materialDesignVersion}"
         const val splashScreenApi = "androidx.core:core-splashscreen:${Versions.Android.splashScreenApiVersion}"
+        const val dataStore = "androidx.datastore:datastore-preferences:${Versions.Android.dataStoreVersion}"
 
         object Compose {
             const val ui = "androidx.compose.ui:ui:${Versions.Android.composeVersion}"
@@ -75,7 +78,12 @@ object Dependencies {
             const val activity = "androidx.activity:activity-compose:${Versions.Android.composeActivityVersion}"
             const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.Android.composeConstraintLayout}"
             const val coil = "io.coil-kt:coil-compose:${Versions.Android.composeCoilVersion}"
+            const val coilSvg = "io.coil-kt:coil-svg:${Versions.Android.composeCoilVersion}"
             const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Android.lifecycleVersion}"
+        }
+
+        object Accompanist {
+            const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.Android.accompanistVersion}"
         }
 
         object OrbitMvi {
@@ -109,6 +117,7 @@ object Dependencies {
         const val injection = ":injection"
         const val remote = ":remote"
         const val shared = ":shared"
+        const val cache = ":cache"
     }
 
 }

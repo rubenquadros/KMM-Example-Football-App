@@ -1,6 +1,7 @@
 package com.ruben.footiescore.android.ui.home
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
+import com.ruben.footiescore.entity.BaseEntity
 import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -21,8 +22,10 @@ class HomeViewModel(
 
     private fun getAllCompetitions() = intent {
         val result = useCase.invoke(Unit)
-        reduce {
-            HomeState.DatState
+        if (result is BaseEntity.Success) {
+            reduce {
+                HomeState.AllCompetitionsState(result.body)
+            }
         }
     }
 }

@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">FootieScore</string>
     <string name="all_loading">Loading</string>
+    <string name="content_description_competition_image">Competition logo</string>
 </resources>

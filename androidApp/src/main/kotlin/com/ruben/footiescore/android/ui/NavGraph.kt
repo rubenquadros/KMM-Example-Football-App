@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
  **/
 object Destinations {
     const val Home = "home"
+    const val Welcome = "welcome"
 }
 
 class NavGraph(navHostController: NavHostController) {

@@ -35,7 +35,11 @@ kotlin {
                 implementation(Dependencies.Shared.koin)
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Dependencies.Android.koin)
+            }
+        }
         val iosMain by getting
     }
 }

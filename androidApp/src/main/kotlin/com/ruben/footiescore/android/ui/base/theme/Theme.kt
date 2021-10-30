@@ -6,16 +6,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
+import coil.compose.LocalImageLoader
+import coil.decode.SvgDecoder
 
 /**
  * Created by Ruben Quadros on 16/10/21
  **/
 @Composable
 fun FootieScoreTheme(content: @Composable () -> Unit) {
+    val context = LocalContext.current
+
     val localFootieScoreColors = FootieScoreColors(
         primary = PrimaryColor,
         secondary = SecondaryColor,
@@ -105,10 +111,17 @@ fun FootieScoreTheme(content: @Composable () -> Unit) {
         )
     )
 
+    val localImageLoader = ImageLoader.Builder(context)
+        .componentRegistry {
+            add(SvgDecoder(context))
+        }
+        .build()
+
     CompositionLocalProvider(
         LocalFootieScoreColors provides localFootieScoreColors,
         LocalFootieScoreShapes provides localFootieScoreShapes,
-        LocalFootieScoreTypography provides localFootieScoreTypography
+        LocalFootieScoreTypography provides localFootieScoreTypography,
+        LocalImageLoader provides localImageLoader
     ) {
         MaterialTheme(content = content)
     }

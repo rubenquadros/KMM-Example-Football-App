@@ -22,3 +22,29 @@ abstract class BaseUseCase<REQUEST, RESPONSE, ERROR> : KoinComponent {
     abstract suspend fun execute(request: REQUEST): BaseEntity<RESPONSE, ERROR>
 
 }
+
+abstract class BaseStorageUseCase<REQUEST, RESPONSE> : KoinComponent {
+
+    private val dispatcherProvider: DispatcherProvider by inject()
+
+    suspend operator fun invoke(request: REQUEST): RESPONSE {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            execute(request)
+        }
+    }
+
+    abstract suspend fun execute(request: REQUEST): RESPONSE
+}
+
+abstract class BaseNoResponseUseCase<REQUEST> : KoinComponent {
+
+    private val dispatcherProvider: DispatcherProvider by inject()
+
+    suspend operator fun invoke(request: REQUEST) {
+        withContext(dispatcherProvider.dispatcherDefault) {
+            execute(request)
+        }
+    }
+
+    abstract suspend fun execute(request: REQUEST)
+}

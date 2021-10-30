@@ -34,6 +34,7 @@ kotlin {
                 //modules
                 api(project(Dependencies.Modules.shared))
                 api(project(Dependencies.Modules.remote))
+                api(project(Dependencies.Modules.cache))
 
                 //dependencies
                 implementation(Dependencies.Shared.coroutines)

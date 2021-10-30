@@ -1,5 +1,6 @@
 package com.ruben.data
 
+import com.ruben.cache.AppStorage
 import com.ruben.remote.rest.RestApi
 
 /**
@@ -7,4 +8,5 @@ import com.ruben.remote.rest.RestApi
  **/
 interface DataSource {
     fun api(): RestApi
+    fun appStorage(): AppStorage
 }

@@ -27,9 +27,13 @@ dependencies {
     implementation(Dependencies.Android.Compose.activity)
     implementation(Dependencies.Android.Compose.constraintLayout)
     implementation(Dependencies.Android.Compose.coil)
+    implementation(Dependencies.Android.Compose.coilSvg)
     implementation(Dependencies.Android.Compose.viewmodel)
     debugImplementation(Dependencies.Android.Compose.uiTooling)
     debugImplementation(Dependencies.Android.Compose.uiTest)
+
+    //accompanist
+    implementation(Dependencies.Android.Accompanist.navigationAnimation)
 }
 
 android {

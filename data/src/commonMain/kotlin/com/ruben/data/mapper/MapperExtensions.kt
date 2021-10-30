@@ -9,7 +9,11 @@ import com.ruben.remote.model.GetAllCompetitionsResponse
 internal fun GetAllCompetitionsResponse.toUIEntity(): List<AllCompetitionEntity> {
 
     fun GetAllCompetitionsResponse.Competition.toEntity(): AllCompetitionEntity =
-        AllCompetitionEntity(id = this.id, name = this.name, image = this.emblemUrl ?: "")
+        AllCompetitionEntity(
+            id = this.id,
+            name = this.name,
+            image = this.emblemUrl ?: this.area.ensignUrl ?: this.currentSeason.winner?.crestUrl ?: ""
+        )
 
     return this.competitions.map {
         it.toEntity()

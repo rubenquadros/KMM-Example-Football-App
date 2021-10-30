@@ -43,7 +43,7 @@ fun BallLoader(modifier: Modifier = Modifier, ballColor: Color = FootieScoreThem
     }) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.ic_football),
+            painter = painterResource(id = R.drawable.ic_football_white),
             colorFilter = ColorFilter.tint(ballColor),
             contentDescription = stringResource(id = R.string.all_loading)
         )

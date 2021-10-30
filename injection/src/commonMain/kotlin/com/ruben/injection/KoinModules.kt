@@ -13,7 +13,7 @@ import org.koin.dsl.module
  * Created by Ruben Quadros on 15/10/21
  **/
 internal val dataModule = module {
-    single<DataSource> { DataSourceImpl(get()) }
+    single<DataSource> { DataSourceImpl(get(), get()) }
 }
 
 internal val repositoryModule = module {

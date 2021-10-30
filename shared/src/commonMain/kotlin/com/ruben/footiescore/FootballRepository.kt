@@ -8,4 +8,6 @@ import com.ruben.footiescore.entity.BaseEntity
  **/
 interface FootballRepository {
     suspend fun getAllCompetitions(): BaseEntity<List<AllCompetitionEntity>, Nothing>
+    suspend fun getIsFirstTimeLaunch(): Boolean
+    suspend fun setFirstTimeLaunch(firstTimeLaunch: Boolean)
 }

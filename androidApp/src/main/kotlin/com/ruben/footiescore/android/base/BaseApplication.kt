@@ -11,6 +11,6 @@ class BaseApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initKoin(appModule = viewModelModule)
+        initKoin(appModule = viewModelModule, this)
     }
 }
