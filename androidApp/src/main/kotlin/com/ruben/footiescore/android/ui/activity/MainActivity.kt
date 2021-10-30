@@ -56,18 +56,18 @@ class MainActivity : ComponentActivity() {
 
     private fun setSplashAnimation(splashScreen: SplashScreen) {
         splashScreen.setOnExitAnimationListener { splashScreenView ->
-            val slideUp = ObjectAnimator.ofFloat(
+            val fadeOut = ObjectAnimator.ofFloat(
                 splashScreenView.view,
-                View.TRANSLATION_Y,
-                0f,
-                -splashScreenView.view.height.toFloat()
+                View.ALPHA,
+                1f,
+                0f
             )
-            slideUp.interpolator = AnticipateInterpolator()
-            slideUp.duration = 500L
+            fadeOut.interpolator = AnticipateInterpolator()
+            fadeOut.duration = 500L
 
-            slideUp.doOnEnd { splashScreenView.remove() }
+            fadeOut.doOnEnd { splashScreenView.remove() }
 
-            slideUp.start()
+            fadeOut.start()
         }
     }
 }
