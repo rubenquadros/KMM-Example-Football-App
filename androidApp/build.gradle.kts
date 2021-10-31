@@ -1,6 +1,10 @@
+import java.util.*
+import java.io.*
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     kotlin("android")
 }
 
@@ -16,6 +20,7 @@ dependencies {
     implementation(Dependencies.Android.materialDesign)
     implementation(Dependencies.Android.splashScreenApi)
     implementation(Dependencies.Android.lottie)
+    implementation(Dependencies.Android.googleAuth)
 
     //mvi orbit
     implementation(Dependencies.Android.OrbitMvi.mviCore)
@@ -36,10 +41,18 @@ dependencies {
 
     //accompanist
     implementation(Dependencies.Android.Accompanist.navigationAnimation)
+
+    //firebase
+    implementation(Dependencies.Android.Firebase.crashlytics)
+    implementation(Dependencies.Android.Firebase.analytics)
 }
 
 android {
     compileSdk = Versions.AndroidVersions.compileSdk
+
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+
     defaultConfig {
         applicationId = "com.ruben.footiescore.android"
         minSdk = Versions.AndroidVersions.minSdk
@@ -54,7 +67,7 @@ android {
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion = Versions.Android.composeVersion
+            kotlinCompilerExtensionVersion = Versions.Android.compose
         }
 
         buildFeatures {
@@ -67,6 +80,8 @@ android {
                 isIncludeAndroidResources = true
             }
         }
+
+        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"" + localProperties["google.client.id"] + "\"")
     }
     buildTypes {
         getByName("debug") {

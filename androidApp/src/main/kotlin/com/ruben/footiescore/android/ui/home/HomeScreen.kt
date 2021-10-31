@@ -74,6 +74,9 @@ fun HomeScreen(
         is HomeState.InitialState -> {
             isVisible = true
         }
+        is HomeState.LoadingState -> {
+            isVisible = true
+        }
         is HomeState.AllCompetitionsState -> {
             isVisible = false
             CompetitionsView(

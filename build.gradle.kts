@@ -10,6 +10,8 @@ buildscript {
         classpath(Dependencies.GradlePlugin.gradle)
         classpath (Dependencies.GradlePlugin.buildKonfig)
         classpath(Dependencies.GradlePlugin.google)
+        classpath(Dependencies.GradlePlugin.sqlDelight)
+        classpath(Dependencies.GradlePlugin.crashlytics)
     }
 }
 

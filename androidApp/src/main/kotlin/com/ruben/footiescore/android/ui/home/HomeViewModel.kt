@@ -3,6 +3,7 @@ package com.ruben.footiescore.android.ui.home
 import com.ruben.footiescore.android.ui.base.BaseViewModel
 import com.ruben.footiescore.entity.BaseEntity
 import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
+import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 
@@ -21,10 +22,13 @@ class HomeViewModel(
     }
 
     private fun getAllCompetitions() = intent {
-        val result = useCase.invoke(Unit)
-        if (result is BaseEntity.Success) {
+        useCase.invoke(Unit).collect { result ->
             reduce {
-                HomeState.AllCompetitionsState(result.body)
+                when (result) {
+                    is BaseEntity.Loading -> HomeState.LoadingState
+                    is BaseEntity.Success ->  HomeState.AllCompetitionsState(result.body)
+                    else -> HomeState.ErrorState
+                }
             }
         }
     }

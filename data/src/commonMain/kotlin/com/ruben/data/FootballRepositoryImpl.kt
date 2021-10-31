@@ -6,6 +6,7 @@ import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.entity.AllCompetitionEntity
 import com.ruben.footiescore.entity.BaseEntity
 import com.ruben.remote.model.ApiResponse
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 /**
@@ -34,6 +35,19 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
     override suspend fun setFirstTimeLaunch(firstTimeLaunch: Boolean) {
         withContext(dispatcherProvider.dispatcherDefault) {
             dataSource.appStorage().storeFirstTime(firstTimeLaunch)
+        }
+    }
+
+    override suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<Nothing, Nothing> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            saveUserData(id, name, email, image)
+            BaseEntity.SuccessNoBody
+        }
+    }
+
+    override suspend fun saveUserData(id: String, name: String, email: String, image: String) {
+        withContext(dispatcherProvider.dispatcherDefault) {
+            dataSource.database().userQueries.insertUser(id, name, email, image)
         }
     }
 }

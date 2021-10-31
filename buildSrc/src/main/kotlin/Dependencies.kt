@@ -4,9 +4,10 @@
 object Versions {
     //gradle
     object GradlePluginVersions {
-        const val gradleVersion = "7.0.3"
-        const val buildKonfigVersion = "0.10.2"
-        const val googleVersion = "4.3.10"
+        const val gradle = "7.0.3"
+        const val buildKonfig = "0.10.2"
+        const val google = "4.3.10"
+        const val crashlytics = "2.8.0"
     }
 
     //ios targets
@@ -26,78 +27,94 @@ object Versions {
 
     //shared
     object Shared {
-        const val kotlinVersion = "1.5.31"
-        const val coroutinesVersion = "1.5.2"
-        const val koinVersion = "3.1.2"
-        const val ktorVersion = "1.6.4"
-        const val kotlinSerializationVersion = "1.2.2"
+        const val kotlin = "1.5.31"
+        const val coroutines = "1.5.2"
+        const val koin = "3.1.2"
+        const val ktor = "1.6.4"
+        const val kotlinSerialization = "1.2.2"
+        const val sqlDelight = "1.5.2"
     }
 
     //android
     object Android {
-        const val junitVersion = "4.13.2"
-        const val composeVersion = "1.0.4"
-        const val materialDesignVersion = "1.4.0"
-        const val lifecycleVersion = "2.4.0-rc01"
-        const val composeNavigationVersion = "2.4.0-alpha10"
-        const val composeActivityVersion = "1.3.1"
+        const val junit = "4.13.2"
+        const val compose = "1.0.4"
+        const val materialDesign = "1.4.0"
+        const val lifecycle = "2.4.0-rc01"
+        const val composeNavigation = "2.4.0-alpha10"
+        const val composeActivity = "1.3.1"
         const val composeConstraintLayout = "1.0.0-rc01"
-        const val composeCoilVersion = "1.3.2"
-        const val mviOrbitVersion = "4.2.0"
-        const val splashScreenApiVersion = "1.0.0-alpha02"
-        const val dataStoreVersion = "1.0.0"
-        const val accompanistVersion = "0.20.0"
-        const val lottieVersion = "4.2.0"
+        const val composeCoil = "1.3.2"
+        const val mviOrbit = "4.2.0"
+        const val splashScreenApi = "1.0.0-alpha02"
+        const val dataStore = "1.0.0"
+        const val accompanist = "0.20.0"
+        const val lottie = "4.2.0"
+        const val googleAuth = "19.2.0"
+        const val firebaseAuth = "21.0.1"
+        const val firestore = "24.0.0"
+        const val crashlytics = "18.2.4"
+        const val analytics = "20.0.0"
     }
 }
 
 object Dependencies {
     object GradlePlugin {
-        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Shared.kotlinVersion}"
-        const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.Shared.kotlinVersion}"
-        const val gradle = "com.android.tools.build:gradle:${Versions.GradlePluginVersions.gradleVersion}"
-        const val buildKonfig = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Versions.GradlePluginVersions.buildKonfigVersion}"
-        const val google = "com.google.gms:google-services:${Versions.GradlePluginVersions.googleVersion}"
+        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Shared.kotlin}"
+        const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.Shared.kotlin}"
+        const val gradle = "com.android.tools.build:gradle:${Versions.GradlePluginVersions.gradle}"
+        const val buildKonfig = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Versions.GradlePluginVersions.buildKonfig}"
+        const val google = "com.google.gms:google-services:${Versions.GradlePluginVersions.google}"
+        const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.Shared.sqlDelight}"
+        const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:${Versions.GradlePluginVersions.crashlytics}"
     }
 
     object Android {
         const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        const val junit = "junit:junit:${Versions.Android.junitVersion}"
-        const val ktor = "io.ktor:ktor-client-android:${Versions.Shared.ktorVersion}"
-        const val koin = "io.insert-koin:koin-android:${Versions.Shared.koinVersion}"
-        const val koinCompose = "io.insert-koin:koin-androidx-compose:${Versions.Shared.koinVersion}"
-        const val koinTest = "io.insert-koin:koin-test:${Versions.Shared.koinVersion}"
-        const val materialDesign = "com.google.android.material:material:${Versions.Android.materialDesignVersion}"
-        const val splashScreenApi = "androidx.core:core-splashscreen:${Versions.Android.splashScreenApiVersion}"
-        const val dataStore = "androidx.datastore:datastore-preferences:${Versions.Android.dataStoreVersion}"
-        const val lottie = "com.airbnb.android:lottie-compose:${Versions.Android.lottieVersion}"
+        const val junit = "junit:junit:${Versions.Android.junit}"
+        const val ktor = "io.ktor:ktor-client-android:${Versions.Shared.ktor}"
+        const val koin = "io.insert-koin:koin-android:${Versions.Shared.koin}"
+        const val koinCompose = "io.insert-koin:koin-androidx-compose:${Versions.Shared.koin}"
+        const val koinTest = "io.insert-koin:koin-test:${Versions.Shared.koin}"
+        const val materialDesign = "com.google.android.material:material:${Versions.Android.materialDesign}"
+        const val splashScreenApi = "androidx.core:core-splashscreen:${Versions.Android.splashScreenApi}"
+        const val dataStore = "androidx.datastore:datastore-preferences:${Versions.Android.dataStore}"
+        const val lottie = "com.airbnb.android:lottie-compose:${Versions.Android.lottie}"
+        const val googleAuth = "com.google.android.gms:play-services-auth:${Versions.Android.googleAuth}"
+        const val sqlDelight = "com.squareup.sqldelight:android-driver:${Versions.Shared.sqlDelight}"
 
         object Compose {
-            const val ui = "androidx.compose.ui:ui:${Versions.Android.composeVersion}"
-            const val material = "androidx.compose.material:material:${Versions.Android.composeVersion}"
-            const val tooling = "androidx.compose.ui:ui-tooling-preview:${Versions.Android.composeVersion}"
-            const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.Android.composeVersion}"
-            const val uiTest = "androidx.compose.ui:ui-test-manifest:${Versions.Android.composeVersion}"
-            const val navigation = "androidx.navigation:navigation-compose:${Versions.Android.composeNavigationVersion}"
-            const val activity = "androidx.activity:activity-compose:${Versions.Android.composeActivityVersion}"
+            const val ui = "androidx.compose.ui:ui:${Versions.Android.compose}"
+            const val material = "androidx.compose.material:material:${Versions.Android.compose}"
+            const val tooling = "androidx.compose.ui:ui-tooling-preview:${Versions.Android.compose}"
+            const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.Android.compose}"
+            const val uiTest = "androidx.compose.ui:ui-test-manifest:${Versions.Android.compose}"
+            const val navigation = "androidx.navigation:navigation-compose:${Versions.Android.composeNavigation}"
+            const val activity = "androidx.activity:activity-compose:${Versions.Android.composeActivity}"
             const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.Android.composeConstraintLayout}"
-            const val coil = "io.coil-kt:coil-compose:${Versions.Android.composeCoilVersion}"
-            const val coilSvg = "io.coil-kt:coil-svg:${Versions.Android.composeCoilVersion}"
-            const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Android.lifecycleVersion}"
+            const val coil = "io.coil-kt:coil-compose:${Versions.Android.composeCoil}"
+            const val coilSvg = "io.coil-kt:coil-svg:${Versions.Android.composeCoil}"
+            const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.Android.lifecycle}"
         }
 
         object Accompanist {
-            const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.Android.accompanistVersion}"
+            const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.Android.accompanist}"
         }
 
         object OrbitMvi {
-            const val mviCore = "org.orbit-mvi:orbit-core:${Versions.Android.mviOrbitVersion}"
-            const val mviViewmodel = "org.orbit-mvi:orbit-viewmodel:${Versions.Android.mviOrbitVersion}"
+            const val mviCore = "org.orbit-mvi:orbit-core:${Versions.Android.mviOrbit}"
+            const val mviViewmodel = "org.orbit-mvi:orbit-viewmodel:${Versions.Android.mviOrbit}"
+        }
+
+        object Firebase {
+            const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx:${Versions.Android.crashlytics}"
+            const val analytics = "com.google.firebase:firebase-analytics-ktx:${Versions.Android.analytics}"
         }
     }
 
     object Ios {
-        const val ktor = "io.ktor:ktor-client-ios:${Versions.Shared.ktorVersion}"
+        const val ktor = "io.ktor:ktor-client-ios:${Versions.Shared.ktor}"
+        const val sqlDelight = "com.squareup.sqldelight:native-driver:${Versions.Shared.sqlDelight}"
     }
 
     object Test {
@@ -107,13 +124,15 @@ object Dependencies {
     }
 
     object Shared {
-        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Shared.coroutinesVersion}"
-        const val koin = "io.insert-koin:koin-core:${Versions.Shared.koinVersion}"
-        const val ktor = "io.ktor:ktor-client-core:${Versions.Shared.ktorVersion}"
-        const val ktorEngine = "io.ktor:ktor-client-cio:${Versions.Shared.ktorVersion}"
-        const val ktorLogging = "io.ktor:ktor-client-logging:${Versions.Shared.ktorVersion}"
-        const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.Shared.ktorVersion}"
-        const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Shared.kotlinSerializationVersion}"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Shared.coroutines}"
+        const val koin = "io.insert-koin:koin-core:${Versions.Shared.koin}"
+        const val ktor = "io.ktor:ktor-client-core:${Versions.Shared.ktor}"
+        const val ktorEngine = "io.ktor:ktor-client-cio:${Versions.Shared.ktor}"
+        const val ktorLogging = "io.ktor:ktor-client-logging:${Versions.Shared.ktor}"
+        const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.Shared.ktor}"
+        const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Shared.kotlinSerialization}"
+        const val sqlDelight = "com.squareup.sqldelight:runtime:${Versions.Shared.sqlDelight}"
+        const val sqlDelightCoroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.Shared.sqlDelight}"
     }
 
     object Modules {

@@ -1,5 +1,11 @@
 package com.ruben.footiescore.android.ui.login
 
+import android.app.Activity
+import android.content.IntentSender
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
@@ -10,39 +16,106 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.ruben.footiescore.android.BuildConfig
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.common.BallLoader
 import com.ruben.footiescore.android.ui.common.BottomWiggleShape
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
+import org.koin.androidx.compose.getViewModel
 
 /**
  * Created by Ruben Quadros on 31/10/21
  **/
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedVisibilityScope.LoginScreen() {
+fun AnimatedVisibilityScope.LoginScreen(
+    loginViewModel: LoginViewModel = getViewModel()
+) {
+    val context = LocalContext.current
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val credential = Identity.getSignInClient(context).getSignInCredentialFromIntent(result.data)
+                loginViewModel.login(
+                    credential.googleIdToken ?: "UNKNOWN",
+                    credential.displayName ?: credential.givenName,
+                    credential.id,
+                    credential.profilePictureUri?.toString() ?: ""
+                )
+            }
+        }
+    )
+
+    fun onLoginClick() {
+        val request = GetSignInIntentRequest.builder()
+            .setServerClientId(BuildConfig.GOOGLE_CLIENT_ID)
+            .build()
+
+        Identity.getSignInClient(context).getSignInIntent(request)
+            .addOnSuccessListener {
+                try {
+                    launcher.launch(IntentSenderRequest.Builder(it).build())
+                } catch (e: IntentSender.SendIntentException) {
+                    loginViewModel.handleGoogleLoginError()
+                }
+            }
+            .addOnFailureListener {
+                loginViewModel.handleGoogleLoginError()
+            }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val stateFlow = loginViewModel.uiState()
+    val stateLifecycleAware = remember(lifecycleOwner, stateFlow) {
+        stateFlow.flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+    }
+    val state by stateLifecycleAware.collectAsState(initial = loginViewModel.createInitialState())
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        LoginScreenContent(onLoginClick = { onLoginClick() })
+
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.Center),
+            visible = state is LoginState.LoadingState
+        ) {
+            BallLoader()
+        }
+    }
+
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun AnimatedVisibilityScope.LoginScreenContent(onLoginClick: () -> Unit) {
     val density = LocalDensity.current
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.football_kick))
 
@@ -97,7 +170,7 @@ fun AnimatedVisibilityScope.LoginScreen() {
                     backgroundColor = FootieScoreTheme.colors.secondary,
                     contentColor = FootieScoreTheme.colors.onPrimary
                 ),
-                onClick = { }
+                onClick = onLoginClick
             ) {
                 Text(
                     text = stringResource(id = R.string.login_google),
@@ -133,5 +206,7 @@ fun AnimatedVisibilityScope.LoginScreen() {
 @Preview
 @Composable
 fun AnimatedVisibilityScope.PreviewLoginScreen() {
-    LoginScreen()
+    LoginScreenContent {
+
+    }
 }

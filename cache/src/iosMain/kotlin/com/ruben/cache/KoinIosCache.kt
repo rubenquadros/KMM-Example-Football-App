@@ -7,4 +7,5 @@ import org.koin.dsl.module
  **/
 actual val koinCacheModule = module {
     single { AppStorage() }
+    single { DatabaseDriverFactory() }
 }

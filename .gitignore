@@ -32,6 +32,7 @@ androidApp/google-services.json
 /shared/build
 /data/build
 /remote/build
+remote/google-services.json
 /injection/build
 /cache/build
 /buildSrc/build

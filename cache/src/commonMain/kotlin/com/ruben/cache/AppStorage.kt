@@ -7,5 +7,7 @@ expect class AppStorage {
 
     suspend fun getIsFirstTimeLaunch(): Boolean
     suspend fun storeFirstTime(firstTime: Boolean)
+    suspend fun isUserLoggedIn(): Boolean
+    suspend fun setUserLogin(userLogin: Boolean)
 
 }

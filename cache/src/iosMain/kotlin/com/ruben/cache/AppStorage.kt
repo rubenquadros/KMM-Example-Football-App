@@ -10,4 +10,11 @@ actual class AppStorage() {
     actual suspend fun getIsFirstTimeLaunch(): Boolean {
         return true
     }
+
+    actual suspend fun isUserLoggedIn(): Boolean {
+        return true
+    }
+
+    actual suspend fun setUserLogin(userLogin: Boolean) {
+    }
 }

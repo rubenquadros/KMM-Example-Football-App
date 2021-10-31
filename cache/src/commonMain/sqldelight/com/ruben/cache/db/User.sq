@@ -1,0 +1,28 @@
+CREATE TABLE User (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    profile_pic TEXT NOT NULL,
+    team TEXT
+);
+
+insertUser:
+INSERT INTO User(id, name, email, profile_pic)
+VALUES (?, ?, ?, ?);
+
+updateUser:
+UPDATE User
+SET name = ?, email = ?, profile_pic = ?
+WHERE id = ?;
+
+updateTeam:
+UPDATE User
+SET team = ?
+WHERE id = ?;
+
+getUser:
+SELECT * FROM User;
+
+clearTable:
+DELETE FROM User;
+

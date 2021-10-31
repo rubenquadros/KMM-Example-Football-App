@@ -7,6 +7,7 @@ import com.ruben.footiescore.entity.AllCompetitionEntity
  **/
 sealed class HomeState {
     object InitialState: HomeState()
+    object LoadingState: HomeState()
     data class AllCompetitionsState(val competitions: List<AllCompetitionEntity>): HomeState()
     object ErrorState: HomeState()
 }

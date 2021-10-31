@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("com.squareup.sqldelight")
 }
 
 version = "1.0"
@@ -33,6 +34,8 @@ kotlin {
             dependencies {
                 implementation(Dependencies.Shared.koin)
                 implementation(Dependencies.Shared.coroutines)
+                implementation(Dependencies.Shared.sqlDelight)
+                implementation(Dependencies.Shared.sqlDelightCoroutines)
             }
         }
         val commonTest by getting {
@@ -45,6 +48,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Dependencies.Android.dataStore)
+                implementation(Dependencies.Android.sqlDelight)
             }
         }
         val androidTest by getting {
@@ -53,7 +57,11 @@ kotlin {
                 implementation(Dependencies.Android.junit)
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation(Dependencies.Ios.sqlDelight)
+            }
+        }
         val iosTest by getting
     }
 }
@@ -64,5 +72,14 @@ android {
     defaultConfig {
         minSdk = Versions.AndroidVersions.minSdk
         targetSdk = Versions.AndroidVersions.targetSdk
+    }
+}
+
+sqldelight {
+    database("FootieScoreDB") {
+        packageName = "com.ruben.cache.db"
+        sourceFolders = listOf("sqldelight")
+        schemaOutputDirectory = file("$rootProject/sqldelight/schema")
+        verifyMigrations = true
     }
 }

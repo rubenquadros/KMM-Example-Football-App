@@ -24,7 +24,7 @@ kotlin {
     iosTarget("ios") {}
 
     cocoapods {
-        summary = "Data layer code shared between android and ios app"
+        summary = "Remote layer code shared between android and ios app"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = Versions.IosVersions.deploymentTarget
         framework {
