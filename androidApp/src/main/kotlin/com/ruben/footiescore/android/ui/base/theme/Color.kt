@@ -15,6 +15,7 @@ val ErrorColor = Color(0xFFc43b3c)
 val OnSurface = Color(0xFF607D8B)
 val BackgroundColor = Color(0xFF105b00)
 val OnBackground = Color(0xFFf8f277)
+val DisabledColor = Color(0xFFC4C4C4)
 
 @Immutable
 data class FootieScoreColors(
@@ -27,7 +28,8 @@ data class FootieScoreColors(
     val surface: Color,
     val onSurface: Color,
     val error: Color,
-    val onPrimary: Color
+    val onPrimary: Color,
+    val disabled: Color
 )
 
 val LocalFootieScoreColors = staticCompositionLocalOf {
@@ -41,6 +43,7 @@ val LocalFootieScoreColors = staticCompositionLocalOf {
         surface = Color.Black,
         onSurface = OnSurface,
         error = ErrorColor,
-        onPrimary = Color.White
+        onPrimary = Color.White,
+        disabled = DisabledColor
     )
 }

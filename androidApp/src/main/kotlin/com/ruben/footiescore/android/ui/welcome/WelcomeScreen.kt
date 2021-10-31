@@ -1,5 +1,6 @@
 package com.ruben.footiescore.android.ui.welcome
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -25,15 +27,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
-import com.ruben.footiescore.android.ui.common.WelcomeScreenShape
+import com.ruben.footiescore.android.ui.common.BottomWiggleShape
+import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
+import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 
 /**
  * Created by Ruben Quadros on 30/10/21
  **/
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun WelcomeScreen(
+fun AnimatedVisibilityScope.WelcomeScreen(
     navigateToLogin: () -> Unit
 ) {
+    val density = LocalDensity.current
+
     Box(modifier = Modifier.fillMaxSize()) {
         Card(
             modifier = Modifier
@@ -41,7 +48,7 @@ fun WelcomeScreen(
                 .fillMaxWidth(),
             backgroundColor = FootieScoreTheme.colors.primary,
             elevation = 20.dp,
-            shape = WelcomeScreenShape()
+            shape = BottomWiggleShape()
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -83,7 +90,14 @@ fun WelcomeScreen(
                 .height(50.dp)
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .shadow(elevation = 10.dp),
+                .shadow(elevation = 10.dp)
+                .animateEnterExit(
+                    enter = slideInVerticallyAnim(
+                        offset = with(density) { -50.dp.roundToPx() },
+                        duration = 600
+                    ),
+                    exit = slideOutVerticallyAnim(offset = with(density) { -50.dp.roundToPx() })
+                ),
             shape = FootieScoreTheme.shapes.largeRoundCornerShape,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = FootieScoreTheme.colors.secondary,
@@ -102,7 +116,7 @@ fun WelcomeScreen(
 @OptIn(ExperimentalAnimationApi::class)
 @Preview(showBackground = true)
 @Composable
-fun PreviewWelcomeScreen() {
+fun AnimatedVisibilityScope.PreviewWelcomeScreen() {
     WelcomeScreen {
 
     }

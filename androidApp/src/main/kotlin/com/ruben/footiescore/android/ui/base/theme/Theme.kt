@@ -32,7 +32,8 @@ fun FootieScoreTheme(content: @Composable () -> Unit) {
         surface = Color.Black,
         onSurface = OnSurface,
         error = ErrorColor,
-        onPrimary = Color.White
+        onPrimary = Color.White,
+        disabled = DisabledColor
     )
 
     val localFootieScoreShapes = FootieScoreShapes(

@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
     kotlin("android")
 }
 
@@ -14,6 +15,7 @@ dependencies {
 
     implementation(Dependencies.Android.materialDesign)
     implementation(Dependencies.Android.splashScreenApi)
+    implementation(Dependencies.Android.lottie)
 
     //mvi orbit
     implementation(Dependencies.Android.OrbitMvi.mviCore)
@@ -67,12 +69,27 @@ android {
         }
     }
     buildTypes {
-        getByName("release") {
+        getByName("debug") {
             isMinifyEnabled = false
+            isDebuggable = true
+            signingConfig = signingConfigs.findByName("debug")
+        }
+        getByName("release") {
+            isMinifyEnabled = true
+            isDebuggable = false
         }
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = "footiescoredebugkmm"
+            keyPassword = "footiescoredebug"
+            storeFile = file("$projectDir/keystore/footiescore_debug.jks")
+            storePassword = "footiescoredebug"
+        }
     }
 }

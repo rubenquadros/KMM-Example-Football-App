@@ -28,6 +28,7 @@ local.properties
 .DS_Store
 /build
 /androidApp/build
+androidApp/google-services.json
 /shared/build
 /data/build
 /remote/build

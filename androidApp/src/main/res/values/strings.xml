@@ -5,6 +5,10 @@
     <string name="all_get_started">Get Started</string>
     <string name="content_description_app_logo">App logo</string>
     <string name="content_description_competition_image">Competition logo</string>
+    <string name="content_description_login">Login</string>
     <string name="welcome_title">Welcome to FootieScore!</string>
     <string name="welcome_description">Your one stop to get all the live scores of ongoing football matches.</string>
+    <string name="login_title">Please login to continue</string>
+    <string name="login_google">Sign in with Google</string>
+    <string name="login_skip">Skip</string>
 </resources>

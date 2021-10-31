@@ -1,9 +1,6 @@
 package com.ruben.footiescore.android.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -12,6 +9,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ruben.footiescore.android.ui.Destinations.Home
 import com.ruben.footiescore.android.ui.Destinations.Login
 import com.ruben.footiescore.android.ui.Destinations.Welcome
+import com.ruben.footiescore.android.ui.common.fadeInAnim
+import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.home.HomeScreen
 import com.ruben.footiescore.android.ui.login.LoginScreen
 import com.ruben.footiescore.android.ui.welcome.WelcomeScreen
@@ -29,10 +28,10 @@ fun FootieScoreApp(isFirstTime: Boolean) {
         composable(
             route = Welcome,
             enterTransition = { _, _ ->
-                fadeIn(initialAlpha = 0.4f, animationSpec = tween(durationMillis = 800))
+                fadeInAnim(alpha = 0.4f, duration = 600)
             },
             exitTransition = { _, _ ->
-                fadeOut(targetAlpha = 0.4f, animationSpec = tween(durationMillis = 800))
+                fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
             WelcomeScreen(navigateToLogin = navGraph.openLoginScreen)
@@ -41,10 +40,10 @@ fun FootieScoreApp(isFirstTime: Boolean) {
         composable(
             route = Login,
             enterTransition = { _, _ ->
-                fadeIn(initialAlpha = 0.4f, animationSpec = tween(durationMillis = 800))
+                fadeInAnim(alpha = 0.4f, duration = 800)
             },
             exitTransition = { _, _ ->
-                fadeOut(targetAlpha = 0.4f, animationSpec = tween(durationMillis = 800))
+                fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
             LoginScreen()

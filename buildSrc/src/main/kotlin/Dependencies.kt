@@ -6,6 +6,7 @@ object Versions {
     object GradlePluginVersions {
         const val gradleVersion = "7.0.3"
         const val buildKonfigVersion = "0.10.2"
+        const val googleVersion = "4.3.10"
     }
 
     //ios targets
@@ -46,6 +47,7 @@ object Versions {
         const val splashScreenApiVersion = "1.0.0-alpha02"
         const val dataStoreVersion = "1.0.0"
         const val accompanistVersion = "0.20.0"
+        const val lottieVersion = "4.2.0"
     }
 }
 
@@ -55,6 +57,7 @@ object Dependencies {
         const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.Shared.kotlinVersion}"
         const val gradle = "com.android.tools.build:gradle:${Versions.GradlePluginVersions.gradleVersion}"
         const val buildKonfig = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:${Versions.GradlePluginVersions.buildKonfigVersion}"
+        const val google = "com.google.gms:google-services:${Versions.GradlePluginVersions.googleVersion}"
     }
 
     object Android {
@@ -67,6 +70,7 @@ object Dependencies {
         const val materialDesign = "com.google.android.material:material:${Versions.Android.materialDesignVersion}"
         const val splashScreenApi = "androidx.core:core-splashscreen:${Versions.Android.splashScreenApiVersion}"
         const val dataStore = "androidx.datastore:datastore-preferences:${Versions.Android.dataStoreVersion}"
+        const val lottie = "com.airbnb.android:lottie-compose:${Versions.Android.lottieVersion}"
 
         object Compose {
             const val ui = "androidx.compose.ui:ui:${Versions.Android.composeVersion}"

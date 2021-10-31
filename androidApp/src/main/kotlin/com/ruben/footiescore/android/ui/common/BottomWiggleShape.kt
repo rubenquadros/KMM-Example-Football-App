@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.LayoutDirection
 /**
  * Created by Ruben Quadros on 30/10/21
  **/
-class WelcomeScreenShape : Shape {
+class BottomWiggleShape : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,

@@ -9,6 +9,7 @@ buildscript {
         classpath(Dependencies.GradlePlugin.kotlinSerialization)
         classpath(Dependencies.GradlePlugin.gradle)
         classpath (Dependencies.GradlePlugin.buildKonfig)
+        classpath(Dependencies.GradlePlugin.google)
     }
 }
 
