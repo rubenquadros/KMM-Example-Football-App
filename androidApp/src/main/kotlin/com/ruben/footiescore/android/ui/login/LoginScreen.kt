@@ -93,6 +93,10 @@ fun AnimatedVisibilityScope.LoginScreen(
             }
     }
 
+    fun onSkipClick() {
+
+    }
+
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = loginViewModel.uiState()
     val stateLifecycleAware = remember(lifecycleOwner, stateFlow) {
@@ -101,7 +105,10 @@ fun AnimatedVisibilityScope.LoginScreen(
     val state by stateLifecycleAware.collectAsState(initial = loginViewModel.createInitialState())
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LoginScreenContent(onLoginClick = { onLoginClick() })
+        LoginScreenContent(
+            onLoginClick = { onLoginClick() },
+            onSkipClick = { onSkipClick() }
+        )
 
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.Center),
@@ -115,7 +122,10 @@ fun AnimatedVisibilityScope.LoginScreen(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedVisibilityScope.LoginScreenContent(onLoginClick: () -> Unit) {
+fun AnimatedVisibilityScope.LoginScreenContent(
+    onLoginClick: () -> Unit,
+    onSkipClick: () -> Unit
+) {
     val density = LocalDensity.current
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.football_kick))
 
@@ -192,6 +202,7 @@ fun AnimatedVisibilityScope.LoginScreenContent(onLoginClick: () -> Unit) {
                         )
                     )
                     .clickable {
+                        onSkipClick.invoke()
                     },
                 text = stringResource(id = R.string.login_skip),
                 style = FootieScoreTheme.typography.button,
@@ -206,7 +217,8 @@ fun AnimatedVisibilityScope.LoginScreenContent(onLoginClick: () -> Unit) {
 @Preview
 @Composable
 fun AnimatedVisibilityScope.PreviewLoginScreen() {
-    LoginScreenContent {
-
-    }
+    LoginScreenContent(
+        onLoginClick = {},
+        onSkipClick = {}
+    )
 }

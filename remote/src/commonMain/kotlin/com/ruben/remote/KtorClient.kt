@@ -1,19 +1,15 @@
 package com.ruben.remote
 
-import com.ruben.remote.exceptions.RemoteException
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.ClientRequestException
-import io.ktor.client.features.HttpResponseValidator
-import io.ktor.client.features.HttpTimeout
-import io.ktor.client.features.RedirectResponseException
-import io.ktor.client.features.ServerResponseException
-import io.ktor.client.features.defaultRequest
+import com.ruben.remote.model.ApiResponse
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.*
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logging
-import io.ktor.client.request.header
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.logging.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.serialization.json.Json
 
 /**
@@ -44,15 +40,19 @@ val client = HttpClient(CIO) {
     defaultRequest {
         header(ApiConstants.AUTH_HEADER, BuildKonfig.API_KEY)
     }
+}
 
-    HttpResponseValidator {
-        handleResponseException {
-            when (it) {
-                is ClientRequestException -> throw RemoteException.ClientError(it.response.status.value)
-                is ServerResponseException -> throw RemoteException.ServerError(it.response.status.value)
-                is RedirectResponseException -> throw RemoteException.RedirectError(it.response.status.value)
-                else -> throw RemoteException.UnknownError
-            }
+fun HttpClient.addResponseInterceptor() {
+    this.responsePipeline.intercept(HttpResponsePipeline.Transform) { (info, body) ->
+        val response = if (context.response.status.isSuccess()) {
+            if (context.response.contentLength() == 0L) ApiResponse.SuccessNoBody
+            else body
         }
+        else {
+            if (context.response.contentLength() == 0L) ApiResponse.ErrorNoBody
+            else body
+        }
+
+        proceedWith(HttpResponseContainer(info, response))
     }
 }

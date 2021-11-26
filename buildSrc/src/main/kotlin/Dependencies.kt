@@ -29,30 +29,28 @@ object Versions {
     object Shared {
         const val kotlin = "1.5.31"
         const val coroutines = "1.5.2"
-        const val koin = "3.1.2"
-        const val ktor = "1.6.4"
-        const val kotlinSerialization = "1.2.2"
+        const val koin = "3.1.3"
+        const val ktor = "1.6.5"
+        const val kotlinSerialization = "1.3.1"
         const val sqlDelight = "1.5.2"
     }
 
     //android
     object Android {
         const val junit = "4.13.2"
-        const val compose = "1.0.4"
+        const val compose = "1.0.5"
         const val materialDesign = "1.4.0"
         const val lifecycle = "2.4.0-rc01"
-        const val composeNavigation = "2.4.0-alpha10"
-        const val composeActivity = "1.3.1"
-        const val composeConstraintLayout = "1.0.0-rc01"
-        const val composeCoil = "1.3.2"
-        const val mviOrbit = "4.2.0"
+        const val composeNavigation = "2.4.0-beta02"
+        const val composeActivity = "1.4.0"
+        const val composeConstraintLayout = "1.0.0-rc02"
+        const val composeCoil = "1.4.0"
+        const val mviOrbit = "4.3.0"
         const val splashScreenApi = "1.0.0-alpha02"
         const val dataStore = "1.0.0"
-        const val accompanist = "0.20.0"
-        const val lottie = "4.2.0"
+        const val accompanist = "0.20.2"
+        const val lottie = "4.2.1"
         const val googleAuth = "19.2.0"
-        const val firebaseAuth = "21.0.1"
-        const val firestore = "24.0.0"
         const val crashlytics = "18.2.4"
         const val analytics = "20.0.0"
     }
@@ -133,6 +131,7 @@ object Dependencies {
         const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Shared.kotlinSerialization}"
         const val sqlDelight = "com.squareup.sqldelight:runtime:${Versions.Shared.sqlDelight}"
         const val sqlDelightCoroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.Shared.sqlDelight}"
+        const val algoliaSearch = "com.algolia:algoliasearch-client-kotlin:${Versions.Shared.kotlin}"
     }
 
     object Modules {

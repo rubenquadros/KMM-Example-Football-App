@@ -1,4 +1,4 @@
-package com.ruben.remote.model
+package com.ruben.remote.model.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -67,6 +67,10 @@ kotlin {
         }
         val iosTest by getting
     }
+
+    kotlin.sourceSets.all {
+        languageSettings.optIn("kotlin.RequiresOptIn")
+    }
 }
 
 android {
@@ -87,6 +91,6 @@ buildkonfig {
 
     defaultConfigs {
         buildConfigField(STRING, "API_KEY", "${localProperties["api.key"]}")
-        buildConfigField(STRING, "BASE_URL", "https://api.football-data.org/v2")
+        buildConfigField(STRING, "BASE_URL", "https://footiescore.herokuapp.com")
     }
 }
