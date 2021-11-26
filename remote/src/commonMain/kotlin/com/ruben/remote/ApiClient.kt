@@ -33,15 +33,13 @@ class ApiClient {
 
     suspend inline fun <RESPONSE, ERROR> post(
         endPoint: String,
-        requestBody: Any?
+        requestBody: Any
     ): ApiResponse<RESPONSE, ERROR> {
         return try {
             client.addResponseInterceptor()
             val response: ApiResponse<RESPONSE, ERROR> = client.post(baseUrl + endPoint) {
-                requestBody?.let {
-                    contentType(ContentType.Application.Json)
-                    body = it
-                }
+                contentType(ContentType.Application.Json)
+                body = requestBody
             }
             response
         } catch (e: RemoteException) {

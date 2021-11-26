@@ -6,6 +6,7 @@ import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.entity.AllCompetitionEntity
 import com.ruben.footiescore.entity.BaseEntity
 import com.ruben.remote.model.ApiResponse
+import com.ruben.remote.model.request.LoginRequest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
@@ -40,8 +41,18 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
 
     override suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<Nothing, Nothing> {
         return withContext(dispatcherProvider.dispatcherDefault) {
-            saveUserData(id, name, email, image)
-            BaseEntity.SuccessNoBody
+            val response = dataSource.api().login(
+                loginRequest = LoginRequest(
+                    userId = id,
+                    userName = name,
+                    email = email,
+                    profilePic = image
+                )
+            )
+            if (response is ApiResponse.SuccessNoBody) {
+                saveUserData(id, name, email, image)
+            }
+            response.toUIEntity()
         }
     }
 

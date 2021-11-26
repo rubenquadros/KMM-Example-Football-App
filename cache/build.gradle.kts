@@ -77,6 +77,7 @@ android {
 
 sqldelight {
     database("FootieScoreDB") {
+        dialect = "sqlite:3.24"
         packageName = "com.ruben.cache.db"
         sourceFolders = listOf("sqldelight")
         schemaOutputDirectory = file("$rootProject/sqldelight/schema")

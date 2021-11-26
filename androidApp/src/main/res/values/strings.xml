@@ -3,6 +3,7 @@
     <string name="app_name">FootieScore</string>
     <string name="all_loading">Loading</string>
     <string name="all_get_started">Get Started</string>
+    <string name="all_generic_error">Something went wrong. Please try again</string>
     <string name="content_description_app_logo">App logo</string>
     <string name="content_description_competition_image">Competition logo</string>
     <string name="content_description_login">Login</string>

@@ -46,7 +46,7 @@ fun FootieScoreApp(isFirstTime: Boolean) {
                 fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
-            LoginScreen()
+            LoginScreen(navigateToSelectTeam = {})
         }
 
         composable(Home) {

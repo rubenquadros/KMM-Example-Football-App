@@ -43,13 +43,15 @@ val client = HttpClient(CIO) {
 }
 
 fun HttpClient.addResponseInterceptor() {
+
+    fun isContentEmpty(response: HttpResponse) = response.contentLength() == null || response.contentLength() == 0L
+
     this.responsePipeline.intercept(HttpResponsePipeline.Transform) { (info, body) ->
         val response = if (context.response.status.isSuccess()) {
-            if (context.response.contentLength() == 0L) ApiResponse.SuccessNoBody
+            if (isContentEmpty(context.response)) ApiResponse.SuccessNoBody
             else body
-        }
-        else {
-            if (context.response.contentLength() == 0L) ApiResponse.ErrorNoBody
+        } else {
+            if (isContentEmpty(context.response)) ApiResponse.ErrorNoBody(context.response.status.value)
             else body
         }
 

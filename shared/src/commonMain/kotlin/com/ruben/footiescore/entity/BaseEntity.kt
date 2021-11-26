@@ -12,7 +12,9 @@ sealed class BaseEntity<out RESPONSE, out ERROR> {
 
     object SuccessNoBody: BaseEntity<Nothing, Nothing>()
 
-    object ErrorNoBody: BaseEntity<Nothing, Nothing>()
+    object ClientError: BaseEntity<Nothing, Nothing>()
+
+    object ServerError: BaseEntity<Nothing, Nothing>()
 
     object UnknownError: BaseEntity<Nothing, Nothing>()
 

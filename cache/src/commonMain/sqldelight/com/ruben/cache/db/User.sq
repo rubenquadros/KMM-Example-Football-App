@@ -8,7 +8,9 @@ CREATE TABLE User (
 
 insertUser:
 INSERT INTO User(id, name, email, profile_pic)
-VALUES (?, ?, ?, ?);
+VALUES (?, ?, ?, ?)
+ON CONFLICT(id) DO
+UPDATE SET name = excluded.name, email = excluded.email, profile_pic = excluded.profile_pic;
 
 updateUser:
 UPDATE User
