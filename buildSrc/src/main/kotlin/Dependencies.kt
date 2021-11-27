@@ -8,6 +8,7 @@ object Versions {
         const val buildKonfig = "0.10.2"
         const val google = "4.3.10"
         const val crashlytics = "2.8.0"
+        const val kover = "0.4.2"
     }
 
     //ios targets
@@ -26,7 +27,7 @@ object Versions {
 
 
     //shared
-    object Shared {
+    internal object Shared {
         const val kotlin = "1.5.31"
         const val coroutines = "1.5.2"
         const val koin = "3.1.3"
@@ -37,7 +38,7 @@ object Versions {
     }
 
     //android
-    object Android {
+    internal object Android {
         const val junit = "4.13.2"
         const val compose = "1.0.5"
         const val materialDesign = "1.4.0"
@@ -66,6 +67,7 @@ object Dependencies {
         const val google = "com.google.gms:google-services:${Versions.GradlePluginVersions.google}"
         const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.Shared.sqlDelight}"
         const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:${Versions.GradlePluginVersions.crashlytics}"
+        const val kover = "org.jetbrains.kotlinx.kover"
     }
 
     object Android {
