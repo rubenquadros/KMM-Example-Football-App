@@ -38,7 +38,7 @@ jobs:
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle-wrapper.properties') }}
           
       - name: Check Dependency Updates
-        run: bash ./gradlew dependencyUpdates
+        run: ./gradlew dependencyUpdates
         
       - name: Log dependency update report
         run: cat build/dependencyUpdates/dependency_update_report.txt
