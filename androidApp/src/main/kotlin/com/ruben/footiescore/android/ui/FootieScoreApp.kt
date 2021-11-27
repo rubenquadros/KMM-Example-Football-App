@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.ruben.footiescore.android.ui.Destinations.AllCompetitions
 import com.ruben.footiescore.android.ui.Destinations.Home
 import com.ruben.footiescore.android.ui.Destinations.Login
 import com.ruben.footiescore.android.ui.Destinations.SelectTeam
@@ -13,7 +14,7 @@ import com.ruben.footiescore.android.ui.Destinations.Welcome
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.favteam.SelectTeamScreen
-import com.ruben.footiescore.android.ui.home.HomeScreen
+import com.ruben.footiescore.android.ui.competitions.AllCompetitionsScreen
 import com.ruben.footiescore.android.ui.login.LoginScreen
 import com.ruben.footiescore.android.ui.welcome.WelcomeScreen
 
@@ -64,7 +65,11 @@ fun FootieScoreApp(isFirstTime: Boolean) {
         }
 
         composable(Home) {
-            HomeScreen()
+
+        }
+
+        composable(AllCompetitions) {
+            AllCompetitionsScreen()
         }
     }
 }

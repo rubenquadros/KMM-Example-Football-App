@@ -1,4 +1,4 @@
-package com.ruben.footiescore.android.ui.home
+package com.ruben.footiescore.android.ui.competitions
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -55,33 +53,33 @@ import kotlin.math.roundToInt
  **/
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun HomeScreen(
-    homeViewModel: HomeViewModel = getViewModel()
+fun AllCompetitionsScreen(
+    competitionsViewModel: CompetitionsViewModel = getViewModel()
 ) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
-    val stateFlow = homeViewModel.uiState()
+    val stateFlow = competitionsViewModel.uiState()
     val stateLifecycleAware = remember(lifecycleOwner, stateFlow) {
         stateFlow.flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.STARTED)
     }
-    val state by stateLifecycleAware.collectAsState(initial = homeViewModel.createInitialState())
+    val state by stateLifecycleAware.collectAsState(initial = competitionsViewModel.createInitialState())
 
     var isVisible by remember {
         mutableStateOf(false)
     }
 
     when (state) {
-        is HomeState.InitialState -> {
+        is CompetitionsState.InitialState -> {
             isVisible = true
         }
-        is HomeState.LoadingState -> {
+        is CompetitionsState.LoadingState -> {
             isVisible = true
         }
-        is HomeState.AllCompetitionsState -> {
+        is CompetitionsState.AllCompetitionsState -> {
             isVisible = false
             CompetitionsView(
                 modifier = Modifier.fillMaxSize(),
-                competitions = (state as HomeState.AllCompetitionsState).competitions
+                competitions = (state as CompetitionsState.AllCompetitionsState).competitions
             )
         }
         else -> {
