@@ -49,6 +49,10 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
         searchState = TextFieldValue()
     }
 
+    fun onSearch(searchQuery: String) {
+        selectFavTeamViewModel.searchTeam(searchQuery)
+    }
+
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = selectFavTeamViewModel.uiState()
     val stateLifecycleAware = remember(lifecycleOwner, stateFlow) {
@@ -63,7 +67,7 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
                     searchState = searchState,
                     onValueChanged = { textFieldValue -> onValueChanged(textFieldValue) },
                     onClear = { onSearchCleared() },
-                    onSearch = { searchQuery -> {} }
+                    onSearch = { searchQuery -> onSearch(searchQuery) }
                 )
 
                 if (state is SelectFavTeamState.SearchResultState) {

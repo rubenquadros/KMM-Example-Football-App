@@ -1,6 +1,6 @@
 package com.ruben.remote.rest
 
-import com.ruben.remote.ApiClient
+import com.ruben.remote.ktor.ApiClient
 import com.ruben.remote.model.ApiResponse
 import com.ruben.remote.model.request.LoginRequest
 import com.ruben.remote.model.response.GetAllCompetitionsResponse

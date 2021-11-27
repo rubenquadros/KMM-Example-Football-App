@@ -5,8 +5,10 @@ import com.ruben.footiescore.FootballRepository
 import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.entity.AllCompetitionEntity
 import com.ruben.footiescore.entity.BaseEntity
+import com.ruben.footiescore.entity.SearchTeamEntity
 import com.ruben.remote.model.ApiResponse
 import com.ruben.remote.model.request.LoginRequest
+import com.ruben.remote.model.request.SearchRequest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
@@ -17,7 +19,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
 
     override suspend fun getAllCompetitions(): BaseEntity<List<AllCompetitionEntity>, Nothing> {
         return withContext(dispatcherProvider.dispatcherDefault) {
-            when (val response = dataSource.api().getAllCompetitions()) {
+            when (val response = dataSource.api().restApi().getAllCompetitions()) {
                 is ApiResponse.Success -> {
                     BaseEntity.Success(response.body.toUIEntity())
                 }
@@ -41,7 +43,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
 
     override suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<Nothing, Nothing> {
         return withContext(dispatcherProvider.dispatcherDefault) {
-            val response = dataSource.api().login(
+            val response = dataSource.api().restApi().login(
                 loginRequest = LoginRequest(
                     userId = id,
                     userName = name,
@@ -59,6 +61,13 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
     override suspend fun saveUserData(id: String, name: String, email: String, image: String) {
         withContext(dispatcherProvider.dispatcherDefault) {
             dataSource.database().userQueries.insertUser(id, name, email, image)
+        }
+    }
+
+    override suspend fun searchTeam(searchQuery: String): BaseEntity<SearchTeamEntity, Nothing> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            val response = dataSource.api().algoliaApi().searchTeams(SearchRequest(searchQuery))
+            response.toUIEntity()
         }
     }
 }

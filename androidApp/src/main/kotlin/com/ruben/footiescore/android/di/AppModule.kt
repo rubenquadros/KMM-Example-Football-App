@@ -16,5 +16,5 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { WelcomeViewModel(get()) }
     viewModel { LoginViewModel(get()) }
-    viewModel { SelectFavTeamViewModel() }
+    viewModel { SelectFavTeamViewModel(get()) }
 }

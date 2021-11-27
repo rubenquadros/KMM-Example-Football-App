@@ -1,5 +1,7 @@
-package com.ruben.remote
+package com.ruben.remote.ktor
 
+import com.ruben.remote.ApiConstants
+import com.ruben.remote.BuildKonfig
 import com.ruben.remote.model.ApiResponse
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*

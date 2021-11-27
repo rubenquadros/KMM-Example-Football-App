@@ -1,5 +1,6 @@
-package com.ruben.remote
+package com.ruben.remote.ktor
 
+import com.ruben.remote.BuildKonfig
 import com.ruben.remote.model.ApiResponse
 import com.ruben.remote.exceptions.RemoteException
 import io.ktor.client.request.get

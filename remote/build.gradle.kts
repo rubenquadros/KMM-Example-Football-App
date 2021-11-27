@@ -92,5 +92,7 @@ buildkonfig {
     defaultConfigs {
         buildConfigField(STRING, "API_KEY", "${localProperties["api.key"]}")
         buildConfigField(STRING, "BASE_URL", "https://footiescore.herokuapp.com")
+        buildConfigField(STRING, "ALGOLIA_APP_ID", "${localProperties["algolia.app.id"]}")
+        buildConfigField(STRING, "ALGOLIA_API_KEY", "${localProperties["algolia.api.key"]}")
     }
 }

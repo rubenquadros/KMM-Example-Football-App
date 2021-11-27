@@ -2,6 +2,7 @@ package com.ruben.footiescore
 
 import com.ruben.footiescore.entity.AllCompetitionEntity
 import com.ruben.footiescore.entity.BaseEntity
+import com.ruben.footiescore.entity.SearchTeamEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -13,4 +14,5 @@ interface FootballRepository {
     suspend fun setFirstTimeLaunch(firstTimeLaunch: Boolean)
     suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<Nothing, Nothing>
     suspend fun saveUserData(id: String, name: String, email: String, image: String)
+    suspend fun searchTeam(searchQuery: String): BaseEntity<SearchTeamEntity, Nothing>
 }

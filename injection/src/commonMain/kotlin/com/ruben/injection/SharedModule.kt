@@ -2,10 +2,7 @@ package com.ruben.injection
 
 import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.dispatcher.DispatcherProviderImpl
-import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
-import com.ruben.footiescore.usecase.GetFirstTimeLaunchUseCase
-import com.ruben.footiescore.usecase.LoginUseCase
-import com.ruben.footiescore.usecase.StoreFirstTimeLaunchUseCase
+import com.ruben.footiescore.usecase.*
 import org.koin.dsl.module
 
 /**
@@ -27,6 +24,8 @@ internal val useCaseModule = module {
     factory {
         LoginUseCase(get())
     }
+
+    factory { SearchTeamUseCase(get()) }
 }
 
 internal val sharedModule = module {
