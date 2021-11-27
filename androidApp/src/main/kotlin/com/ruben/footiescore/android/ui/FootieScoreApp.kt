@@ -8,9 +8,11 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ruben.footiescore.android.ui.Destinations.Home
 import com.ruben.footiescore.android.ui.Destinations.Login
+import com.ruben.footiescore.android.ui.Destinations.SelectTeam
 import com.ruben.footiescore.android.ui.Destinations.Welcome
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
+import com.ruben.footiescore.android.ui.favteam.SelectTeamScreen
 import com.ruben.footiescore.android.ui.home.HomeScreen
 import com.ruben.footiescore.android.ui.login.LoginScreen
 import com.ruben.footiescore.android.ui.welcome.WelcomeScreen
@@ -46,7 +48,19 @@ fun FootieScoreApp(isFirstTime: Boolean) {
                 fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
-            LoginScreen(navigateToSelectTeam = {})
+            LoginScreen(navigateToSelectTeam = navGraph.openSelectTeamScreen)
+        }
+
+        composable(
+            route = SelectTeam,
+            enterTransition = { _, _ ->
+                fadeInAnim(alpha = 0.4f, duration = 800)
+            },
+            exitTransition = { _, _ ->
+                fadeOutAnim(alpha = 0.4f, duration = 600)
+            }
+        ) {
+            SelectTeamScreen()
         }
 
         composable(Home) {

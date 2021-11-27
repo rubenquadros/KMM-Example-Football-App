@@ -2,6 +2,7 @@ package com.ruben.footiescore.android.ui.login
 
 import android.app.Activity
 import android.content.IntentSender
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -112,6 +113,10 @@ fun AnimatedVisibilityScope.LoginScreen(
         ) {
             BallLoader(modifier = Modifier.size(40.dp))
         }
+    }
+
+    BackHandler {
+        //cannot go back from here
     }
 
 }
@@ -236,10 +241,12 @@ fun HandleSideEffects(sideEffectFlow: Flow<LoginSideEffect>, navigateToSelectTea
 @OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable
-fun AnimatedVisibilityScope.PreviewLoginScreen() {
-    LoginScreenContent(
-        scaffoldState = rememberScaffoldState(),
-        onLoginClick = {},
-        onSkipClick = {}
-    )
+fun PreviewLoginScreen() {
+    AnimatedVisibility(visible = true) {
+        LoginScreenContent(
+            scaffoldState = rememberScaffoldState(),
+            onLoginClick = {},
+            onSkipClick = {}
+        )
+    }
 }

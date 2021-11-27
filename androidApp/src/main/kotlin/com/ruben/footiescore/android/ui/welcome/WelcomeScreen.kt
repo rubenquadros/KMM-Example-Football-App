@@ -1,5 +1,7 @@
 package com.ruben.footiescore.android.ui.welcome
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
@@ -54,6 +56,9 @@ fun AnimatedVisibilityScope.WelcomeScreen(
         onClick = { welcomeViewModel.storeFirstTime() }
     )
 
+    BackHandler {
+        //cannot go back from here
+    }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -146,8 +151,10 @@ fun HandleWelcomeSideEffect(sideEffectFlow: Flow<WelcomeSideEffect>, navigateToL
 @OptIn(ExperimentalAnimationApi::class)
 @Preview(showBackground = true)
 @Composable
-fun AnimatedVisibilityScope.PreviewWelcomeScreen() {
-    WelcomeScreenContent(density = LocalDensity.current) {
+fun PreviewWelcomeScreen() {
+    AnimatedVisibility(visible = true) {
+        WelcomeScreenContent(density = LocalDensity.current) {
 
+        }
     }
 }
