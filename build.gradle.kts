@@ -1,3 +1,6 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -16,7 +19,8 @@ buildscript {
 }
 
 plugins {
-    id(Dependencies.GradlePlugin.kover) version Versions.GradlePluginVersions.kover
+    id(Dependencies.GradlePlugin.kover) version Versions.PluginVersions.kover
+    id(Dependencies.GradlePlugin.dependencyUpdate) version Versions.PluginVersions.dependencyUpdate
 }
 
 allprojects {
@@ -33,6 +37,15 @@ tasks.koverVerify {
             minValue = 50
         }
     }
+}
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+    checkForGradleUpdate = true
+    gradleReleaseChannel = GradleReleaseChannel.RELEASE_CANDIDATE.id
+    revision = "integration" // See available revisions
+    outputFormatter = "plain" // xml and json available too
+    outputDir = "build/dependencyUpdates"
+    reportfileName = "dependency_update_report"
 }
 
 tasks.register("clean", Delete::class) {

@@ -3,12 +3,11 @@
  **/
 object Versions {
     //gradle
-    object GradlePluginVersions {
+    internal object GradlePluginVersions {
         const val gradle = "7.0.3"
         const val buildKonfig = "0.10.2"
         const val google = "4.3.10"
         const val crashlytics = "2.8.0"
-        const val kover = "0.4.2"
     }
 
     //ios targets
@@ -23,6 +22,12 @@ object Versions {
         const val targetSdk = 31
         const val versionName = "0.0.1"
         const val versionCode = 1
+        const val compose = "1.0.5"
+    }
+
+    object PluginVersions {
+        const val kover = "0.4.2"
+        const val dependencyUpdate = "0.39.0"
     }
 
 
@@ -40,7 +45,6 @@ object Versions {
     //android
     internal object Android {
         const val junit = "4.13.2"
-        const val compose = "1.0.5"
         const val materialDesign = "1.4.0"
         const val lifecycle = "2.4.0-rc01"
         const val composeNavigation = "2.4.0-beta02"
@@ -68,6 +72,7 @@ object Dependencies {
         const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.Shared.sqlDelight}"
         const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:${Versions.GradlePluginVersions.crashlytics}"
         const val kover = "org.jetbrains.kotlinx.kover"
+        const val dependencyUpdate = "com.github.ben-manes.versions"
     }
 
     object Android {
@@ -85,11 +90,11 @@ object Dependencies {
         const val sqlDelight = "com.squareup.sqldelight:android-driver:${Versions.Shared.sqlDelight}"
 
         object Compose {
-            const val ui = "androidx.compose.ui:ui:${Versions.Android.compose}"
-            const val material = "androidx.compose.material:material:${Versions.Android.compose}"
-            const val tooling = "androidx.compose.ui:ui-tooling-preview:${Versions.Android.compose}"
-            const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.Android.compose}"
-            const val uiTest = "androidx.compose.ui:ui-test-manifest:${Versions.Android.compose}"
+            const val ui = "androidx.compose.ui:ui:${Versions.AndroidVersions.compose}"
+            const val material = "androidx.compose.material:material:${Versions.AndroidVersions.compose}"
+            const val tooling = "androidx.compose.ui:ui-tooling-preview:${Versions.AndroidVersions.compose}"
+            const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.AndroidVersions.compose}"
+            const val uiTest = "androidx.compose.ui:ui-test-manifest:${Versions.AndroidVersions.compose}"
             const val navigation = "androidx.navigation:navigation-compose:${Versions.Android.composeNavigation}"
             const val activity = "androidx.activity:activity-compose:${Versions.Android.composeActivity}"
             const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.Android.composeConstraintLayout}"

@@ -67,7 +67,7 @@ android {
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion = Versions.Android.compose
+            kotlinCompilerExtensionVersion = Versions.AndroidVersions.compose
         }
 
         buildFeatures {
