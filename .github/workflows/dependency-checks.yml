@@ -25,6 +25,18 @@ jobs:
         with:
           java-version: 11
           
+      - name: Copy CI gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+        
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+        
+      - name: Fetch Gradle Wrapper Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle-wrapper.properties') }}
+          
       - name: Check Dependency Updates
         run: bash ./gradlew dependencyUpdates
         
