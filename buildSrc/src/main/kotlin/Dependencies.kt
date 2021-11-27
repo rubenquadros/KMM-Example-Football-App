@@ -35,10 +35,10 @@ object Versions {
     internal object Shared {
         const val kotlin = "1.5.31"
         const val coroutines = "1.5.2"
-        const val koin = "3.1.3"
-        const val ktor = "1.6.5"
+        const val koin = "3.1.4"
+        const val ktor = "1.6.3"
         const val kotlinSerialization = "1.3.1"
-        const val sqlDelight = "1.5.2"
+        const val sqlDelight = "1.5.3"
         const val algolia = "1.12.0"
     }
 
@@ -46,7 +46,7 @@ object Versions {
     internal object Android {
         const val junit = "4.13.2"
         const val materialDesign = "1.4.0"
-        const val lifecycle = "2.4.0-rc01"
+        const val lifecycle = "2.4.0"
         const val composeNavigation = "2.4.0-beta02"
         const val composeActivity = "1.4.0"
         const val composeConstraintLayout = "1.0.0-rc02"
@@ -133,8 +133,6 @@ object Dependencies {
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Shared.coroutines}"
         const val koin = "io.insert-koin:koin-core:${Versions.Shared.koin}"
         const val ktor = "io.ktor:ktor-client-core:${Versions.Shared.ktor}"
-        const val ktorEngine = "io.ktor:ktor-client-cio:${Versions.Shared.ktor}"
-        const val ktorLogging = "io.ktor:ktor-client-logging:${Versions.Shared.ktor}"
         const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.Shared.ktor}"
         const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Shared.kotlinSerialization}"
         const val sqlDelight = "com.squareup.sqldelight:runtime:${Versions.Shared.sqlDelight}"

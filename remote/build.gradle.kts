@@ -37,8 +37,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Dependencies.Shared.ktor)
-                implementation(Dependencies.Shared.ktorEngine)
-                implementation(Dependencies.Shared.ktorLogging)
                 implementation(Dependencies.Shared.ktorSerialization)
                 implementation(Dependencies.Shared.kotlinSerialization)
             }

@@ -4,11 +4,9 @@ import com.ruben.remote.ApiConstants
 import com.ruben.remote.BuildKonfig
 import com.ruben.remote.model.ApiResponse
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -17,13 +15,9 @@ import kotlinx.serialization.json.Json
 /**
  * Created by Ruben Quadros on 15/10/21
  **/
-val client = HttpClient(CIO) {
+val client = HttpClient() {
 
     expectSuccess = false
-
-    install(Logging) {
-        level = LogLevel.ALL
-    }
 
     install(JsonFeature) {
         serializer = KotlinxSerializer(Json {
