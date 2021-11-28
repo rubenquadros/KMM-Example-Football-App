@@ -9,23 +9,19 @@ import org.koin.dsl.module
  * Created by Ruben Quadros on 15/10/21
  **/
 internal val useCaseModule = module {
-    factory {
-        GetAllCompetitionsUseCase(get())
-    }
+    factory { GetAllCompetitionsUseCase(get()) }
 
-    factory {
-        GetFirstTimeLaunchUseCase(get())
-    }
+    factory { GetFirstTimeLaunchUseCase(get()) }
 
-    factory {
-        StoreFirstTimeLaunchUseCase(get())
-    }
+    factory { StoreFirstTimeLaunchUseCase(get()) }
 
-    factory {
-        LoginUseCase(get())
-    }
+    factory { LoginUseCase(get()) }
 
     factory { SearchTeamUseCase(get()) }
+
+    factory { GetLoginStateUseCase(get()) }
+
+    factory { SetLoginStateUseCase(get()) }
 }
 
 internal val sharedModule = module {

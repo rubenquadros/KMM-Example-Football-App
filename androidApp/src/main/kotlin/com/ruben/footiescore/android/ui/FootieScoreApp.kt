@@ -15,6 +15,7 @@ import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.favteam.SelectTeamScreen
 import com.ruben.footiescore.android.ui.competitions.AllCompetitionsScreen
+import com.ruben.footiescore.android.ui.home.HomeScreen
 import com.ruben.footiescore.android.ui.login.LoginScreen
 import com.ruben.footiescore.android.ui.welcome.WelcomeScreen
 
@@ -46,7 +47,7 @@ fun FootieScoreApp(isFirstTime: Boolean) {
                 fadeInAnim(alpha = 0.4f, duration = 800)
             },
             exitTransition = { _, _ ->
-                fadeOutAnim(alpha = 0.4f, duration = 600)
+                fadeOutAnim(alpha = 0.4f, duration = 200)
             }
         ) {
             LoginScreen(navigateToSelectTeam = navGraph.openSelectTeamScreen)
@@ -55,7 +56,7 @@ fun FootieScoreApp(isFirstTime: Boolean) {
         composable(
             route = SelectTeam,
             enterTransition = { _, _ ->
-                fadeInAnim(alpha = 0.4f, duration = 800)
+                fadeInAnim(alpha = 0.4f, duration = 400)
             },
             exitTransition = { _, _ ->
                 fadeOutAnim(alpha = 0.4f, duration = 600)
@@ -64,8 +65,16 @@ fun FootieScoreApp(isFirstTime: Boolean) {
             SelectTeamScreen()
         }
 
-        composable(Home) {
-
+        composable(
+            route = Home,
+            enterTransition = { _, _ ->
+                fadeInAnim(alpha = 0.4f, duration = 800)
+            },
+            exitTransition = { _, _ ->
+                fadeOutAnim(alpha = 0.4f, duration = 600)
+            }
+        ) {
+            HomeScreen()
         }
 
         composable(AllCompetitions) {

@@ -70,4 +70,16 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
             response.toUIEntity()
         }
     }
+
+    override suspend fun getIsUserLoggedIn(): Boolean {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            dataSource.appStorage().isUserLoggedIn()
+        }
+    }
+
+    override suspend fun setIsUserLoggedIn(isLogin: Boolean) {
+        withContext(dispatcherProvider.dispatcherDefault) {
+            dataSource.appStorage().setUserLogin(isLogin)
+        }
+    }
 }

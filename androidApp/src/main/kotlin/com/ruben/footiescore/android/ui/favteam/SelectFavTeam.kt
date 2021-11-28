@@ -1,9 +1,7 @@
 package com.ruben.footiescore.android.ui.favteam
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,6 +38,7 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
 ) {
     val scaffoldState = rememberScaffoldState()
     var searchState by remember { mutableStateOf(TextFieldValue())}
+    val density = LocalDensity.current
 
     fun onValueChanged(textFieldValue: TextFieldValue) {
         searchState = textFieldValue
@@ -79,7 +78,14 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
             AnimatedVisibility(
                 modifier = Modifier
                     .padding(top = 100.dp)
-                    .align(Alignment.TopCenter),
+                    .align(Alignment.TopCenter)
+                    .animateEnterExit(
+                        enter = slideInVerticallyAnim(
+                            offset = with(density) { -100.dp.roundToPx() },
+                            duration = 600
+                        ) + fadeIn(),
+                        exit = slideOutVerticallyAnim(offset = with(density) { 100.dp.roundToPx() }) + fadeOut()
+                    ),
                 visible = state is SelectFavTeamState.InitialState
             ) {
                 InitialStateContent()
@@ -104,17 +110,8 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedVisibilityScope.InitialStateContent() {
-    val density = LocalDensity.current
-    Column(
-        modifier = Modifier.animateEnterExit(
-            enter = slideInVerticallyAnim(
-                offset = with(density) { -100.dp.roundToPx() },
-                duration = 600
-            ),
-            exit = slideOutVerticallyAnim(offset = with(density) { 100.dp.roundToPx() })
-        )
-    ) {
+fun InitialStateContent() {
+    Column {
         Text(
             modifier = Modifier
                 .padding(16.dp)
@@ -152,9 +149,7 @@ fun AnimatedVisibilityScope.SearchResults() {
 @Preview(name = "Initial State")
 @Composable
 fun PreviewInitialStateContent() {
-    AnimatedVisibility(visible = true) {
-        InitialStateContent()
-    }
+    InitialStateContent()
 }
 
 @OptIn(ExperimentalAnimationApi::class)

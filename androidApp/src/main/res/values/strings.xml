@@ -4,11 +4,13 @@
     <string name="all_loading">Loading</string>
     <string name="all_get_started">Get Started</string>
     <string name="all_generic_error">Something went wrong. Please try again</string>
+    <string name="all_welcome">Welcome to FootieScore!</string>
     <string name="content_description_app_logo">App logo</string>
     <string name="content_description_competition_image">Competition logo</string>
     <string name="content_description_login">Login</string>
     <string name="content_description_back_button">Back Button</string>
     <string name="content_description_clear_button">Clear Button</string>
+    <string name="content_description_profile">Profile</string>
     <string name="welcome_title">Welcome to FootieScore!</string>
     <string name="welcome_description">Your one stop to get all the live scores of ongoing football matches.</string>
     <string name="login_title">Please login to continue</string>
@@ -17,4 +19,6 @@
     <string name="select_team_title">You can add your \u2665 team to get all the latest updates.</string>
     <string name="select_team_skip">Skip for now</string>
     <string name="select_team_hint">Search your team…</string>
+    <string name="home_dashboard_name">Hello %s</string>
+    <string name="home_dashboard_welcome">Welcome Back!</string>
 </resources>

@@ -15,4 +15,6 @@ interface FootballRepository {
     suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<Nothing, Nothing>
     suspend fun saveUserData(id: String, name: String, email: String, image: String)
     suspend fun searchTeam(searchQuery: String): BaseEntity<SearchTeamEntity, Nothing>
+    suspend fun getIsUserLoggedIn(): Boolean
+    suspend fun setIsUserLoggedIn(isLogin: Boolean)
 }
