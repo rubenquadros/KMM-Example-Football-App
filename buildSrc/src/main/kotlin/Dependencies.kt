@@ -26,7 +26,7 @@ object Versions {
     }
 
     object PluginVersions {
-        const val kover = "0.4.2"
+        const val kover = "0.4.4"
         const val dependencyUpdate = "0.39.0"
     }
 
