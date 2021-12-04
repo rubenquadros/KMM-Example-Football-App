@@ -39,7 +39,6 @@ object Versions {
         const val ktor = "1.6.3"
         const val kotlinSerialization = "1.3.1"
         const val sqlDelight = "1.5.3"
-        const val algolia = "1.12.0"
     }
 
     //android
@@ -137,7 +136,6 @@ object Dependencies {
         const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Shared.kotlinSerialization}"
         const val sqlDelight = "com.squareup.sqldelight:runtime:${Versions.Shared.sqlDelight}"
         const val sqlDelightCoroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.Shared.sqlDelight}"
-        const val algoliaSearch = "com.algolia:algoliasearch-client-kotlin:${Versions.Shared.algolia}"
     }
 
     object Modules {

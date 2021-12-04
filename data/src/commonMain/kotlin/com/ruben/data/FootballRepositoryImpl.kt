@@ -8,8 +8,6 @@ import com.ruben.footiescore.entity.BaseEntity
 import com.ruben.footiescore.entity.SearchTeamEntity
 import com.ruben.remote.model.ApiResponse
 import com.ruben.remote.model.request.LoginRequest
-import com.ruben.remote.model.request.SearchRequest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 /**
@@ -65,10 +63,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
     }
 
     override suspend fun searchTeam(searchQuery: String): BaseEntity<SearchTeamEntity, Nothing> {
-        return withContext(dispatcherProvider.dispatcherDefault) {
-            val response = dataSource.api().algoliaApi().searchTeams(SearchRequest(searchQuery))
-            response.toUIEntity()
-        }
+        return BaseEntity.SuccessNoBody
     }
 
     override suspend fun getIsUserLoggedIn(): Boolean {

@@ -1,6 +1,5 @@
 package com.ruben.remote
 
-import com.ruben.remote.algolia.AlgoliaApi
 import com.ruben.remote.rest.RestApi
 
 /**
@@ -8,5 +7,4 @@ import com.ruben.remote.rest.RestApi
  **/
 interface ApiSource {
     fun restApi(): RestApi
-    fun algoliaApi(): AlgoliaApi
 }

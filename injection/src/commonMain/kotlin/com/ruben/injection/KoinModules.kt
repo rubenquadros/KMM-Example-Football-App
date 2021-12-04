@@ -6,8 +6,6 @@ import com.ruben.data.FootballRepositoryImpl
 import com.ruben.footiescore.FootballRepository
 import com.ruben.remote.ApiSource
 import com.ruben.remote.ApiSourceImpl
-import com.ruben.remote.algolia.AlgoliaApi
-import com.ruben.remote.algolia.AlgoliaApiImpl
 import com.ruben.remote.ktor.ApiClient
 import com.ruben.remote.rest.RestApi
 import com.ruben.remote.rest.RestApiImpl
@@ -27,11 +25,9 @@ internal val repositoryModule = module {
 }
 
 internal val remoteModule =  module {
-    single<ApiSource> { ApiSourceImpl(get(), get()) }
+    single<ApiSource> { ApiSourceImpl(get()) }
 
     single<RestApi> { RestApiImpl(get()) }
-
-    single<AlgoliaApi> { AlgoliaApiImpl() }
 
     single { ApiClient() }
 }
