@@ -60,7 +60,7 @@ fun AnimatedVisibilityScope.LoginScreen(
             if (result.resultCode == Activity.RESULT_OK) {
                 val credential = Identity.getSignInClient(context).getSignInCredentialFromIntent(result.data)
                 loginViewModel.login(
-                    credential.googleIdToken ?: "UNKNOWN",
+                    credential.id,
                     credential.displayName ?: credential.givenName,
                     credential.id,
                     credential.profilePictureUri?.toString().orEmpty()

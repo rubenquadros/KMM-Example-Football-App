@@ -3,14 +3,14 @@ CREATE TABLE User (
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     profile_pic TEXT NOT NULL,
-    team TEXT
+    team INTEGER
 );
 
 insertUser:
-INSERT INTO User(id, name, email, profile_pic)
-VALUES (?, ?, ?, ?)
+INSERT INTO User(id, name, email, profile_pic, team)
+VALUES (?, ?, ?, ?, ?)
 ON CONFLICT(id) DO
-UPDATE SET name = excluded.name, email = excluded.email, profile_pic = excluded.profile_pic;
+UPDATE SET name = excluded.name, email = excluded.email, profile_pic = excluded.profile_pic, team = excluded.team;
 
 updateUser:
 UPDATE User

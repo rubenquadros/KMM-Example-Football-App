@@ -32,7 +32,7 @@ class ApiClient {
         }
     }
 
-    suspend inline fun <RESPONSE, ERROR> post(
+    suspend inline fun <reified RESPONSE, ERROR> post(
         endPoint: String,
         requestBody: Any
     ): ApiResponse<RESPONSE, ERROR> {

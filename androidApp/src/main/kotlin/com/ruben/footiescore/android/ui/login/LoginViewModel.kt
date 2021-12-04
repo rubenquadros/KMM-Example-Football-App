@@ -19,7 +19,7 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) : BaseViewModel<Log
         loginUseCase.invoke(LoginUseCase.RequestValue(id, name, email, image)).collect { result ->
             when (result) {
                 is BaseEntity.Loading -> reduce { LoginState.LoadingState }
-                is BaseEntity.SuccessNoBody -> reduce { LoginState.LoginSuccessState }.also { postSideEffect(LoginSideEffect.LoginSuccess) }
+                is BaseEntity.Success -> reduce { LoginState.LoginSuccessState }.also { postSideEffect(LoginSideEffect.LoginSuccess) }
                 else -> reduce { LoginState.InitialState }.also { postSideEffect(LoginSideEffect.LoginError) }
             }
         }

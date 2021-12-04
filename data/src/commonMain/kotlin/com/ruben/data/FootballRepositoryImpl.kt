@@ -1,13 +1,16 @@
 package com.ruben.data
 
+import com.ruben.data.mapper.mapErrorEntity
 import com.ruben.data.mapper.toUIEntity
 import com.ruben.footiescore.FootballRepository
 import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.entity.AllCompetitionEntity
 import com.ruben.footiescore.entity.BaseEntity
 import com.ruben.footiescore.entity.SearchTeamEntity
+import com.ruben.footiescore.entity.UserEntity
 import com.ruben.remote.model.ApiResponse
 import com.ruben.remote.model.request.LoginRequest
+import com.ruben.remote.model.request.SearchRequest
 import kotlinx.coroutines.withContext
 
 /**
@@ -39,7 +42,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
         }
     }
 
-    override suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<Nothing, Nothing> {
+    override suspend fun login(id: String, name: String, email: String, image: String): BaseEntity<UserEntity, Nothing> {
         return withContext(dispatcherProvider.dispatcherDefault) {
             val response = dataSource.api().restApi().login(
                 loginRequest = LoginRequest(
@@ -49,21 +52,43 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
                     profilePic = image
                 )
             )
-            if (response is ApiResponse.SuccessNoBody) {
-                saveUserData(id, name, email, image)
+            when (response) {
+                is ApiResponse.Success -> {
+                    val userData = response.body
+                    saveUserData(userData.userId, userData.name, userData.email, userData.profilePic, userData.teamId)
+                    BaseEntity.Success(userData.toUIEntity())
+                }
+                is ApiResponse.ErrorNoBody -> {
+                    mapErrorEntity(response.code)
+                }
+                else -> {
+                    BaseEntity.UnknownError
+                }
             }
-            response.toUIEntity()
         }
     }
 
-    override suspend fun saveUserData(id: String, name: String, email: String, image: String) {
+    override suspend fun saveUserData(id: String, name: String, email: String, image: String, teamId: Int?) {
         withContext(dispatcherProvider.dispatcherDefault) {
-            dataSource.database().userQueries.insertUser(id, name, email, image)
+            dataSource.database().userQueries.insertUser(id, name, email, image, teamId?.toLong())
         }
     }
 
-    override suspend fun searchTeam(searchQuery: String): BaseEntity<SearchTeamEntity, Nothing> {
-        return BaseEntity.SuccessNoBody
+    override suspend fun searchTeam(searchQuery: String): BaseEntity<List<SearchTeamEntity>, Nothing> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            val response = dataSource.api().restApi().searchTeams(
+                searchRequest = SearchRequest(searchQuery = searchQuery)
+            )
+            when (response) {
+                is ApiResponse.Success -> {
+                    BaseEntity.Success(response.body.toUIEntity())
+                }
+                is ApiResponse.ErrorNoBody -> {
+                    mapErrorEntity(response.code)
+                }
+                else -> BaseEntity.UnknownError
+            }
+        }
     }
 
     override suspend fun getIsUserLoggedIn(): Boolean {

@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
 /**
  * Created by Ruben Quadros on 15/10/21
  **/
-val client = HttpClient() {
+val client = HttpClient {
 
     expectSuccess = false
 

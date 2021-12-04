@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.flow
  * Created by Ruben Quadros on 27/11/21
  **/
 class SearchTeamUseCase(private val repository: FootballRepository) :
-    BaseUseCase<SearchTeamUseCase.RequestValue, SearchTeamEntity, Nothing>() {
+    BaseUseCase<SearchTeamUseCase.RequestValue, List<SearchTeamEntity>, Nothing>() {
 
-    override suspend fun execute(request: RequestValue): Flow<BaseEntity<SearchTeamEntity, Nothing>> = flow {
+    override suspend fun execute(request: RequestValue): Flow<BaseEntity<List<SearchTeamEntity>, Nothing>> = flow {
         emit(BaseEntity.Loading)
         val result = repository.searchTeam(request.searchQuery)
         emit(result)
