@@ -21,7 +21,7 @@ import kotlinx.serialization.json.JsonObject
 @Serializable(with = ApiResponseSerializer::class)
 sealed class ApiResponse<out SUCCESS, out ERROR> {
 
-    data class Success<SUCCESS>(val body: SUCCESS): ApiResponse<SUCCESS, Nothing>()
+    data class Success<SUCCESS>(val body: SUCCESS): ApiResponse<SUCCESS, @kotlinx.serialization.Contextual Nothing>()
 
     object SuccessNoBody: ApiResponse<Nothing, Nothing>()
 

@@ -3,6 +3,7 @@ package com.ruben.footiescore.usecase
 import com.ruben.footiescore.dispatcher.DispatcherProvider
 import com.ruben.footiescore.entity.BaseEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -17,7 +18,7 @@ abstract class BaseUseCase<REQUEST, RESPONSE, ERROR> : KoinComponent {
     suspend operator fun invoke(request: REQUEST): Flow<BaseEntity<RESPONSE, ERROR>> {
         return withContext(dispatcherProvider.dispatcherDefault) {
             execute(request)
-        }
+        }.catch { emit(BaseEntity.UnknownError) }
     }
 
     abstract suspend fun execute(request: REQUEST): Flow<BaseEntity<RESPONSE, ERROR>>

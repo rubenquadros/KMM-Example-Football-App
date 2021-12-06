@@ -6,7 +6,7 @@ import com.ruben.data.FootballRepositoryImpl
 import com.ruben.footiescore.FootballRepository
 import com.ruben.remote.ApiSource
 import com.ruben.remote.ApiSourceImpl
-import com.ruben.remote.ktor.ApiClient
+import com.ruben.remote.ktor.KtorService
 import com.ruben.remote.rest.RestApi
 import com.ruben.remote.rest.RestApiImpl
 import org.koin.dsl.module
@@ -25,9 +25,11 @@ internal val repositoryModule = module {
 }
 
 internal val remoteModule =  module {
+
+
     single<ApiSource> { ApiSourceImpl(get()) }
 
     single<RestApi> { RestApiImpl(get()) }
 
-    single { ApiClient() }
+    single { KtorService() }
 }
