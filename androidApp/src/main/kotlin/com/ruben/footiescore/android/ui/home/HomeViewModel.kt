@@ -1,7 +1,7 @@
 package com.ruben.footiescore.android.ui.home
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
-import com.ruben.footiescore.usecase.GetLoginStateUseCase
+import com.ruben.footiescore.core.domain.usecase.GetLoginStateUseCase
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 

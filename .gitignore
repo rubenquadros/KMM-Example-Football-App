@@ -28,9 +28,7 @@ local.properties
 /build
 /androidApp/build
 /shared/build
-/data/build
-/remote/build
-remote/google-services.json
+/core/build
 /injection/build
 /cache/build
 /buildSrc/build

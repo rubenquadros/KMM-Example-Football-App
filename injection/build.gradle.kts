@@ -31,7 +31,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(Dependencies.Modules.data))
+                implementation(project(Dependencies.Modules.shared))
+                implementation(project(Dependencies.Modules.cache))
+                implementation(project(Dependencies.Modules.core))
                 implementation(Dependencies.Shared.koin)
             }
         }

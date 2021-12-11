@@ -44,7 +44,7 @@ import coil.compose.rememberImagePainter
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.PitchLoader
-import com.ruben.footiescore.entity.AllCompetitionEntity
+import com.ruben.footiescore.core.domain.entity.AllCompetitionEntity
 import org.koin.androidx.compose.getViewModel
 import kotlin.math.roundToInt
 

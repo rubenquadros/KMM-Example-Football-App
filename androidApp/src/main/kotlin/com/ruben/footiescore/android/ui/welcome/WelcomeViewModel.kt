@@ -1,7 +1,7 @@
 package com.ruben.footiescore.android.ui.welcome
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
-import com.ruben.footiescore.usecase.StoreFirstTimeLaunchUseCase
+import com.ruben.footiescore.core.domain.usecase.StoreFirstTimeLaunchUseCase
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 

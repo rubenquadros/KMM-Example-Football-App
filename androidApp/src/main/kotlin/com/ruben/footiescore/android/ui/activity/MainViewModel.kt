@@ -1,7 +1,7 @@
 package com.ruben.footiescore.android.ui.activity
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
-import com.ruben.footiescore.usecase.GetFirstTimeLaunchUseCase
+import com.ruben.footiescore.core.domain.usecase.GetFirstTimeLaunchUseCase
 import org.koin.java.KoinJavaComponent.inject
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce

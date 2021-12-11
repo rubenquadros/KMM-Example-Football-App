@@ -139,9 +139,8 @@ object Dependencies {
     }
 
     object Modules {
-        const val data = ":data"
+        const val core = ":core"
         const val injection = ":injection"
-        const val remote = ":remote"
         const val shared = ":shared"
         const val cache = ":cache"
     }

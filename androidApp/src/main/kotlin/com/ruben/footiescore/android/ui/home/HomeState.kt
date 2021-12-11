@@ -1,6 +1,6 @@
 package com.ruben.footiescore.android.ui.home
 
-import com.ruben.footiescore.entity.UserEntity
+import com.ruben.footiescore.core.domain.entity.UserEntity
 
 /**
  * Created by Ruben Quadros on 28/11/21

@@ -27,7 +27,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
-import com.ruben.footiescore.entity.UserEntity
+import com.ruben.footiescore.core.domain.entity.UserEntity
 
 /**
  * Created by Ruben Quadros on 28/11/21

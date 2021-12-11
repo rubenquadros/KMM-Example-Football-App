@@ -22,7 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.ruben.footiescore.android.ui.common.PitchLoader
 import com.ruben.footiescore.android.ui.home.component.UserDetailsContent
-import com.ruben.footiescore.entity.UserEntity
+import com.ruben.footiescore.core.domain.entity.UserEntity
 import org.koin.androidx.compose.getViewModel
 
 /**

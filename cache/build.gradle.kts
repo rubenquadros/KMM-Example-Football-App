@@ -47,7 +47,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(Dependencies.Android.dataStore)
                 implementation(Dependencies.Android.sqlDelight)
             }
         }

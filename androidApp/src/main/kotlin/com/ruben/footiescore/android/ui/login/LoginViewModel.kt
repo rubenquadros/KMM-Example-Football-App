@@ -1,8 +1,8 @@
 package com.ruben.footiescore.android.ui.login
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
-import com.ruben.footiescore.entity.BaseEntity
-import com.ruben.footiescore.usecase.LoginUseCase
+import com.ruben.footiescore.shared.domain.entity.BaseEntity
+import com.ruben.footiescore.core.domain.usecase.LoginUseCase
 import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect

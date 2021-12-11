@@ -1,0 +1,21 @@
+package com.ruben.footiescore.shared.domain.entity
+
+/**
+ * Created by Ruben Quadros on 15/10/21
+ **/
+sealed class BaseEntity<out RESPONSE, out ERROR> {
+    object Loading: BaseEntity<Nothing, Nothing>()
+
+    data class Success<RESPONSE>(val body: RESPONSE): BaseEntity<RESPONSE, Nothing>()
+
+    data class Error<ERROR>(val error: ERROR): BaseEntity<Nothing, ERROR>()
+
+    object SuccessNoBody: BaseEntity<Nothing, Nothing>()
+
+    object ClientError: BaseEntity<Nothing, Nothing>()
+
+    object ServerError: BaseEntity<Nothing, Nothing>()
+
+    object UnknownError: BaseEntity<Nothing, Nothing>()
+
+}

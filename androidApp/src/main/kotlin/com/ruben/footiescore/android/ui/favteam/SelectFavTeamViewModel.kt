@@ -1,8 +1,8 @@
 package com.ruben.footiescore.android.ui.favteam
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
-import com.ruben.footiescore.entity.BaseEntity
-import com.ruben.footiescore.usecase.SearchTeamUseCase
+import com.ruben.footiescore.shared.domain.entity.BaseEntity
+import com.ruben.footiescore.core.domain.usecase.SearchTeamUseCase
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
@@ -36,7 +36,7 @@ class SelectFavTeamViewModel(private val searchTeamUseCase: SearchTeamUseCase): 
         }.collect {
             searchTeamUseCase.invoke(SearchTeamUseCase.RequestValue(it)).collect { result ->
                 when (result) {
-                    is BaseEntity.Success -> {
+                    is com.ruben.footiescore.shared.domain.entity.BaseEntity.Success -> {
                         if (result.body.isEmpty()) {
                             reduce { SelectFavTeamState.NoResultsState }
                         } else {

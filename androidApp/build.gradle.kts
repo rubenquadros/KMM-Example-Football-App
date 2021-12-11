@@ -10,7 +10,7 @@ plugins {
 
 dependencies {
     //modules
-    implementation(project(Dependencies.Modules.shared))
+    implementation(project(Dependencies.Modules.core))
     implementation(project(Dependencies.Modules.injection))
 
     //koin

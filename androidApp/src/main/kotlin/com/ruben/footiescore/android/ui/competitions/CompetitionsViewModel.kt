@@ -1,8 +1,8 @@
 package com.ruben.footiescore.android.ui.competitions
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
-import com.ruben.footiescore.entity.BaseEntity
-import com.ruben.footiescore.usecase.GetAllCompetitionsUseCase
+import com.ruben.footiescore.shared.domain.entity.BaseEntity
+import com.ruben.footiescore.core.domain.usecase.GetAllCompetitionsUseCase
 import kotlinx.coroutines.flow.collect
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce

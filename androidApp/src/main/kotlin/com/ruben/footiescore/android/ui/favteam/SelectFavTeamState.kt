@@ -1,6 +1,6 @@
 package com.ruben.footiescore.android.ui.favteam
 
-import com.ruben.footiescore.entity.SearchTeamEntity
+import com.ruben.footiescore.core.domain.entity.SearchTeamEntity
 
 /**
  * Created by Ruben Quadros on 27/11/21

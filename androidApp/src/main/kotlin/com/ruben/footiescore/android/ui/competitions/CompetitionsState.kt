@@ -1,6 +1,6 @@
 package com.ruben.footiescore.android.ui.competitions
 
-import com.ruben.footiescore.entity.AllCompetitionEntity
+import com.ruben.footiescore.core.domain.entity.AllCompetitionEntity
 
 /**
  * Created by Ruben Quadros on 17/10/21
