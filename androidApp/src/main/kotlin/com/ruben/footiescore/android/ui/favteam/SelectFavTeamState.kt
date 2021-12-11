@@ -7,8 +7,12 @@ import com.ruben.footiescore.core.domain.entity.SearchTeamEntity
  **/
 sealed class SelectFavTeamState {
     object InitialState: SelectFavTeamState()
-    object LoadingState: SelectFavTeamState()
+    data class LoadingState(val isError: Boolean = false): SelectFavTeamState()
     data class SearchResultState(val searchResults: List<SearchTeamEntity>): SelectFavTeamState()
     object NoResultsState: SelectFavTeamState()
     object ErrorState: SelectFavTeamState()
+}
+
+fun SelectFavTeamState.shouldShowLoading(): Boolean {
+    return this is SelectFavTeamState.LoadingState && (this as? SelectFavTeamState.LoadingState)?.isError?.not() == true
 }

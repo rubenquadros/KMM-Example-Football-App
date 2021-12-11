@@ -31,7 +31,7 @@ data class SearchTeamResponse(
         @SerialName("area")
         val area: String,
         @SerialName("crestUrl")
-        val crestUrl: String,
+        val crestUrl: String? = null,
         @SerialName("_highlightResult")
         val highlightResult: HighlightResult,
         @SerialName("id")
@@ -49,7 +49,7 @@ data class SearchTeamResponse(
             @Serializable
             data class Name(
                 @SerialName("fullyHighlighted")
-                val fullyHighlighted: Boolean,
+                val fullyHighlighted: Boolean? = null,
                 @SerialName("matchLevel")
                 val matchLevel: String,
                 @SerialName("matchedWords")

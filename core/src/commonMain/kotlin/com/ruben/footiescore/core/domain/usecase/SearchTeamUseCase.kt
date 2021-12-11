@@ -38,7 +38,7 @@ internal fun SearchTeamResponse.toUIEntity(): List<SearchTeamEntity> {
             id = this.id,
             name = this.name,
             area = this.area,
-            image = this.crestUrl
+            image = this.crestUrl.orEmpty()
         )
 
     return this.hits.map { it.toEntity() }

@@ -222,16 +222,13 @@ fun AnimatedVisibilityScope.LoginScreenContent(
 @Composable
 fun HandleSideEffects(sideEffectFlow: Flow<LoginSideEffect>, navigateToSelectTeam: () -> Unit, scaffoldState: ScaffoldState) {
     val loginError = stringResource(id = R.string.all_generic_error)
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(sideEffectFlow) {
         sideEffectFlow.collect { sideEffect ->
             when (sideEffect) {
                 is LoginSideEffect.LoginSuccess -> navigateToSelectTeam.invoke()
                 is LoginSideEffect.LoginError -> {
-                    scope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(loginError)
-                    }
+                    scaffoldState.snackbarHostState.showSnackbar(loginError)
                 }
             }
         }

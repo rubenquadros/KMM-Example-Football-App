@@ -67,6 +67,10 @@ kotlin {
             iosArm64Test.dependsOn(this)
         }
     }
+
+    kotlin.sourceSets.all {
+        languageSettings.optIn("kotlin.RequiresOptIn")
+    }
 }
 
 android {
@@ -86,6 +90,6 @@ buildkonfig {
 
     defaultConfigs {
         buildConfigField(STRING, "API_KEY", "${localProperties["api.key"]}")
-        buildConfigField(STRING, "BASE_URL", "https://footiescore.herokuapp.com")
+        buildConfigField(STRING, "BASE_URL", "footiescore.herokuapp.com")
     }
 }

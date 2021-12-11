@@ -68,6 +68,10 @@ kotlin {
 
         val iosTest by getting
     }
+
+    kotlin.sourceSets.all {
+        languageSettings.optIn("kotlin.RequiresOptIn")
+    }
 }
 
 android {

@@ -18,7 +18,10 @@ abstract class BaseUseCase<REQUEST, RESPONSE, ERROR> : KoinComponent {
     suspend operator fun invoke(request: REQUEST): Flow<BaseEntity<RESPONSE, ERROR>> {
         return withContext(dispatcherProvider.dispatcherDefault) {
             execute(request)
-        }.catch { emit(BaseEntity.UnknownError) }
+        }.catch {
+            it.printStackTrace()
+            emit(BaseEntity.UnknownError)
+        }
     }
 
     abstract suspend fun execute(request: REQUEST): Flow<BaseEntity<RESPONSE, ERROR>>

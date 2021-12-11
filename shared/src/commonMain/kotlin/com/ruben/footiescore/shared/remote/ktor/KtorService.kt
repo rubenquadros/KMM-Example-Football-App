@@ -9,14 +9,18 @@ import io.ktor.client.features.defaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.header
+import io.ktor.client.request.host
+import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpResponseContainer
 import io.ktor.client.statement.HttpResponsePipeline
 import io.ktor.http.ContentType
+import io.ktor.http.URLProtocol
 import io.ktor.http.contentLength
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 
 /**
  * Created by Ruben Quadros on 15/10/21
@@ -42,6 +46,10 @@ class KtorService {
         }
 
         defaultRequest {
+            url {
+                host = BuildKonfig.BASE_URL
+                protocol = URLProtocol.HTTPS
+            }
             header(ApiConstants.AUTH_HEADER, BuildKonfig.API_KEY)
             contentType(ContentType.Application.Json)
         }
@@ -56,7 +64,7 @@ fun HttpClient.addResponseInterceptor() {
 
     this.responsePipeline.intercept(HttpResponsePipeline.Transform) { (info, body) ->
         val response = if (context.response.status.isSuccess()) {
-            if (isContentEmpty(context.response)) ApiResponse.SuccessNoBody
+            if (isContentEmpty(context.response) && (body as? JsonObject)?.isNullOrEmpty() == true) ApiResponse.SuccessNoBody
             else body
         } else {
             if (isContentEmpty(context.response)) ApiResponse.ErrorNoBody(context.response.status.value)

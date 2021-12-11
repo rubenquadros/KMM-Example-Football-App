@@ -1,42 +1,64 @@
 package com.ruben.footiescore.android.ui.favteam
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.*
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.BallLoader
+import com.ruben.footiescore.android.ui.common.ErrorView
+import com.ruben.footiescore.android.ui.common.NoResultsView
 import com.ruben.footiescore.android.ui.common.TopSearchBar
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
+import com.ruben.footiescore.android.ui.favteam.component.InitialStateContent
+import com.ruben.footiescore.android.ui.favteam.component.SearchResults
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import org.koin.androidx.compose.getViewModel
 
 /**
  * Created by Ruben Quadros on 26/11/21
  **/
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AnimatedVisibilityScope.SelectTeamScreen(
     selectFavTeamViewModel: SelectFavTeamViewModel = getViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
+    val lazyListState = rememberLazyListState()
+    val keyboardController = LocalSoftwareKeyboardController.current
     var searchState by remember { mutableStateOf(TextFieldValue())}
     val density = LocalDensity.current
 
@@ -45,12 +67,20 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
     }
 
     fun onSearchCleared() {
-        searchState = TextFieldValue()
+        selectFavTeamViewModel.onSearchCleared().also {
+            searchState = TextFieldValue()
+        }
     }
 
     fun onSearch(searchQuery: String) {
         selectFavTeamViewModel.searchTeam(searchQuery)
     }
+
+    HandleSideEffects(
+        sideEffectFlow = selectFavTeamViewModel.uiSideEffect(),
+        scaffoldState = scaffoldState,
+        keyboardController = keyboardController
+    )
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = selectFavTeamViewModel.uiState()
@@ -69,31 +99,58 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
                     onSearch = { searchQuery -> onSearch(searchQuery) }
                 )
 
-                if (state is SelectFavTeamState.SearchResultState) {
-                    SearchResults()
+                when (state) {
+                    is SelectFavTeamState.InitialState -> {
+                        InitialStateContent(density = density)
+                    }
+
+                    is SelectFavTeamState.SearchResultState -> {
+                        SearchResults(
+                            modifier = Modifier.padding(top = 8.dp),
+                            lazyListState = lazyListState,
+                            searchResults = (state as? SelectFavTeamState.SearchResultState)?.searchResults.orEmpty(),
+                            onClick = {}
+                        )
+                    }
+
+                    is SelectFavTeamState.NoResultsState -> {
+                        NoResultsView(
+                            modifier = Modifier
+                                .padding(top = 24.dp)
+                                .align(Alignment.CenterHorizontally),
+                            enterTransition = slideInVerticallyAnim(
+                                offset = with(density) { -100.dp.roundToPx() },
+                                duration = 600
+                            ) + fadeIn(),
+                            exitTransition = slideOutVerticallyAnim(
+                                offset = with(density) { 100.dp.roundToPx() },
+                                duration = 300
+                            ) + fadeOut()
+                        )
+                    }
+
+                    is SelectFavTeamState.ErrorState -> {
+                        ErrorView(
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .align(Alignment.CenterHorizontally),
+                            errorMessage = stringResource(id = R.string.all_generic_error),
+                            enterTransition = slideInVerticallyAnim(
+                                offset = with(density) { -100.dp.roundToPx() },
+                                duration = 600
+                            ) + fadeIn(),
+                            exitTransition = slideOutVerticallyAnim(
+                                offset = with(density) { 100.dp.roundToPx() },
+                                duration = 300
+                            ) + fadeOut()
+                        )
+                    }
                 }
-
-            }
-
-            AnimatedVisibility(
-                modifier = Modifier
-                    .padding(top = 100.dp)
-                    .align(Alignment.TopCenter)
-                    .animateEnterExit(
-                        enter = slideInVerticallyAnim(
-                            offset = with(density) { -100.dp.roundToPx() },
-                            duration = 600
-                        ) + fadeIn(),
-                        exit = slideOutVerticallyAnim(offset = with(density) { 100.dp.roundToPx() }) + fadeOut()
-                    ),
-                visible = state is SelectFavTeamState.InitialState
-            ) {
-                InitialStateContent()
             }
 
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.Center),
-                visible = state is SelectFavTeamState.LoadingState
+                visible = state.shouldShowLoading()
             ) {
                 BallLoader(
                     modifier = Modifier.size(40.dp),
@@ -108,55 +165,27 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun InitialStateContent() {
-    Column {
-        Text(
-            modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.CenterHorizontally),
-            text = stringResource(id = R.string.select_team_title),
-            style = FootieScoreTheme.typography.button,
-            color = FootieScoreTheme.colors.surface,
-            textAlign = TextAlign.Center
-        )
+fun HandleSideEffects(
+    sideEffectFlow: Flow<SelectFavTeamSideEffect>,
+    scaffoldState: ScaffoldState,
+    keyboardController: SoftwareKeyboardController?
+) {
+    val searchError = stringResource(id = R.string.all_generic_error)
 
-        Text(
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .align(Alignment.CenterHorizontally)
-                .clickable {
+    LaunchedEffect(sideEffectFlow) {
+        sideEffectFlow.collect { sideEffect ->
+            when (sideEffect) {
+                is SelectFavTeamSideEffect.ShowErrorMessage -> {
+                    keyboardController?.hide()
+                    scaffoldState.snackbarHostState.showSnackbar(searchError)
+                }
 
-                },
-            text = stringResource(id = R.string.select_team_skip),
-            style = FootieScoreTheme.typography.button,
-            color = FootieScoreTheme.colors.disabled,
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun AnimatedVisibilityScope.SearchResults() {
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
-
-    }
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Preview(name = "Initial State")
-@Composable
-fun PreviewInitialStateContent() {
-    InitialStateContent()
-}
-
-@OptIn(ExperimentalAnimationApi::class)
-@Preview(name = "Search content")
-@Composable
-fun PreviewSelectTeamScreen() {
-    AnimatedVisibility(visible = true) {
-        SearchResults()
+                is SelectFavTeamSideEffect.HideKeyboard -> {
+                    keyboardController?.hide()
+                }
+            }
+        }
     }
 }
