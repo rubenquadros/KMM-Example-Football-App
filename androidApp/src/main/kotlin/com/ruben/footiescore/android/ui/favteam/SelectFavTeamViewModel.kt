@@ -2,6 +2,7 @@ package com.ruben.footiescore.android.ui.favteam
 
 import com.ruben.footiescore.android.ui.base.BaseViewModel
 import com.ruben.footiescore.core.domain.entity.SearchTeamEntity
+import com.ruben.footiescore.core.domain.usecase.SaveTeamUseCase
 import com.ruben.footiescore.shared.domain.entity.BaseEntity
 import com.ruben.footiescore.core.domain.usecase.SearchTeamUseCase
 import kotlinx.coroutines.FlowPreview
@@ -15,8 +16,10 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 /**
  * Created by Ruben Quadros on 27/11/21
  **/
-class SelectFavTeamViewModel(private val searchTeamUseCase: SearchTeamUseCase) :
-    BaseViewModel<SelectFavTeamState, SelectFavTeamSideEffect>() {
+class SelectFavTeamViewModel(
+    private val searchTeamUseCase: SearchTeamUseCase,
+    private val saveTeamUseCase: SaveTeamUseCase,
+) : BaseViewModel<SelectFavTeamState, SelectFavTeamSideEffect>() {
 
     private val searchFlow: MutableSharedFlow<String> = MutableSharedFlow()
     private var searchResults: MutableList<SearchTeamEntity> = mutableListOf()
@@ -36,6 +39,26 @@ class SelectFavTeamViewModel(private val searchTeamUseCase: SearchTeamUseCase) :
         reduce { SelectFavTeamState.InitialState }
     }
 
+    fun saveTeam(id: Int) = intent {
+        saveTeamUseCase.invoke(SaveTeamUseCase.RequestValue(id)).collect { result ->
+            when (result) {
+                is BaseEntity.Loading -> reduce {
+                    state.handleLoading(shouldShow = true)
+                    state
+                }
+                is BaseEntity.SuccessNoBody -> postSideEffect(SelectFavTeamSideEffect.SelectTeamSuccess)
+                else -> {
+                    reduce {
+                        state.handleLoading(shouldShow = false)
+                        state
+                    }.also {
+                        intent { postSideEffect(SelectFavTeamSideEffect.ShowErrorMessage) }
+                    }
+                }
+            }
+        }
+    }
+
     @OptIn(FlowPreview::class)
     private fun handleSearchTeamsInternal() = intent {
         searchFlow.debounce {
@@ -45,9 +68,11 @@ class SelectFavTeamViewModel(private val searchTeamUseCase: SearchTeamUseCase) :
                 reduce {
                     when (result) {
                         is BaseEntity.Loading -> {
-                            SelectFavTeamState.LoadingState(isError = false)
+                            state.handleLoading(shouldShow = true)
+                            state
                         }
                         is BaseEntity.Success -> {
+                            state.handleLoading(shouldShow = false)
                             if (result.body.isEmpty()) {
                                 searchResults.clear()
                                 SelectFavTeamState.NoResultsState
@@ -57,13 +82,13 @@ class SelectFavTeamViewModel(private val searchTeamUseCase: SearchTeamUseCase) :
                             }
                         }
                         else -> {
+                            state.handleLoading(shouldShow = false)
                             if (searchResults.isEmpty()) {
                                 SelectFavTeamState.ErrorState.also {
                                     intent { postSideEffect(SelectFavTeamSideEffect.HideKeyboard) }
                                 }
                             } else {
-                                SelectFavTeamState.LoadingState(isError = true)
-                                    .also { intent { postSideEffect(SelectFavTeamSideEffect.ShowErrorMessage) } }
+                                state.also { intent { postSideEffect(SelectFavTeamSideEffect.ShowErrorMessage) } }
                             }
                         }
                     }

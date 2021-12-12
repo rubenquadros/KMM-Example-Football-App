@@ -22,4 +22,5 @@ interface FootballRepository {
     suspend fun searchTeam(searchQuery: String): ApiResponse<SearchTeamResponse, JsonObject>
     suspend fun getIsUserLoggedIn(): Boolean
     suspend fun setIsUserLoggedIn(isLogin: Boolean)
+    suspend fun saveTeam(id: Int): ApiResponse<Nothing, Nothing>
 }

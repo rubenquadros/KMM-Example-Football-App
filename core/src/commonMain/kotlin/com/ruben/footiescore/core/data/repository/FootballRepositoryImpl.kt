@@ -2,6 +2,7 @@ package com.ruben.footiescore.core.data.repository
 
 import com.ruben.footiescore.core.data.DataSource
 import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
+import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
 import com.ruben.footiescore.core.data.remote.model.response.LoginResponse
@@ -76,6 +77,25 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
     override suspend fun setIsUserLoggedIn(isLogin: Boolean) {
         withContext(dispatcherProvider.dispatcherDefault) {
             dataSource.appStorage().setUserLogin(isLogin)
+        }
+    }
+
+    override suspend fun saveTeam(id: Int): ApiResponse<Nothing, Nothing> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            val userId = runCatching {
+                dataSource.database().userQueries.getUserId().executeAsOne()
+            }.getOrNull()
+            if (userId.isNullOrBlank()) {
+                ApiResponse.DatabaseError
+            } else {
+                val response = dataSource.api().restApi().saveTeam(
+                    saveTeamRequest = SaveTeamRequest(userId = userId, teamId = id)
+                )
+                if (response is ApiResponse.SuccessNoBody) {
+                    dataSource.database().userQueries.updateTeam(id.toLong(), userId)
+                }
+                response
+            }
         }
     }
 }

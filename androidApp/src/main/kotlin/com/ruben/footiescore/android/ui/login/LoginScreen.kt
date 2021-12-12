@@ -36,6 +36,7 @@ import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.BallLoader
 import com.ruben.footiescore.android.ui.common.BottomWiggleShape
+import com.ruben.footiescore.android.ui.common.EmptyBackHandler
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 import kotlinx.coroutines.flow.Flow
@@ -115,9 +116,7 @@ fun AnimatedVisibilityScope.LoginScreen(
         }
     }
 
-    BackHandler {
-        //cannot go back from here
-    }
+    EmptyBackHandler()
 
 }
 

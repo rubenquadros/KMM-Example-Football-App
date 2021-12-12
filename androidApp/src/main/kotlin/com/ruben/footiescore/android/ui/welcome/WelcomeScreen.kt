@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.BottomWiggleShape
+import com.ruben.footiescore.android.ui.common.EmptyBackHandler
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 import kotlinx.coroutines.flow.Flow
@@ -56,9 +57,7 @@ fun AnimatedVisibilityScope.WelcomeScreen(
         onClick = { welcomeViewModel.storeFirstTime() }
     )
 
-    BackHandler {
-        //cannot go back from here
-    }
+    EmptyBackHandler()
 }
 
 @OptIn(ExperimentalAnimationApi::class)

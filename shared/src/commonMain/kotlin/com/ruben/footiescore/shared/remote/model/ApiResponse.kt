@@ -29,6 +29,8 @@ sealed class ApiResponse<out SUCCESS, out ERROR> {
 
     data class ErrorNoBody(val code: Int): ApiResponse<Nothing, Nothing>()
 
+    object DatabaseError: ApiResponse<Nothing, Nothing>()
+
     object UnknownError: ApiResponse<Nothing, Nothing>()
 
 }
@@ -70,7 +72,7 @@ class ApiResponseSerializer<S, E>(
         when (value) {
             is ApiResponse.Success -> encoder.json.encodeToJsonElement(successSerializer, value.body)
             is ApiResponse.Error -> encoder.json.encodeToJsonElement(errorSerializer, value.error)
-            is ApiResponse.ErrorNoBody, ApiResponse.SuccessNoBody, ApiResponse.UnknownError -> {
+            is ApiResponse.ErrorNoBody, ApiResponse.SuccessNoBody, ApiResponse.DatabaseError, ApiResponse.UnknownError -> {
                 //do nothing
             }
         }

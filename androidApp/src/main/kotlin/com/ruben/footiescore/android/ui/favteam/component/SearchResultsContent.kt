@@ -2,9 +2,14 @@ package com.ruben.footiescore.android.ui.favteam.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,12 +42,19 @@ import com.ruben.footiescore.core.domain.entity.SearchTeamEntity
 @Composable
 fun AnimatedVisibilityScope.SearchResults(
     modifier: Modifier = Modifier,
+    enterTransition: EnterTransition,
+    exitTransition: ExitTransition,
     lazyListState: LazyListState,
     searchResults: List<SearchTeamEntity>,
-    onClick: () -> Unit
+    onClick: (id: Int) -> Unit
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .animateEnterExit(
+                enter = enterTransition,
+                exit = exitTransition
+            ),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         state = lazyListState
     ) {
@@ -58,12 +70,16 @@ fun AnimatedVisibilityScope.SearchResults(
 @Composable
 fun SearchResultItem(
     teamEntity: SearchTeamEntity,
-    onClick: () -> Unit
+    onClick: (id: Int) -> Unit
 ) {
 
     Row(modifier = Modifier
         .padding(horizontal = 8.dp)
-        .fillMaxWidth()) {
+        .fillMaxWidth()
+        .clickable {
+            onClick.invoke(teamEntity.id)
+        }
+    ) {
         Image(
             modifier = Modifier
                 .size(60.dp)
@@ -117,6 +133,8 @@ fun PreviewSelectTeamScreen() {
     AnimatedVisibility(visible = true) {
         SearchResults(
             modifier = Modifier.background(FootieScoreTheme.colors.onPrimary),
+            enterTransition = fadeIn(),
+            exitTransition = fadeOut(),
             lazyListState = rememberLazyListState(),
             searchResults = listOf(
                 SearchTeamEntity(
@@ -168,7 +186,7 @@ fun PreviewSelectTeamScreen() {
                     image = ""
                 )
             ),
-            onClick = {}
+            onClick = {  }
         )
     }
 }
@@ -182,8 +200,7 @@ fun PreviewSearchResultItem() {
             name = "Manchester United",
             area = "England",
             image = ""
-        )
-    ) {
-
-    }
+        ),
+        onClick = { }
+    )
 }

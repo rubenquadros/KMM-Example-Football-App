@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.ruben.footiescore.android.ui.common.EmptyBackHandler
 import com.ruben.footiescore.android.ui.common.PitchLoader
 import com.ruben.footiescore.android.ui.home.component.UserDetailsContent
 import com.ruben.footiescore.core.domain.entity.UserEntity
@@ -63,6 +64,8 @@ fun AnimatedVisibilityScope.HomeScreen(
             )
         }
     }
+
+    EmptyBackHandler()
 }
 
 @OptIn(ExperimentalAnimationApi::class)

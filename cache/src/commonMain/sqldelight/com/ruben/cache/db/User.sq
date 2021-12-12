@@ -25,6 +25,9 @@ WHERE id = ?;
 getUser:
 SELECT * FROM User;
 
+getUserId:
+SELECT id FROM User;
+
 clearTable:
 DELETE FROM User;
 

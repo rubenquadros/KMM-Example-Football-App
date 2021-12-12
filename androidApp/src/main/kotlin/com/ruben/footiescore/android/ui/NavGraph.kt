@@ -2,6 +2,7 @@ package com.ruben.footiescore.android.ui
 
 import androidx.navigation.NavHostController
 import com.ruben.footiescore.android.ui.Destinations.AllCompetitions
+import com.ruben.footiescore.android.ui.Destinations.Home
 import com.ruben.footiescore.android.ui.Destinations.Login
 import com.ruben.footiescore.android.ui.Destinations.SelectTeam
 
@@ -24,6 +25,10 @@ class NavGraph(navHostController: NavHostController) {
 
     val openSelectTeamScreen: () -> Unit = {
         navHostController.navigate(route = SelectTeam)
+    }
+
+    val openHomeScreen: () -> Unit = {
+        navHostController.navigate(Home)
     }
 
     val openAllCompetitionsScreen: () -> Unit = {

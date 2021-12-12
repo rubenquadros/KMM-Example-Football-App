@@ -16,6 +16,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +38,7 @@ import androidx.lifecycle.flowWithLifecycle
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.BallLoader
+import com.ruben.footiescore.android.ui.common.EmptyBackHandler
 import com.ruben.footiescore.android.ui.common.ErrorView
 import com.ruben.footiescore.android.ui.common.NoResultsView
 import com.ruben.footiescore.android.ui.common.TopSearchBar
@@ -54,7 +56,8 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AnimatedVisibilityScope.SelectTeamScreen(
-    selectFavTeamViewModel: SelectFavTeamViewModel = getViewModel()
+    selectFavTeamViewModel: SelectFavTeamViewModel = getViewModel(),
+    onSelectTeamSuccess: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val lazyListState = rememberLazyListState()
@@ -76,11 +79,20 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
         selectFavTeamViewModel.searchTeam(searchQuery)
     }
 
+    fun saveTeam(id: Int) {
+        selectFavTeamViewModel.saveTeam(id)
+    }
+
     HandleSideEffects(
         sideEffectFlow = selectFavTeamViewModel.uiSideEffect(),
         scaffoldState = scaffoldState,
-        keyboardController = keyboardController
+        keyboardController = keyboardController,
+        onSelectTeamSuccess = onSelectTeamSuccess
     )
+
+    DisposableEffect(Unit) {
+        onDispose { keyboardController?.hide() }
+    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = selectFavTeamViewModel.uiState()
@@ -107,9 +119,11 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
                     is SelectFavTeamState.SearchResultState -> {
                         SearchResults(
                             modifier = Modifier.padding(top = 8.dp),
+                            enterTransition = fadeIn(initialAlpha = 0.2f),
+                            exitTransition = fadeOut(targetAlpha = 0.2f),
                             lazyListState = lazyListState,
                             searchResults = (state as? SelectFavTeamState.SearchResultState)?.searchResults.orEmpty(),
-                            onClick = {}
+                            onClick = { id -> saveTeam(id) }
                         )
                     }
 
@@ -150,7 +164,7 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
 
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.Center),
-                visible = state.shouldShowLoading()
+                visible = state.shouldShowLoading
             ) {
                 BallLoader(
                     modifier = Modifier.size(40.dp),
@@ -160,9 +174,7 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
         }
     }
 
-    BackHandler {
-        //cannot go back from here
-    }
+    EmptyBackHandler()
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -170,7 +182,8 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
 fun HandleSideEffects(
     sideEffectFlow: Flow<SelectFavTeamSideEffect>,
     scaffoldState: ScaffoldState,
-    keyboardController: SoftwareKeyboardController?
+    keyboardController: SoftwareKeyboardController?,
+    onSelectTeamSuccess: () -> Unit
 ) {
     val searchError = stringResource(id = R.string.all_generic_error)
 
@@ -184,6 +197,11 @@ fun HandleSideEffects(
 
                 is SelectFavTeamSideEffect.HideKeyboard -> {
                     keyboardController?.hide()
+                }
+
+                is SelectFavTeamSideEffect.SelectTeamSuccess -> {
+                    keyboardController?.hide()
+                    onSelectTeamSuccess.invoke()
                 }
             }
         }

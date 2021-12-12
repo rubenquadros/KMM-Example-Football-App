@@ -4,6 +4,7 @@ import com.ruben.footiescore.core.domain.usecase.GetAllCompetitionsUseCase
 import com.ruben.footiescore.core.domain.usecase.GetFirstTimeLaunchUseCase
 import com.ruben.footiescore.core.domain.usecase.GetLoginStateUseCase
 import com.ruben.footiescore.core.domain.usecase.LoginUseCase
+import com.ruben.footiescore.core.domain.usecase.SaveTeamUseCase
 import com.ruben.footiescore.core.domain.usecase.SearchTeamUseCase
 import com.ruben.footiescore.core.domain.usecase.SetLoginStateUseCase
 import com.ruben.footiescore.core.domain.usecase.StoreFirstTimeLaunchUseCase
@@ -26,4 +27,6 @@ internal val coreUseCaseModule = module {
     factory { GetLoginStateUseCase(get()) }
 
     factory { SetLoginStateUseCase(get()) }
+
+    factory { SaveTeamUseCase(get()) }
 }

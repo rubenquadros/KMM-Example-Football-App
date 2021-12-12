@@ -6,4 +6,5 @@ package com.ruben.footiescore.android.ui.favteam
 sealed class SelectFavTeamSideEffect {
     object ShowErrorMessage: SelectFavTeamSideEffect()
     object HideKeyboard: SelectFavTeamSideEffect()
+    object SelectTeamSuccess: SelectFavTeamSideEffect()
 }

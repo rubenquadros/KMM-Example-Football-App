@@ -44,9 +44,9 @@ fun TopSearchBar(
         focusRequester.requestFocus()
     }
 
-    DisposableEffect(Unit) {
-        onDispose { focusRequester.freeFocus() }
-    }
+//    DisposableEffect(Unit) {
+//        onDispose { focusRequester.freeFocus() }
+//    }
 
     Card(
         elevation = 10.dp
@@ -85,6 +85,7 @@ fun TopSearchBar(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
+                    onSearch.invoke(searchState.text)
                     focusRequester.freeFocus()
                 }
             ),

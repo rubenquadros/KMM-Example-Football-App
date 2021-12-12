@@ -60,14 +60,17 @@ class KtorService {
 
 fun HttpClient.addResponseInterceptor() {
 
-    fun isContentEmpty(response: HttpResponse) = response.contentLength() == null || response.contentLength() == 0L
+    fun isBodyEmpty(body: Any): Boolean {
+        val jsonResponse = (body as? ApiResponse.Success<*>)?.body
+        return jsonResponse == null
+    }
 
     this.responsePipeline.intercept(HttpResponsePipeline.Transform) { (info, body) ->
         val response = if (context.response.status.isSuccess()) {
-            if (isContentEmpty(context.response) && (body as? JsonObject)?.isNullOrEmpty() == true) ApiResponse.SuccessNoBody
+            if (isBodyEmpty(body)) ApiResponse.SuccessNoBody
             else body
         } else {
-            if (isContentEmpty(context.response)) ApiResponse.ErrorNoBody(context.response.status.value)
+            if (isBodyEmpty(body)) ApiResponse.ErrorNoBody(context.response.status.value)
             else body
         }
 
