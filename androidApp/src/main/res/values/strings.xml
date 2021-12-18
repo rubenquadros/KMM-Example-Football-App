@@ -23,6 +23,7 @@
     <string name="select_team_title">You can add your \u2665 team to get all the latest updates</string>
     <string name="select_team_skip">Skip for now</string>
     <string name="select_team_hint">Search your team…</string>
+    <string name="select_team_already_selected_error">You are already following this team</string>
     <string name="home_dashboard_name">Hello %s</string>
     <string name="home_dashboard_welcome">Welcome Back!</string>
 </resources>

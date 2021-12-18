@@ -83,13 +83,18 @@ android {
 }
 
 buildkonfig {
-    val localProperties = Properties()
-    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+    val file = rootProject.file("local.properties")
 
     packageName = "com.ruben.footiescore.core"
 
     defaultConfigs {
-        buildConfigField(STRING, "API_KEY", "${localProperties["api.key"]}")
+        if (file.exists()) {
+            val localProperties = Properties()
+            localProperties.load(FileInputStream(file))
+            buildConfigField(STRING, "API_KEY", "${localProperties["api.key"]}")
+        } else {
+            buildConfigField(STRING, "API_KEY", System.getenv("API_KEY"))
+        }
         buildConfigField(STRING, "BASE_URL", "footiescore.herokuapp.com")
     }
 }

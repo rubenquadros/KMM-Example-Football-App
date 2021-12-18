@@ -18,6 +18,8 @@ sealed class BaseEntity<out RESPONSE, out ERROR> {
 
     object ServerError: BaseEntity<Nothing, Nothing>()
 
+    object ForbiddenAction: BaseEntity<Nothing, Nothing>()
+
     object UnknownError: BaseEntity<Nothing, Nothing>()
 
 }
@@ -32,7 +34,13 @@ internal fun ApiResponse<Nothing, Nothing>.toUIEntity(): BaseEntity<Nothing, Not
 
 fun <T>mapErrorEntity(code: Int): BaseEntity<T, Nothing> {
     return when (code) {
-        in (400..499) -> BaseEntity.ClientError
+        in (400..499) -> {
+            if (code == 403) {
+                BaseEntity.ForbiddenAction
+            } else {
+                BaseEntity.ClientError
+            }
+        }
         in (500..599) -> BaseEntity.ServerError
         else -> BaseEntity.UnknownError
     }

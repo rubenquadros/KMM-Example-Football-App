@@ -47,6 +47,15 @@ class SelectFavTeamViewModel(
                     state
                 }
                 is BaseEntity.SuccessNoBody -> postSideEffect(SelectFavTeamSideEffect.SelectTeamSuccess)
+                is BaseEntity.ForbiddenAction -> {
+                    //already fav team
+                    reduce {
+                        state.handleLoading(shouldShow = false)
+                        state
+                    }.also {
+                        intent { postSideEffect(SelectFavTeamSideEffect.TeamAlreadySelected) }
+                    }
+                }
                 else -> {
                     reduce {
                         state.handleLoading(shouldShow = false)

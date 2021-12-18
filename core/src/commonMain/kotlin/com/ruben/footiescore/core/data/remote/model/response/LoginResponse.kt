@@ -13,7 +13,7 @@ data class LoginResponse(
     @SerialName("profile_pic")
     val profilePic: String,
     @SerialName("team_id")
-    val teamId: Int?,
+    val teamId: Int? = null,
     @SerialName("user_id")
     val userId: String
 )

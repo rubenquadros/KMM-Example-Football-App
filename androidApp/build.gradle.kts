@@ -50,8 +50,7 @@ dependencies {
 android {
     compileSdk = Versions.AndroidVersions.compileSdk
 
-    val localProperties = Properties()
-    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+    val file = rootProject.file("local.properties")
 
     defaultConfig {
         applicationId = "com.ruben.footiescore.android"
@@ -81,7 +80,21 @@ android {
             }
         }
 
-        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"" + localProperties["google.client.id"] + "\"")
+        if (file.exists()) {
+            val localProperties = Properties()
+            localProperties.load(FileInputStream(file))
+            buildConfigField(
+                "String",
+                "GOOGLE_CLIENT_ID",
+                "\"" + localProperties["google.client.id"] + "\""
+            )
+        } else {
+            buildConfigField(
+                "String",
+                "GOOGLE_CLIENT_ID",
+                "\"" + System.getenv("GOOGLE_CLIENT_ID") + "\""
+            )
+        }
     }
     buildTypes {
         getByName("debug") {

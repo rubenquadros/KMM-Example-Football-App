@@ -1,6 +1,5 @@
 package com.ruben.footiescore.android.ui.favteam
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -186,13 +185,17 @@ fun HandleSideEffects(
     onSelectTeamSuccess: () -> Unit
 ) {
     val searchError = stringResource(id = R.string.all_generic_error)
+    val sameTeamError = stringResource(id = R.string.select_team_already_selected_error)
 
     LaunchedEffect(sideEffectFlow) {
         sideEffectFlow.collect { sideEffect ->
             when (sideEffect) {
                 is SelectFavTeamSideEffect.ShowErrorMessage -> {
-                    keyboardController?.hide()
                     scaffoldState.snackbarHostState.showSnackbar(searchError)
+                }
+
+                is SelectFavTeamSideEffect.TeamAlreadySelected -> {
+                    scaffoldState.snackbarHostState.showSnackbar(sameTeamError)
                 }
 
                 is SelectFavTeamSideEffect.HideKeyboard -> {
