@@ -93,7 +93,7 @@ buildkonfig {
             localProperties.load(FileInputStream(file))
             buildConfigField(STRING, "API_KEY", "${localProperties["api.key"]}")
         } else {
-            buildConfigField(STRING, "API_KEY", System.getenv("API_KEY").toString())
+            buildConfigField(STRING, "API_KEY", "TODO_SETUP_CI")
         }
         buildConfigField(STRING, "BASE_URL", "footiescore.herokuapp.com")
     }
