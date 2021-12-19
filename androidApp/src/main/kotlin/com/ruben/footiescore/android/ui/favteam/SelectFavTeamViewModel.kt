@@ -40,8 +40,8 @@ class SelectFavTeamViewModel(
     }
 
     fun saveTeam(id: Int) = intent {
-        saveTeamUseCase.invoke(SaveTeamUseCase.RequestValue(id)).collect { result ->
-            when (result) {
+        saveTeamUseCase.invoke(SaveTeamUseCase.RequestValue(id)).collect { entity ->
+            when (entity) {
                 is BaseEntity.Loading -> reduce {
                     state.handleLoading(shouldShow = true)
                     state
