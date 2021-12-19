@@ -1,11 +1,13 @@
 package com.ruben.footiescore.core.data.repository
 
 import com.ruben.footiescore.core.data.DataSource
+import com.ruben.footiescore.core.data.remote.model.request.GetRecentMatchesRequest
 import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
 import com.ruben.footiescore.core.data.remote.model.response.LoginResponse
+import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
 import com.ruben.footiescore.core.data.remote.model.response.SearchTeamResponse
 import com.ruben.footiescore.shared.domain.dispatcher.DispatcherProvider
 import com.ruben.footiescore.shared.remote.model.ApiResponse
@@ -82,9 +84,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
 
     override suspend fun saveTeam(id: Int): ApiResponse<Nothing, Nothing> {
         return withContext(dispatcherProvider.dispatcherDefault) {
-            val userId = runCatching {
-                dataSource.database().userQueries.getUserId().executeAsOne()
-            }.getOrNull()
+            val userId = dataSource.database().userQueries.getUserId().executeAsOneOrNull()
             if (userId.isNullOrBlank()) {
                 ApiResponse.DatabaseError
             } else {
@@ -96,6 +96,18 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
                 }
                 response
             }
+        }
+    }
+
+    override suspend fun getRecentMatches(): ApiResponse<RecentMatchesResponse, JsonObject> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            val teamId = if (dataSource.appStorage().isUserLoggedIn()) {
+                dataSource.database().userQueries.getTeamId().executeAsOneOrNull()?.team ?: -1
+            } else -1
+
+            dataSource.api().restApi().getRecentMatches(
+                getRecentMatchesRequest = GetRecentMatchesRequest(teamId = teamId.toInt())
+            )
         }
     }
 }

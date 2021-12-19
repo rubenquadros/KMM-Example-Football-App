@@ -31,3 +31,6 @@ SELECT id FROM User;
 clearTable:
 DELETE FROM User;
 
+getTeamId:
+SELECT team FROM User;
+

@@ -16,8 +16,8 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) : BaseViewModel<Log
     override fun createInitialState(): LoginState = LoginState.InitialState
 
     fun login(id: String, name: String, email: String, image: String) = intent {
-        loginUseCase.invoke(LoginUseCase.RequestValue(id, name, email, image)).collect { result ->
-            when (result) {
+        loginUseCase.invoke(LoginUseCase.RequestValue(id, name, email, image)).collect { entity ->
+            when (entity) {
                 is BaseEntity.Loading -> reduce { LoginState.LoadingState }
                 is BaseEntity.Success -> reduce { LoginState.LoginSuccessState }.also { postSideEffect(LoginSideEffect.LoginSuccess) }
                 else -> reduce { LoginState.InitialState }.also { postSideEffect(LoginSideEffect.LoginError) }

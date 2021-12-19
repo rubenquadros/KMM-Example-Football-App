@@ -2,6 +2,7 @@ package com.ruben.footiescore.core.data.repository
 
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
 import com.ruben.footiescore.core.data.remote.model.response.LoginResponse
+import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
 import com.ruben.footiescore.core.data.remote.model.response.SearchTeamResponse
 import com.ruben.footiescore.core.domain.entity.AllCompetitionEntity
 import com.ruben.footiescore.shared.domain.entity.BaseEntity
@@ -23,4 +24,5 @@ interface FootballRepository {
     suspend fun getIsUserLoggedIn(): Boolean
     suspend fun setIsUserLoggedIn(isLogin: Boolean)
     suspend fun saveTeam(id: Int): ApiResponse<Nothing, Nothing>
+    suspend fun getRecentMatches(): ApiResponse<RecentMatchesResponse, JsonObject>
 }

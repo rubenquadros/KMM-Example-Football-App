@@ -1,13 +1,6 @@
 package com.ruben.injection.core
 
-import com.ruben.footiescore.core.domain.usecase.GetAllCompetitionsUseCase
-import com.ruben.footiescore.core.domain.usecase.GetFirstTimeLaunchUseCase
-import com.ruben.footiescore.core.domain.usecase.GetLoginStateUseCase
-import com.ruben.footiescore.core.domain.usecase.LoginUseCase
-import com.ruben.footiescore.core.domain.usecase.SaveTeamUseCase
-import com.ruben.footiescore.core.domain.usecase.SearchTeamUseCase
-import com.ruben.footiescore.core.domain.usecase.SetLoginStateUseCase
-import com.ruben.footiescore.core.domain.usecase.StoreFirstTimeLaunchUseCase
+import com.ruben.footiescore.core.domain.usecase.*
 import org.koin.dsl.module
 
 /**
@@ -29,4 +22,6 @@ internal val coreUseCaseModule = module {
     factory { SetLoginStateUseCase(get()) }
 
     factory { SaveTeamUseCase(get()) }
+
+    factory { GetRecentMatchesUseCase(get()) }
 }
