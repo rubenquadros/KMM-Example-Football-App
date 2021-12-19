@@ -7,7 +7,7 @@ import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
-import com.ruben.footiescore.core.data.remote.model.response.LoginResponse
+import com.ruben.footiescore.core.data.remote.model.response.UserResponse
 import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
 import com.ruben.footiescore.core.data.remote.model.response.SearchTeamResponse
 import io.ktor.client.request.get
@@ -20,7 +20,7 @@ import kotlinx.serialization.json.JsonObject
  **/
 class RestApiImpl(private val ktorService: KtorService): RestApi {
 
-    override suspend fun login(loginRequest: LoginRequest): ApiResponse<LoginResponse, JsonObject> {
+    override suspend fun login(loginRequest: LoginRequest): ApiResponse<UserResponse, JsonObject> {
         return ktorService.client.post(path = "login") {
             body = loginRequest
         }

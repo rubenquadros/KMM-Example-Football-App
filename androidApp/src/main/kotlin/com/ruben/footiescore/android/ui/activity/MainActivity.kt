@@ -12,6 +12,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.ruben.footiescore.android.ui.FootieScoreApp
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import kotlinx.coroutines.flow.collect
@@ -44,7 +45,9 @@ class MainActivity : ComponentActivity() {
                         is MainState.AppValues -> {
                             setContent {
                                 FootieScoreTheme {
-                                    FootieScoreApp(state.isFirstTime)
+                                    ProvideWindowInsets {
+                                        FootieScoreApp(state.isFirstTime)
+                                    }
                                 }
                             }
                         }

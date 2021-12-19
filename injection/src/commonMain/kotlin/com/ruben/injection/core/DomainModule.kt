@@ -24,4 +24,6 @@ internal val coreUseCaseModule = module {
     factory { SaveTeamUseCase(get()) }
 
     factory { GetRecentMatchesUseCase(get()) }
+
+    factory { GetUserDataUseCase(get()) }
 }

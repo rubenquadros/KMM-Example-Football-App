@@ -111,7 +111,7 @@ data class RecentMatchesResponse(
             @SerialName("name")
             val name: String,
             @SerialName("nationality")
-            val nationality: String,
+            val nationality: String? = null,
             @SerialName("role")
             val role: String
         )

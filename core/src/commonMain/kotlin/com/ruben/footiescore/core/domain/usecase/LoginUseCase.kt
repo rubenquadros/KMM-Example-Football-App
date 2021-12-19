@@ -1,8 +1,9 @@
 package com.ruben.footiescore.core.domain.usecase
 
-import com.ruben.footiescore.core.data.remote.model.response.LoginResponse
+import com.ruben.footiescore.core.data.remote.model.response.UserResponse
 import com.ruben.footiescore.core.data.repository.FootballRepository
 import com.ruben.footiescore.core.domain.entity.UserEntity
+import com.ruben.footiescore.core.domain.mapper.toUIEntity
 import com.ruben.footiescore.shared.domain.entity.BaseEntity
 import com.ruben.footiescore.shared.domain.entity.mapErrorEntity
 import com.ruben.footiescore.shared.domain.usecase.BaseUseCase
@@ -32,14 +33,4 @@ class LoginUseCase(private val repository: FootballRepository) :
     }
 
     data class RequestValue(val id: String, val name: String, val email: String, val image: String)
-}
-
-internal fun LoginResponse.toUIEntity(): UserEntity {
-    return UserEntity(
-        id = this.userId,
-        name = this.name,
-        email = this.email,
-        profilePic = this.profilePic,
-        teamId = this.teamId
-    )
 }

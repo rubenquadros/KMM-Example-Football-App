@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponse(
+data class UserResponse(
     @SerialName("email")
     val email: String,
     @SerialName("name")

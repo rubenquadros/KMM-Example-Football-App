@@ -1,5 +1,6 @@
 package com.ruben.footiescore.android.ui.favteam
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -184,6 +186,7 @@ fun HandleSideEffects(
     keyboardController: SoftwareKeyboardController?,
     onSelectTeamSuccess: () -> Unit
 ) {
+    val context = LocalContext.current
     val searchError = stringResource(id = R.string.all_generic_error)
     val sameTeamError = stringResource(id = R.string.select_team_already_selected_error)
 
@@ -195,7 +198,7 @@ fun HandleSideEffects(
                 }
 
                 is SelectFavTeamSideEffect.TeamAlreadySelected -> {
-                    scaffoldState.snackbarHostState.showSnackbar(sameTeamError)
+                    Toast.makeText(context, sameTeamError, Toast.LENGTH_SHORT).show()
                 }
 
                 is SelectFavTeamSideEffect.HideKeyboard -> {

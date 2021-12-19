@@ -41,6 +41,8 @@ dependencies {
 
     //accompanist
     implementation(Dependencies.Android.Accompanist.navigationAnimation)
+    implementation(Dependencies.Android.Accompanist.insets)
+    implementation(Dependencies.Android.Accompanist.insetsUi)
 
     //firebase
     implementation(Dependencies.Android.Firebase.crashlytics)

@@ -15,6 +15,7 @@
     <string name="content_description_profile">Profile</string>
     <string name="content_description_error">Error</string>
     <string name="content_description_team_crest">Team Crest</string>
+    <string name="content_description_favourite">Favourite</string>
     <string name="welcome_title">Welcome to FootieScore!</string>
     <string name="welcome_description">Your one stop to get all the live scores of ongoing football matches</string>
     <string name="login_title">Please login to continue</string>
@@ -26,4 +27,12 @@
     <string name="select_team_already_selected_error">You are already following this team</string>
     <string name="home_dashboard_name">Hello %s</string>
     <string name="home_dashboard_welcome">Welcome Back!</string>
+    <string name="home_dashboard_recent_matches">Recent Matches</string>
+    <string name="home_dashboard_browse_content">Browse Content</string>
+    <string name="home_dashboard_browse_select_team_title">Follow your team</string>
+    <string name="home_dashboard_browse_select_team_desc">You can follow your favourite team to get all the latest updates</string>
+    <string name="home_dashboard_browse_live_matches_title">Live scores</string>
+    <string name="home_dashboard_browse_live_matches_desc">Get all the live scores of ongoing matches all over the world</string>
+    <string name="home_dashboard_browse_competitions_title">All competitions</string>
+    <string name="home_dashboard_browse_competitions_desc">Checkout teams, players, standings and matches of different leagues and competitions</string>
 </resources>

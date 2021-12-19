@@ -104,6 +104,9 @@ object Dependencies {
 
         object Accompanist {
             const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.Android.accompanist}"
+            const val insets = "com.google.accompanist:accompanist-insets:${Versions.Android.accompanist}"
+            const val insetsUi = "com.google.accompanist:accompanist-insets-ui:${Versions.Android.accompanist}"
+
         }
 
         object OrbitMvi {

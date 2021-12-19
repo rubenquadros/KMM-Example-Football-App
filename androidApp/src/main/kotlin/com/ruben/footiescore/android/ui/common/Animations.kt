@@ -6,7 +6,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 
 /**
@@ -33,6 +35,30 @@ fun slideInVerticallyAnim(offset: Int = 0, duration: Int = 0) : EnterTransition 
 fun slideOutVerticallyAnim(offset: Int = 0, duration: Int = 0) : ExitTransition {
     return slideOutVertically(
         targetOffsetY = { offset },
+        animationSpec = tween(durationMillis = duration)
+    )
+}
+
+/**
+ * @param offset - targetOffsetY
+ * @param duration - durationInMillis
+ */
+@OptIn(ExperimentalAnimationApi::class)
+fun slideInHorizontallyAnim(offset: Int = 0, duration: Int = 0): EnterTransition {
+    return slideInHorizontally(
+        initialOffsetX = { offset },
+        animationSpec = tween(durationMillis = duration)
+    )
+}
+
+/**
+ * @param offset - targetOffsetY
+ * @param duration - durationInMillis
+ */
+@OptIn(ExperimentalAnimationApi::class)
+fun slideOutHorizontallyAnim(offset: Int = 0, duration: Int = 0): ExitTransition {
+    return slideOutHorizontally(
+        targetOffsetX = { offset },
         animationSpec = tween(durationMillis = duration)
     )
 }

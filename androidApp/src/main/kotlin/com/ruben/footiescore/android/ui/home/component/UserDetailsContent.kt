@@ -3,7 +3,10 @@ package com.ruben.footiescore.android.ui.home.component
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,8 +29,12 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
+import com.google.accompanist.insets.cutoutPadding
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.common.BottomWiggleShape
+import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
+import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
 import com.ruben.footiescore.core.domain.entity.UserEntity
 
 /**
@@ -38,10 +46,23 @@ fun AnimatedVisibilityScope.UserDetailsContent(
     isUserLoggedIn: Boolean,
     userDetails: UserEntity?
 ) {
+    val density = LocalDensity.current
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
-            .animateEnterExit(),
+            .cutoutPadding()
+            .animateEnterExit(
+                enter = slideInHorizontallyAnim(
+                    offset = with(density) { -100.dp.roundToPx() },
+                    duration = 800
+                ) + fadeIn(),
+                exit = slideOutHorizontallyAnim(
+                    offset = with(density) { 100.dp.roundToPx() },
+                    duration = 400
+                ) + fadeOut()
+            )
+            .background(color = FootieScoreTheme.colors.primary, shape = BottomWiggleShape()),
         constraintSet = ConstraintSet {
             val details = createRefFor("user_details")
             val profile = createRefFor("profile")
@@ -85,7 +106,7 @@ fun AnimatedVisibilityScope.UserDetailsContent(
             Text(
                 text = stringResource(id = R.string.home_dashboard_name, userDetails?.name.orEmpty()),
                 style = FootieScoreTheme.typography.body1,
-                color = FootieScoreTheme.colors.onSurface
+                color = FootieScoreTheme.colors.onPrimary
             )
 
             Text(
@@ -93,7 +114,7 @@ fun AnimatedVisibilityScope.UserDetailsContent(
                 text = if (isUserLoggedIn) stringResource(id = R.string.home_dashboard_welcome)
                 else stringResource(id = R.string.all_welcome),
                 style = FootieScoreTheme.typography.title3,
-                color = FootieScoreTheme.colors.onSurface
+                color = FootieScoreTheme.colors.onPrimary
             )
         }
     }

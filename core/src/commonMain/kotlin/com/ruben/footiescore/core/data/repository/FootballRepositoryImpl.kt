@@ -5,12 +5,10 @@ import com.ruben.footiescore.core.data.remote.model.request.GetRecentMatchesRequ
 import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
-import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
-import com.ruben.footiescore.core.data.remote.model.response.LoginResponse
-import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
-import com.ruben.footiescore.core.data.remote.model.response.SearchTeamResponse
+import com.ruben.footiescore.core.data.remote.model.response.*
 import com.ruben.footiescore.shared.domain.dispatcher.DispatcherProvider
 import com.ruben.footiescore.shared.remote.model.ApiResponse
+import com.ruben.footiescore.shared.remote.model.DBResponse
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
 
@@ -38,7 +36,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
         }
     }
 
-    override suspend fun login(id: String, name: String, email: String, image: String): ApiResponse<LoginResponse, JsonObject> {
+    override suspend fun login(id: String, name: String, email: String, image: String): ApiResponse<UserResponse, JsonObject> {
         return withContext(dispatcherProvider.dispatcherDefault) {
             val response = dataSource.api().restApi().login(
                 loginRequest = LoginRequest(
@@ -108,6 +106,25 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
             dataSource.api().restApi().getRecentMatches(
                 getRecentMatchesRequest = GetRecentMatchesRequest(teamId = teamId.toInt())
             )
+        }
+    }
+
+    override suspend fun getUserData(): DBResponse<UserResponse> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            val response = dataSource.database().userQueries.getUser().executeAsOneOrNull()
+            if (response == null) {
+                DBResponse.Error
+            } else {
+                DBResponse.Success(
+                    UserResponse(
+                        userId = response.id,
+                        name = response.name,
+                        email = response.email,
+                        profilePic = response.profile_pic,
+                        teamId = response.team?.toInt()
+                    )
+                )
+            }
         }
     }
 }
