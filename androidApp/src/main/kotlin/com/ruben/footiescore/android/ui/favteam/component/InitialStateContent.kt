@@ -30,7 +30,8 @@ import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 @Composable
 fun AnimatedVisibilityScope.InitialStateContent(
     density: Density,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSkipClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -61,7 +62,7 @@ fun AnimatedVisibilityScope.InitialStateContent(
                 .padding(vertical = 8.dp)
                 .align(Alignment.CenterHorizontally)
                 .clickable {
-
+                    onSkipClick.invoke()
                 },
             text = stringResource(id = R.string.select_team_skip),
             style = FootieScoreTheme.typography.button,
@@ -76,6 +77,8 @@ fun AnimatedVisibilityScope.InitialStateContent(
 @Composable
 fun PreviewInitialStateContent() {
     AnimatedVisibility(visible = true) {
-        InitialStateContent(density = LocalDensity.current)
+        InitialStateContent(density = LocalDensity.current) {
+
+        }
     }
 }

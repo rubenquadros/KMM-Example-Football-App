@@ -51,7 +51,8 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AnimatedVisibilityScope.LoginScreen(
     loginViewModel: LoginViewModel = getViewModel(),
-    navigateToSelectTeam: () -> Unit
+    navigateToSelectTeam: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
@@ -88,11 +89,12 @@ fun AnimatedVisibilityScope.LoginScreen(
             }
     }
 
-    fun onSkipClick() {
-
-    }
-
-    HandleSideEffects(loginViewModel.uiSideEffect(), navigateToSelectTeam, scaffoldState)
+    HandleSideEffects(
+        sideEffectFlow = loginViewModel.uiSideEffect(),
+        navigateToSelectTeam = navigateToSelectTeam,
+        navigateToHome = navigateToHome,
+        scaffoldState = scaffoldState
+    )
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = loginViewModel.uiState()
@@ -105,7 +107,7 @@ fun AnimatedVisibilityScope.LoginScreen(
         LoginScreenContent(
             scaffoldState = scaffoldState,
             onLoginClick = { onLoginClick() },
-            onSkipClick = { onSkipClick() }
+            onSkipClick = navigateToHome
         )
 
         AnimatedVisibility(
@@ -219,13 +221,19 @@ fun AnimatedVisibilityScope.LoginScreenContent(
 }
 
 @Composable
-fun HandleSideEffects(sideEffectFlow: Flow<LoginSideEffect>, navigateToSelectTeam: () -> Unit, scaffoldState: ScaffoldState) {
+fun HandleSideEffects(
+    sideEffectFlow: Flow<LoginSideEffect>,
+    navigateToSelectTeam: () -> Unit,
+    scaffoldState: ScaffoldState,
+    navigateToHome: () -> Unit
+) {
     val loginError = stringResource(id = R.string.all_generic_error)
 
     LaunchedEffect(sideEffectFlow) {
         sideEffectFlow.collect { sideEffect ->
             when (sideEffect) {
-                is LoginSideEffect.LoginSuccess -> navigateToSelectTeam.invoke()
+                is LoginSideEffect.NavigateToHome -> navigateToHome.invoke()
+                is LoginSideEffect.NavigateToSelectTeam -> navigateToSelectTeam.invoke()
                 is LoginSideEffect.LoginError -> {
                     scaffoldState.snackbarHostState.showSnackbar(loginError)
                 }

@@ -28,7 +28,11 @@ class LoginViewModel(
                         LoginState.LoginSuccessState.also {
                             intent {
                                 //setLoginStateUseCase.invoke(SetLoginStateUseCase.RequestValue(isUseLoggedIn = true))
-                                postSideEffect(LoginSideEffect.LoginSuccess)
+                                if (entity.body.teamId != null) {
+                                    postSideEffect(LoginSideEffect.NavigateToHome)
+                                } else {
+                                    postSideEffect(LoginSideEffect.NavigateToSelectTeam)
+                                }
                             }
                         }
                     }

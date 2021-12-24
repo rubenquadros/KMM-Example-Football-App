@@ -58,7 +58,8 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AnimatedVisibilityScope.SelectTeamScreen(
     selectFavTeamViewModel: SelectFavTeamViewModel = getViewModel(),
-    onSelectTeamSuccess: () -> Unit
+    onSelectTeamSuccess: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val lazyListState = rememberLazyListState()
@@ -114,7 +115,13 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
 
                 when (state) {
                     is SelectFavTeamState.InitialState -> {
-                        InitialStateContent(density = density)
+                        InitialStateContent(
+                            density = density,
+                            onSkipClick = {
+                                keyboardController?.hide()
+                                navigateToHome.invoke()
+                            }
+                        )
                     }
 
                     is SelectFavTeamState.SearchResultState -> {

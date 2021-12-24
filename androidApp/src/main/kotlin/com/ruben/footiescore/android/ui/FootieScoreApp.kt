@@ -50,7 +50,10 @@ fun FootieScoreApp(isFirstTime: Boolean) {
                 fadeOutAnim(alpha = 0.4f, duration = 200)
             }
         ) {
-            LoginScreen(navigateToSelectTeam = navGraph.openSelectTeamScreen)
+            LoginScreen(
+                navigateToSelectTeam = navGraph.openSelectTeamScreen,
+                navigateToHome = navGraph.openHomeScreen
+            )
         }
 
         composable(
@@ -63,7 +66,8 @@ fun FootieScoreApp(isFirstTime: Boolean) {
             }
         ) {
             SelectTeamScreen(
-                onSelectTeamSuccess = navGraph.openHomeScreen
+                onSelectTeamSuccess = navGraph.openHomeScreen,
+                navigateToHome = navGraph.openHomeScreen
             )
         }
 
