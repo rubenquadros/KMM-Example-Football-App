@@ -50,7 +50,7 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedVisibilityScope.HomeScreen(
-    homeViewModel: HomeViewModel = getViewModel()
+    homeViewModel: HomeViewModel,
 ) {
     val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
@@ -63,46 +63,44 @@ fun AnimatedVisibilityScope.HomeScreen(
     }
     val state by stateLifecycleAware.collectAsState(initial = homeViewModel.createInitialState())
 
-    Scaffold(scaffoldState = scaffoldState) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            when (state) {
-                is HomeState.DashBoardState -> {
-                    val dashBoardState = state as? HomeState.DashBoardState
-                    dashBoardState?.let {
-                        DashboardContent(
-                            scrollState = scrollState,
-                            isUserLoggedIn = it.isUserLoggedIn,
-                            userDetails = it.userDetails,
-                            teamMatches = it.teamMatchesDetails
-                        )
-                    }
-                }
-
-                is HomeState.ErrorState -> {
-                    ErrorView(
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .align(Alignment.TopCenter),
-                        errorMessage = stringResource(id = R.string.all_generic_error),
-                        enterTransition = slideInVerticallyAnim(
-                            offset = with(density) { -100.dp.roundToPx() },
-                            duration = 600
-                        ) + fadeIn(),
-                        exitTransition = slideOutVerticallyAnim(
-                            offset = with(density) { 100.dp.roundToPx() },
-                            duration = 300
-                        ) + fadeOut(),
-                        onClick = { homeViewModel.initData() }
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (state) {
+            is HomeState.DashBoardState -> {
+                val dashBoardState = state as? HomeState.DashBoardState
+                dashBoardState?.let {
+                    DashboardContent(
+                        scrollState = scrollState,
+                        isUserLoggedIn = it.isUserLoggedIn,
+                        userDetails = it.userDetails,
+                        teamMatches = it.teamMatchesDetails
                     )
                 }
-                else -> { /*do nothing*/ }
             }
 
-            PitchLoader(
-                modifier = Modifier.fillMaxSize(),
-                isVisible = state is HomeState.LoadingState
-            )
+            is HomeState.ErrorState -> {
+                ErrorView(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .align(Alignment.TopCenter),
+                    errorMessage = stringResource(id = R.string.all_generic_error),
+                    enterTransition = slideInVerticallyAnim(
+                        offset = with(density) { -100.dp.roundToPx() },
+                        duration = 600
+                    ) + fadeIn(),
+                    exitTransition = slideOutVerticallyAnim(
+                        offset = with(density) { 100.dp.roundToPx() },
+                        duration = 300
+                    ) + fadeOut(),
+                    onClick = { homeViewModel.initData() }
+                )
+            }
+            else -> { /*do nothing*/ }
         }
+
+        PitchLoader(
+            modifier = Modifier.fillMaxSize(),
+            isVisible = state is HomeState.LoadingState
+        )
     }
 
     EmptyBackHandler()

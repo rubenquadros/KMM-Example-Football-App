@@ -54,7 +54,7 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AllCompetitionsScreen(
-    competitionsViewModel: CompetitionsViewModel = getViewModel()
+    competitionsViewModel: CompetitionsViewModel
 ) {
 
     val lifecycleOwner = LocalLifecycleOwner.current

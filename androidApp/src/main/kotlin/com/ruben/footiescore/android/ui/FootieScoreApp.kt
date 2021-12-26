@@ -6,16 +6,14 @@ import androidx.compose.runtime.remember
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.ruben.footiescore.android.ui.Destinations.AllCompetitions
-import com.ruben.footiescore.android.ui.Destinations.Home
+import com.ruben.footiescore.android.ui.Destinations.Landing
 import com.ruben.footiescore.android.ui.Destinations.Login
 import com.ruben.footiescore.android.ui.Destinations.SelectTeam
 import com.ruben.footiescore.android.ui.Destinations.Welcome
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.favteam.SelectTeamScreen
-import com.ruben.footiescore.android.ui.competitions.AllCompetitionsScreen
-import com.ruben.footiescore.android.ui.home.HomeScreen
+import com.ruben.footiescore.android.ui.landing.LandingScreen
 import com.ruben.footiescore.android.ui.login.LoginScreen
 import com.ruben.footiescore.android.ui.welcome.WelcomeScreen
 
@@ -27,14 +25,14 @@ import com.ruben.footiescore.android.ui.welcome.WelcomeScreen
 fun FootieScoreApp(isFirstTime: Boolean) {
     val navController = rememberAnimatedNavController()
     val navGraph = remember(navController) { NavGraph(navController) }
-    val home = if (isFirstTime) Welcome else Home
+    val home = if (isFirstTime) Welcome else Landing
     AnimatedNavHost(navController = navController, startDestination = home) {
         composable(
             route = Welcome,
-            enterTransition = { _, _ ->
+            enterTransition = {
                 fadeInAnim(alpha = 0.4f, duration = 600)
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
@@ -43,48 +41,45 @@ fun FootieScoreApp(isFirstTime: Boolean) {
 
         composable(
             route = Login,
-            enterTransition = { _, _ ->
+            enterTransition = {
                 fadeInAnim(alpha = 0.4f, duration = 800)
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 fadeOutAnim(alpha = 0.4f, duration = 200)
             }
         ) {
             LoginScreen(
                 navigateToSelectTeam = navGraph.openSelectTeamScreen,
-                navigateToHome = navGraph.openHomeScreen
+                navigateToHome = navGraph.openLandingScreen
             )
         }
 
         composable(
             route = SelectTeam,
-            enterTransition = { _, _ ->
+            enterTransition = {
                 fadeInAnim(alpha = 0.4f, duration = 400)
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
             SelectTeamScreen(
-                onSelectTeamSuccess = navGraph.openHomeScreen,
-                navigateToHome = navGraph.openHomeScreen
+                navigateToHome = navGraph.openLandingScreen
             )
         }
 
         composable(
-            route = Home,
-            enterTransition = { _, _ ->
+            route = Landing,
+            enterTransition = {
                 fadeInAnim(alpha = 0.4f, duration = 800)
             },
-            exitTransition = { _, _ ->
+            exitTransition = {
                 fadeOutAnim(alpha = 0.4f, duration = 600)
             }
         ) {
-            HomeScreen()
-        }
-
-        composable(AllCompetitions) {
-            AllCompetitionsScreen()
+            LandingScreen(
+                navigateToLogin = navGraph.openLoginScreen
+            )
         }
     }
 }

@@ -25,6 +25,10 @@
     <string name="select_team_skip">Skip for now</string>
     <string name="select_team_hint">Search your team…</string>
     <string name="select_team_already_selected_error">You are already following this team</string>
+    <string name="bottom_navigation_title_home">Home</string>
+    <string name="bottom_navigation_title_browse">Browse</string>
+    <string name="bottom_navigation_title_live">Live</string>
+    <string name="bottom_navigation_title_profile">Profile</string>
     <string name="home_dashboard_name">Hello %s</string>
     <string name="home_dashboard_welcome">Welcome Back!</string>
     <string name="home_dashboard_recent_matches">Recent Matches</string>

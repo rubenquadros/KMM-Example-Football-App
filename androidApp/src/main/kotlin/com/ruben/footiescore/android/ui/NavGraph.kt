@@ -1,8 +1,7 @@
 package com.ruben.footiescore.android.ui
 
 import androidx.navigation.NavHostController
-import com.ruben.footiescore.android.ui.Destinations.AllCompetitions
-import com.ruben.footiescore.android.ui.Destinations.Home
+import com.ruben.footiescore.android.ui.Destinations.Landing
 import com.ruben.footiescore.android.ui.Destinations.Login
 import com.ruben.footiescore.android.ui.Destinations.SelectTeam
 
@@ -10,11 +9,10 @@ import com.ruben.footiescore.android.ui.Destinations.SelectTeam
  * Created by Ruben Quadros on 16/10/21
  **/
 object Destinations {
-    const val Home = "home"
     const val Welcome = "welcome"
     const val Login = "login"
     const val SelectTeam = "selectTeam"
-    const val AllCompetitions = "allCompetitions"
+    const val Landing = "landing"
 }
 
 class NavGraph(navHostController: NavHostController) {
@@ -27,11 +25,7 @@ class NavGraph(navHostController: NavHostController) {
         navHostController.navigate(route = SelectTeam)
     }
 
-    val openHomeScreen: () -> Unit = {
-        navHostController.navigate(Home)
-    }
-
-    val openAllCompetitionsScreen: () -> Unit = {
-        navHostController.navigate(route = AllCompetitions)
+    val openLandingScreen: () -> Unit = {
+        navHostController.navigate(route = Landing)
     }
 }

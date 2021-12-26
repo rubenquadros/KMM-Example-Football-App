@@ -58,7 +58,6 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AnimatedVisibilityScope.SelectTeamScreen(
     selectFavTeamViewModel: SelectFavTeamViewModel = getViewModel(),
-    onSelectTeamSuccess: () -> Unit,
     navigateToHome: () -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -89,7 +88,7 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
         sideEffectFlow = selectFavTeamViewModel.uiSideEffect(),
         scaffoldState = scaffoldState,
         keyboardController = keyboardController,
-        onSelectTeamSuccess = onSelectTeamSuccess
+        onSelectTeamSuccess = navigateToHome
     )
 
     DisposableEffect(Unit) {
