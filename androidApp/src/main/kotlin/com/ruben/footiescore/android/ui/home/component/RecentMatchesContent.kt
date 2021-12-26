@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
@@ -35,6 +37,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.base.theme.Gray100
 import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
 import com.ruben.footiescore.core.domain.entity.AreaEntity
@@ -78,12 +81,12 @@ fun AnimatedVisibilityScope.RecentMatchesContent(
         Card(
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
             shape = FootieScoreTheme.shapes.largeRoundCornerShape,
-            elevation = 10.dp
+            elevation = 16.dp
         ) {
             Column(
                 modifier = Modifier
                     .background(
-                        color = FootieScoreTheme.colors.primaryVariant
+                        color = Gray100
                     )
             ) {
                 recentMatches.forEachIndexed { index, recentMatchesEntity ->
@@ -94,7 +97,7 @@ fun AnimatedVisibilityScope.RecentMatchesContent(
                                 .padding(vertical = 2.dp, horizontal = 18.dp)
                                 .height(1.dp)
                                 .fillMaxWidth()
-                                .background(color = FootieScoreTheme.colors.onBackground)
+                                .background(color = FootieScoreTheme.colors.onSurface)
                         )
                     }
                 }
@@ -167,7 +170,7 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = FootieScoreTheme.typography.subtitle2,
-            color = FootieScoreTheme.colors.onPrimary
+            color = FootieScoreTheme.colors.surface
         )
 
         Image(
@@ -175,13 +178,15 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
                 .clip(CircleShape)
                 .layoutId("home_crest")
                 .background(Color.Transparent),
+            contentScale = ContentScale.Fit,
             painter = if (recentMatchesEntity.homeTeam.crestUrl.isEmpty()) {
-                painterResource(id = R.drawable.ic_football_white)
+                painterResource(id = R.drawable.ic_football_black)
             } else {
                 rememberImagePainter(
                     data = recentMatchesEntity.homeTeam.crestUrl,
                     builder = {
                         transformations(CircleCropTransformation())
+                        placeholder(R.drawable.ic_football_black)
                         crossfade(true)
                     }
                 )
@@ -197,8 +202,8 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = FootieScoreTheme.typography.body1,
-            color = FootieScoreTheme.colors.onPrimary
+            style = FootieScoreTheme.typography.subtitle2,
+            color = FootieScoreTheme.colors.surface
         )
 
         Image(
@@ -206,13 +211,15 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
                 .clip(CircleShape)
                 .layoutId("away_crest")
                 .background(Color.Transparent),
+            contentScale = ContentScale.Fit,
             painter = if (recentMatchesEntity.awayTeam.crestUrl.isEmpty()) {
-                painterResource(id = R.drawable.ic_football_white)
+                painterResource(id = R.drawable.ic_football_black)
             } else {
                 rememberImagePainter(
                     data = recentMatchesEntity.awayTeam.crestUrl,
                     builder = {
                         transformations(CircleCropTransformation())
+                        placeholder(R.drawable.ic_football_black)
                         crossfade(true)
                     }
                 )
@@ -228,25 +235,25 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = FootieScoreTheme.typography.body1,
-            color = FootieScoreTheme.colors.onPrimary
+            style = FootieScoreTheme.typography.subtitle2,
+            color = FootieScoreTheme.colors.surface
         )
 
         Column(modifier = Modifier.layoutId("scores_date")) {
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = "${recentMatchesEntity.scoreEntity.homeTeam}-${recentMatchesEntity.scoreEntity.awayTeam}",
-                style = FootieScoreTheme.typography.title1,
-                color = FootieScoreTheme.colors.onPrimary
+                style = FootieScoreTheme.typography.title1.copy(fontSize = 28.sp),
+                color = FootieScoreTheme.colors.surface
             )
 
             Text(
                 modifier = Modifier
-                    .padding(vertical = 4.dp)
+                    .padding(vertical = 8.dp)
                     .align(Alignment.CenterHorizontally),
                 text = recentMatchesEntity.date,
-                style = FootieScoreTheme.typography.body1,
-                color = FootieScoreTheme.colors.onPrimary
+                style = FootieScoreTheme.typography.body2,
+                color = FootieScoreTheme.colors.surface
             )
         }
     }

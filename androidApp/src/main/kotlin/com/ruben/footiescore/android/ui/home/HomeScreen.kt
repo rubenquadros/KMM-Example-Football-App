@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,12 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.ruben.footiescore.android.R
-import com.ruben.footiescore.android.ui.common.EmptyBackHandler
 import com.ruben.footiescore.android.ui.common.ErrorView
 import com.ruben.footiescore.android.ui.common.PitchLoader
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
-import com.ruben.footiescore.android.ui.home.component.BrowseContent
+import com.ruben.footiescore.android.ui.home.component.FeedContent
 import com.ruben.footiescore.android.ui.home.component.RecentMatchesContent
 import com.ruben.footiescore.android.ui.home.component.UserDetailsContent
 import com.ruben.footiescore.core.domain.entity.AreaEntity
@@ -42,7 +39,6 @@ import com.ruben.footiescore.core.domain.entity.RecentMatchesEntity
 import com.ruben.footiescore.core.domain.entity.ScoreEntity
 import com.ruben.footiescore.core.domain.entity.TeamEntity
 import com.ruben.footiescore.core.domain.entity.UserEntity
-import org.koin.androidx.compose.getViewModel
 
 /**
  * Created by Ruben Quadros on 28/11/21
@@ -52,7 +48,6 @@ import org.koin.androidx.compose.getViewModel
 fun AnimatedVisibilityScope.HomeScreen(
     homeViewModel: HomeViewModel,
 ) {
-    val scaffoldState = rememberScaffoldState()
     val scrollState = rememberScrollState()
     val density = LocalDensity.current
 
@@ -102,8 +97,6 @@ fun AnimatedVisibilityScope.HomeScreen(
             isVisible = state is HomeState.LoadingState
         )
     }
-
-    EmptyBackHandler()
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -124,7 +117,10 @@ fun AnimatedVisibilityScope.DashboardContent(
 
         RecentMatchesContent(recentMatches = teamMatches)
 
-        BrowseContent(isTeamNotSelected = userDetails?.teamId == null)
+        FeedContent(
+            isNotLoggedIn  = userDetails == null,
+            isTeamNotSelected = userDetails?.teamId == null,
+        )
     }
 }
 

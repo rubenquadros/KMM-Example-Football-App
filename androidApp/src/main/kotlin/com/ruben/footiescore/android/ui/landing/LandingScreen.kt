@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.ruben.footiescore.android.ui.common.LandingBackHandler
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.competitions.AllCompetitionsScreen
@@ -89,4 +90,5 @@ fun LandingScreen(
         }
     }
 
+    LandingBackHandler()
 }

@@ -38,6 +38,7 @@ kotlin {
                 implementation(Dependencies.Shared.ktor)
                 implementation(Dependencies.Shared.ktorSerialization)
                 implementation(Dependencies.Shared.kotlinSerialization)
+                implementation(Dependencies.Shared.dateTime)
             }
         }
         val commonTest by getting {

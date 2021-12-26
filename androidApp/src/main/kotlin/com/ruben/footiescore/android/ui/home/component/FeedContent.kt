@@ -12,7 +12,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -29,6 +28,7 @@ import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.base.theme.Gray100
 import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
 
@@ -37,8 +37,9 @@ import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
  **/
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedVisibilityScope.BrowseContent(
+fun AnimatedVisibilityScope.FeedContent(
     modifier: Modifier = Modifier,
+    isNotLoggedIn: Boolean,
     isTeamNotSelected: Boolean
 ) {
     val density = LocalDensity.current
@@ -78,7 +79,7 @@ fun AnimatedVisibilityScope.BrowseContent(
                 .padding(16.dp)
                 .fillMaxWidth()
                 .layoutId("title"),
-            text = stringResource(id = R.string.home_dashboard_browse_content),
+            text = stringResource(id = R.string.home_dashboard_feed),
             style = FootieScoreTheme.typography.subtitle2,
             color = FootieScoreTheme.colors.surface
         )
@@ -88,17 +89,25 @@ fun AnimatedVisibilityScope.BrowseContent(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp, horizontal = 16.dp)
                 .layoutId("content"),
-            elevation = 10.dp,
+            elevation = 16.dp,
             shape = FootieScoreTheme.shapes.largeRoundCornerShape,
-            backgroundColor = FootieScoreTheme.colors.primaryVariant
+            backgroundColor = Gray100
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                if (isTeamNotSelected) {
+                if (isNotLoggedIn) {
                     ContentItem(
-                        image = R.drawable.ic_favorite,
-                        title = R.string.home_dashboard_browse_select_team_title,
-                        description = R.string.home_dashboard_browse_select_team_desc
+                        image = R.drawable.ic_login,
+                        title = R.string.home_dashboard_feed_login_title,
+                        description = R.string.home_dashboard_feed_login_desc
                     )
+                } else {
+                    if (isTeamNotSelected) {
+                        ContentItem(
+                            image = R.drawable.ic_favorite,
+                            title = R.string.home_dashboard_feed_select_team_title,
+                            description = R.string.home_dashboard_feed_select_team_desc
+                        )
+                    }
                 }
 
                 ContentItem(
@@ -108,7 +117,7 @@ fun AnimatedVisibilityScope.BrowseContent(
                 )
 
                 ContentItem(
-                    image = R.drawable.ic_events,
+                    image = R.drawable.ic_sports,
                     title = R.string.home_dashboard_browse_competitions_title,
                     description = R.string.home_dashboard_browse_competitions_desc,
                     shouldShowDivider = false
@@ -131,6 +140,7 @@ fun ContentItem(
             val logo = createRefFor("logo")
             val heading = createRefFor("heading")
             val desc = createRefFor("desc")
+            val chevron = createRefFor("chevron")
             val divider = createRefFor("divider")
 
             constrain(logo) {
@@ -141,22 +151,30 @@ fun ContentItem(
                 width = Dimension.value(40.dp)
             }
 
+            constrain(chevron) {
+                top.linkTo(heading.top)
+                end.linkTo(parent.end, margin = 16.dp)
+                bottom.linkTo(desc.bottom)
+                height = Dimension.value(32.dp)
+                width = Dimension.value(32.dp)
+            }
+
             constrain(heading) {
                 top.linkTo(parent.top, margin = 16.dp)
                 start.linkTo(logo.end, margin = 8.dp)
-                end.linkTo(parent.end, margin = 8.dp)
+                end.linkTo(chevron.start, margin = 8.dp)
                 width = Dimension.fillToConstraints
             }
 
             constrain(desc) {
                 top.linkTo(heading.bottom, margin = 8.dp)
                 start.linkTo(logo.end, margin = 8.dp)
-                end.linkTo(parent.end, margin = 8.dp)
+                end.linkTo(chevron.start, margin = 8.dp)
                 width = Dimension.fillToConstraints
             }
 
             constrain(divider) {
-                top.linkTo(desc.bottom, margin = 4.dp)
+                top.linkTo(desc.bottom, margin = 16.dp)
                 start.linkTo(parent.start, margin = 18.dp)
                 end.linkTo(parent.end, margin = 18.dp)
                 height = Dimension.value(1.dp)
@@ -175,20 +193,26 @@ fun ContentItem(
             modifier = Modifier.layoutId("heading"),
             text = stringResource(id = title),
             style = FootieScoreTheme.typography.subtitle2,
-            color = FootieScoreTheme.colors.onPrimary
+            color = FootieScoreTheme.colors.surface
         )
 
         Text(
             modifier = Modifier.layoutId("desc"),
             text = stringResource(id = description),
             style = FootieScoreTheme.typography.body1,
-            color = FootieScoreTheme.colors.onPrimary
+            color = FootieScoreTheme.colors.surface
+        )
+
+        Image(
+            modifier = Modifier.layoutId("chevron"),
+            painter = painterResource(id = R.drawable.ic_chevron_right),
+            contentDescription = ""
         )
 
         if (shouldShowDivider) {
             Box(
                 modifier = Modifier
-                    .background(color = FootieScoreTheme.colors.onBackground)
+                    .background(color = FootieScoreTheme.colors.onSurface)
                     .layoutId("divider")
             )
         }
@@ -200,7 +224,7 @@ fun ContentItem(
 @Composable
 fun PreviewBrowseContent() {
     AnimatedVisibility(visible = true) {
-        BrowseContent(isTeamNotSelected = true)
+        FeedContent(isTeamNotSelected = true, isNotLoggedIn = true)
     }
 }
 

@@ -47,6 +47,6 @@ fun PreviewFootieScoreBottomNavigation() {
             NavigationItem.Profile
         ),
         onClick = {},
-        getCurrentScreen = { "home" }
+        getCurrentScreen = { "landing/home" }
     )
 }

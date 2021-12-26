@@ -11,7 +11,7 @@ data class RecentMatchesResponse(
     @SerialName("filters")
     val filters: Filters,
     @SerialName("matches")
-    val matches: List<Matches>
+    val matches: List<Match>
 ) {
     @Serializable
     data class Filters(
@@ -24,21 +24,21 @@ data class RecentMatchesResponse(
     )
 
     @Serializable
-    data class Matches(
+    data class Match(
         @SerialName("awayTeam")
-        val awayTeam: AwayTeam,
+        val awayTeam: Team,
         @SerialName("competition")
         val competition: Competition,
         @SerialName("group")
         val group: String? = null,
         @SerialName("homeTeam")
-        val homeTeam: HomeTeam,
+        val homeTeam: Team,
         @SerialName("id")
         val id: Int,
         @SerialName("lastUpdated")
         val lastUpdated: String,
         @SerialName("matchday")
-        val matchDay: Int,
+        val matchDay: Int? = null,
         @SerialName("odds")
         val odds: Odds? = null,
         @SerialName("referees")
@@ -54,18 +54,6 @@ data class RecentMatchesResponse(
         @SerialName("utcDate")
         val utcDate: String
     ) {
-        @Serializable
-        data class AwayTeam(
-            @SerialName("crest_url")
-            val crestUrl: String? = null,
-            @SerialName("id")
-            val id: Int,
-            @SerialName("name")
-            val name: String,
-            @SerialName("short_name")
-            val shortName: String
-        )
-
         @Serializable
         data class Competition(
             @SerialName("area")
@@ -85,18 +73,6 @@ data class RecentMatchesResponse(
                 val name: String
             )
         }
-
-        @Serializable
-        data class HomeTeam(
-            @SerialName("crest_url")
-            val crestUrl: String? = null,
-            @SerialName("id")
-            val id: Int,
-            @SerialName("name")
-            val name: String,
-            @SerialName("short_name")
-            val shortName: String
-        )
 
         @Serializable
         data class Odds(
@@ -176,6 +152,18 @@ data class RecentMatchesResponse(
             val startDate: String,
             @SerialName("winner")
             val winner: String? = null
+        )
+
+        @Serializable
+        data class Team(
+            @SerialName("crest_url")
+            val crestUrl: String? = null,
+            @SerialName("id")
+            val id: Int,
+            @SerialName("name")
+            val name: String,
+            @SerialName("short_name")
+            val shortName: String
         )
     }
 }

@@ -26,6 +26,10 @@ class NavGraph(navHostController: NavHostController) {
     }
 
     val openLandingScreen: () -> Unit = {
-        navHostController.navigate(route = Landing)
+        navHostController.navigate(route = Landing) {
+            popUpTo(navHostController.graph.startDestinationId) {
+                inclusive = true
+            }
+        }
     }
 }

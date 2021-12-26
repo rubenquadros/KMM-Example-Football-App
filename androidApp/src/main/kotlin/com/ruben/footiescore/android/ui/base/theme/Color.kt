@@ -16,6 +16,7 @@ val OnSurface = Color(0xFF607D8B)
 val BackgroundColor = Color(0xFF105b00)
 val OnBackground = Color(0xFFf8f277)
 val DisabledColor = Color(0xFFC4C4C4)
+val Gray100 = Color(0xFFF5F5F5)
 
 @Immutable
 data class FootieScoreColors(

@@ -100,7 +100,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
     override suspend fun getRecentMatches(): ApiResponse<RecentMatchesResponse, JsonObject> {
         return withContext(dispatcherProvider.dispatcherDefault) {
             val teamId = if (dataSource.appStorage().isUserLoggedIn()) {
-                dataSource.database().userQueries.getTeamId().executeAsOneOrNull()?.team ?: -1
+                dataSource.database().userQueries.getTeamId().executeAsOneOrNull()?.team ?: 4286
             } else -1
 
             dataSource.api().restApi().getRecentMatches(
