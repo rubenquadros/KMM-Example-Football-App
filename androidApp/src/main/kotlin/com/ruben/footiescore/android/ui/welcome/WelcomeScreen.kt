@@ -1,6 +1,5 @@
 package com.ruben.footiescore.android.ui.welcome
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -46,7 +45,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AnimatedVisibilityScope.WelcomeScreen(
     welcomeViewModel: WelcomeViewModel = getViewModel(),
-    navigateToLogin: () -> Unit
+    navigateToLogin: (isBackAllowed: Boolean) -> Unit
 ) {
     val density = LocalDensity.current
 
@@ -139,10 +138,13 @@ fun AnimatedVisibilityScope.WelcomeScreenContent(
 }
 
 @Composable
-fun HandleWelcomeSideEffect(sideEffectFlow: Flow<WelcomeSideEffect>, navigateToLogin: () -> Unit) {
+fun HandleWelcomeSideEffect(
+    sideEffectFlow: Flow<WelcomeSideEffect>,
+    navigateToLogin: (isBackAllowed: Boolean) -> Unit
+) {
     LaunchedEffect(sideEffectFlow) {
         sideEffectFlow.collect {
-            navigateToLogin.invoke()
+            navigateToLogin.invoke(false)
         }
     }
 }

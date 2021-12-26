@@ -13,12 +13,16 @@ object Destinations {
     const val Login = "login"
     const val SelectTeam = "selectTeam"
     const val Landing = "landing"
+
+    object LoginArgs {
+        const val IS_BACK_ALLOWED = "isBackAllowed"
+    }
 }
 
 class NavGraph(navHostController: NavHostController) {
 
-    val openLoginScreen: () -> Unit = {
-        navHostController.navigate(route = Login)
+    val openLoginScreen: (Boolean) -> Unit = { isBackAllowed ->
+        navHostController.navigate(route = "$Login/$isBackAllowed")
     }
 
     val openSelectTeamScreen: () -> Unit = {

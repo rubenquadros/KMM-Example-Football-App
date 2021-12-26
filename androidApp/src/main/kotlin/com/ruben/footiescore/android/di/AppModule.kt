@@ -4,6 +4,7 @@ import com.ruben.footiescore.android.ui.activity.MainViewModel
 import com.ruben.footiescore.android.ui.favteam.SelectFavTeamViewModel
 import com.ruben.footiescore.android.ui.competitions.CompetitionsViewModel
 import com.ruben.footiescore.android.ui.home.HomeViewModel
+import com.ruben.footiescore.android.ui.landing.LandingViewModel
 import com.ruben.footiescore.android.ui.login.LoginViewModel
 import com.ruben.footiescore.android.ui.welcome.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,4 +20,5 @@ val viewModelModule = module {
     viewModel { LoginViewModel(get(), get()) }
     viewModel { SelectFavTeamViewModel(get(), get()) }
     viewModel { HomeViewModel(get(), get(), get()) }
+    viewModel { LandingViewModel(get()) }
 }

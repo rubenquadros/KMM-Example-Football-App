@@ -51,6 +51,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AnimatedVisibilityScope.LoginScreen(
     loginViewModel: LoginViewModel = getViewModel(),
+    isBackAllowed: Boolean,
     navigateToSelectTeam: () -> Unit,
     navigateToHome: () -> Unit
 ) {
@@ -118,7 +119,9 @@ fun AnimatedVisibilityScope.LoginScreen(
         }
     }
 
-    EmptyBackHandler()
+    if (isBackAllowed.not()) {
+        EmptyBackHandler()
+    }
 
 }
 

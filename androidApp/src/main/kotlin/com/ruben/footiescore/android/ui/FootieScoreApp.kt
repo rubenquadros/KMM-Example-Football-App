@@ -3,11 +3,14 @@ package com.ruben.footiescore.android.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ruben.footiescore.android.ui.Destinations.Landing
 import com.ruben.footiescore.android.ui.Destinations.Login
+import com.ruben.footiescore.android.ui.Destinations.LoginArgs.IS_BACK_ALLOWED
 import com.ruben.footiescore.android.ui.Destinations.SelectTeam
 import com.ruben.footiescore.android.ui.Destinations.Welcome
 import com.ruben.footiescore.android.ui.common.fadeInAnim
@@ -40,7 +43,10 @@ fun FootieScoreApp(isFirstTime: Boolean) {
         }
 
         composable(
-            route = Login,
+            route = "$Login/{$IS_BACK_ALLOWED}",
+            arguments = listOf(
+                navArgument(IS_BACK_ALLOWED) { type = NavType.BoolType }
+            ),
             enterTransition = {
                 fadeInAnim(alpha = 0.4f, duration = 800)
             },
@@ -50,7 +56,8 @@ fun FootieScoreApp(isFirstTime: Boolean) {
         ) {
             LoginScreen(
                 navigateToSelectTeam = navGraph.openSelectTeamScreen,
-                navigateToHome = navGraph.openLandingScreen
+                navigateToHome = navGraph.openLandingScreen,
+                isBackAllowed = it.arguments?.getBoolean(IS_BACK_ALLOWED) ?: false
             )
         }
 
