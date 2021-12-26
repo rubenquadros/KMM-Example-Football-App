@@ -63,7 +63,7 @@ fun AnimatedVisibilityScope.LoginScreen(
                 val credential = Identity.getSignInClient(context).getSignInCredentialFromIntent(result.data)
                 loginViewModel.login(
                     credential.id,
-                    credential.displayName ?: credential.givenName,
+                    credential.displayName ?: credential.givenName ?: credential.id,
                     credential.id,
                     credential.profilePictureUri?.toString().orEmpty()
                 )

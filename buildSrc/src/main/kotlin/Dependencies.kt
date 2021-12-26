@@ -4,10 +4,10 @@
 object Versions {
     //gradle
     internal object GradlePluginVersions {
-        const val gradle = "7.0.3"
-        const val buildKonfig = "0.10.2"
+        const val gradle = "7.0.4"
+        const val buildKonfig = "0.11.0"
         const val google = "4.3.10"
-        const val crashlytics = "2.8.0"
+        const val crashlytics = "2.8.1"
     }
 
     //ios targets
@@ -36,7 +36,7 @@ object Versions {
         const val kotlin = "1.5.31"
         const val coroutines = "1.5.2"
         const val koin = "3.1.4"
-        const val ktor = "1.6.3"
+        const val ktor = "1.6.5"
         const val kotlinSerialization = "1.3.1"
         const val sqlDelight = "1.5.3"
     }
@@ -46,18 +46,18 @@ object Versions {
         const val junit = "4.13.2"
         const val materialDesign = "1.4.0"
         const val lifecycle = "2.4.0"
-        const val composeNavigation = "2.4.0-beta02"
+        const val composeNavigation = "2.4.0-rc01"
         const val composeActivity = "1.4.0"
         const val composeConstraintLayout = "1.0.0-rc02"
         const val composeCoil = "1.4.0"
         const val mviOrbit = "4.3.0"
         const val splashScreenApi = "1.0.0-alpha02"
         const val dataStore = "1.0.0"
-        const val accompanist = "0.20.2"
-        const val lottie = "4.2.1"
-        const val googleAuth = "19.2.0"
-        const val crashlytics = "18.2.4"
-        const val analytics = "20.0.0"
+        const val accompanist = "0.22.0-rc"
+        const val lottie = "4.2.2"
+        const val googleAuth = "20.0.0"
+        const val crashlytics = "18.2.6"
+        const val analytics = "20.0.2"
     }
 }
 
