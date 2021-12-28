@@ -15,13 +15,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -33,6 +36,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.google.android.gms.auth.api.identity.Identity
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.base.theme.Gray100
@@ -45,6 +49,8 @@ import com.ruben.footiescore.android.ui.profile.component.TeamDetailsContent
 import com.ruben.footiescore.core.domain.entity.ProfileEntity
 import com.ruben.footiescore.core.domain.entity.TeamEntity
 import com.ruben.footiescore.core.domain.entity.UserEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 /**
  * Created by Ruben Quadros on 26/12/21
@@ -52,9 +58,18 @@ import com.ruben.footiescore.core.domain.entity.UserEntity
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimatedVisibilityScope.ProfileScreen(
-    profileViewModel: ProfileViewModel
+    profileViewModel: ProfileViewModel,
+    scaffoldState: ScaffoldState,
+    navigateToHome: () -> Unit,
 ) {
 
+    HandleSideEffects(
+        sideEffectFlow = profileViewModel.uiSideEffect(),
+        scaffoldState = scaffoldState,
+        navigateToHome = navigateToHome
+    )
+
+    val context = LocalContext.current
     val density = LocalDensity.current
 
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -64,6 +79,16 @@ fun AnimatedVisibilityScope.ProfileScreen(
     }
     val state by stateLifecycleAware.collectAsState(initial = profileViewModel.createInitialState())
 
+    fun onLogoutClick() {
+        Identity.getSignInClient(context).signOut()
+            .addOnSuccessListener {
+                profileViewModel.handleLogout(isLogoutSuccess = true)
+            }
+            .addOnFailureListener {
+                profileViewModel.handleLogout(isLogoutSuccess = false)
+            }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         when (state) {
             is ProfileState.ProfileDetailsState -> {
@@ -71,7 +96,8 @@ fun AnimatedVisibilityScope.ProfileScreen(
                 profileDetailsState?.let {
                     ProfileContent(
                         density = density,
-                        profileEntity = it.profileEntity
+                        profileEntity = it.profileEntity,
+                        onLogoutClick = { onLogoutClick() }
                     )
                 }
             }
@@ -81,7 +107,7 @@ fun AnimatedVisibilityScope.ProfileScreen(
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .align(Alignment.Center),
-                    errorMessage = stringResource(id = R.string.all_generic_error),
+                    errorMessage = stringResource(id = R.string.profile_error),
                     enterTransition = slideInVerticallyAnim(
                         offset = with(density) { -100.dp.roundToPx() },
                         duration = 600
@@ -109,7 +135,8 @@ fun AnimatedVisibilityScope.ProfileScreen(
 fun AnimatedVisibilityScope.ProfileContent(
     modifier: Modifier = Modifier,
     density: Density,
-    profileEntity: ProfileEntity
+    profileEntity: ProfileEntity,
+    onLogoutClick: () -> Unit
 ) {
 
     Column(
@@ -130,12 +157,15 @@ fun AnimatedVisibilityScope.ProfileContent(
 
         TeamDetailsContent(profileEntity.teamEntity)
 
-        LogoutButton(modifier = Modifier.align(Alignment.CenterHorizontally))
+        LogoutButton(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            onLogoutClick = onLogoutClick
+        )
     }
 }
 
 @Composable
-fun LogoutButton(modifier: Modifier = Modifier) {
+fun LogoutButton(modifier: Modifier = Modifier, onLogoutClick: () -> Unit) {
     Button(
         modifier = modifier
             .padding(16.dp),
@@ -144,7 +174,7 @@ fun LogoutButton(modifier: Modifier = Modifier) {
             backgroundColor = Gray100,
             contentColor = FootieScoreTheme.colors.surface
         ),
-        onClick = {  },
+        onClick = { onLogoutClick.invoke() },
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_logout),
@@ -160,6 +190,27 @@ fun LogoutButton(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun HandleSideEffects(
+    sideEffectFlow: Flow<ProfileSideEffect>,
+    scaffoldState: ScaffoldState,
+    navigateToHome: () -> Unit
+) {
+    val logoutError = stringResource(id = R.string.profile_logout_error)
+    LaunchedEffect(key1 = sideEffectFlow) {
+        sideEffectFlow.collect { sideEffect ->
+            when (sideEffect) {
+                is ProfileSideEffect.LogoutError -> {
+                    scaffoldState.snackbarHostState.showSnackbar(logoutError)
+                }
+                is ProfileSideEffect.LogoutSuccess -> {
+                    navigateToHome.invoke()
+                }
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalAnimationApi::class)
 @Preview
 @Composable
@@ -168,7 +219,8 @@ fun PreviewProfileContent(@PreviewParameter(ProfileEntityProvider::class) profil
         ProfileContent(
             modifier = Modifier.background(FootieScoreTheme.colors.onPrimary),
             density = LocalDensity.current,
-            profileEntity = profileEntity
+            profileEntity = profileEntity,
+            onLogoutClick = {}
         )
     }
 }

@@ -27,7 +27,7 @@ class LoginViewModel(
                     is BaseEntity.Success -> {
                         LoginState.LoginSuccessState.also {
                             intent {
-                                //setLoginStateUseCase.invoke(SetLoginStateUseCase.RequestValue(isUseLoggedIn = true))
+                                setLoginStateUseCase.invoke(SetLoginStateUseCase.RequestValue(isUserLoggedIn = true))
                                 if (entity.body.teamId != null) {
                                     postSideEffect(LoginSideEffect.NavigateToHome)
                                 } else {

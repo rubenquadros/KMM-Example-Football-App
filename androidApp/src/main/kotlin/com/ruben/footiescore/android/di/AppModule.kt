@@ -22,5 +22,5 @@ val viewModelModule = module {
     viewModel { SelectFavTeamViewModel(get(), get()) }
     viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { LandingViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
 }

@@ -85,7 +85,8 @@ fun FootieScoreApp(isFirstTime: Boolean) {
             }
         ) {
             LandingScreen(
-                navigateToLogin = navGraph.openLoginScreen
+                navigateToLogin = navGraph.openLoginScreen,
+                navigateToHome = navGraph.openLandingScreen
             )
         }
     }

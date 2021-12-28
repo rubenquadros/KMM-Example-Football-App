@@ -19,8 +19,8 @@ class SetLoginStateUseCase(private val repository: FootballRepository) :
     BaseNoResponseUseCase<SetLoginStateUseCase.RequestValue>() {
 
     override suspend fun execute(request: RequestValue) {
-        repository.setIsUserLoggedIn(request.isUseLoggedIn)
+        repository.setIsUserLoggedIn(request.isUserLoggedIn)
     }
 
-    data class RequestValue(val isUseLoggedIn: Boolean)
+    data class RequestValue(val isUserLoggedIn: Boolean)
 }

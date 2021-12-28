@@ -14,7 +14,7 @@ class WelcomeViewModel(private val storeFirstTimeLaunchUseCase: StoreFirstTimeLa
     override fun createInitialState(): WelcomeState = WelcomeState.InitialState
 
     fun storeFirstTime() = intent {
-        //storeFirstTimeLaunchUseCase.invoke(StoreFirstTimeLaunchUseCase.RequestValue(false))
+        storeFirstTimeLaunchUseCase.invoke(StoreFirstTimeLaunchUseCase.RequestValue(false))
         postSideEffect(WelcomeSideEffect.NavigateToLogin)
     }
 

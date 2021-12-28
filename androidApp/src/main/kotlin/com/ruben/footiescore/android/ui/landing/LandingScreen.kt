@@ -43,8 +43,16 @@ fun LandingScreen(
     homeViewModel: HomeViewModel = getViewModel(),
     competitionsViewModel: CompetitionsViewModel = getViewModel(),
     profileViewModel: ProfileViewModel = getViewModel(),
-    navigateToLogin: (isBackAllowed: Boolean) -> Unit
+    navigateToLogin: (isBackAllowed: Boolean) -> Unit,
+    navigateToHome: () -> Unit
 ) {
+
+    val systemUiController = rememberSystemUiController()
+    val navigationBarColor = FootieScoreTheme.colors.onPrimary
+
+    SideEffect {
+        systemUiController.setNavigationBarColor(navigationBarColor)
+    }
 
     HandleSideEffects(sideEffectFlow = landingViewModel.uiSideEffect(), navigateToLogin = navigateToLogin)
 
@@ -115,7 +123,11 @@ fun LandingScreen(
             }
 
             composable(route = NavigationItem.PROFILE_ROUTE) {
-                ProfileScreen(profileViewModel = profileViewModel)
+                ProfileScreen(
+                    profileViewModel = profileViewModel,
+                    scaffoldState = scaffoldState,
+                    navigateToHome = navigateToHome
+                )
             }
         }
     }

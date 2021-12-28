@@ -230,7 +230,7 @@ fun HandleSideEffects(
     scaffoldState: ScaffoldState,
     navigateToHome: () -> Unit
 ) {
-    val loginError = stringResource(id = R.string.all_generic_error)
+    val loginError = stringResource(id = R.string.login_error)
 
     LaunchedEffect(sideEffectFlow) {
         sideEffectFlow.collect { sideEffect ->
