@@ -76,7 +76,7 @@ fun AnimatedVisibilityScope.ErrorView(
                     .align(Alignment.CenterHorizontally),
                 shape = FootieScoreTheme.shapes.largeRoundCornerShape,
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = FootieScoreTheme.colors.secondary,
+                    backgroundColor = FootieScoreTheme.colors.error,
                     contentColor = FootieScoreTheme.colors.onPrimary
                 ),
                 onClick = onClick

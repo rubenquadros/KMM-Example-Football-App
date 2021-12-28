@@ -8,6 +8,7 @@
     <string name="all_retry">Retry</string>
     <string name="all_no_results_found">No results found</string>
     <string name="all_back_pressed">Press back again to exit</string>
+    <string name="all_logout">Logout</string>
     <string name="content_description_app_logo">App logo</string>
     <string name="content_description_competition_image">Competition logo</string>
     <string name="content_description_login">Login</string>
@@ -17,6 +18,7 @@
     <string name="content_description_error">Error</string>
     <string name="content_description_team_crest">Team Crest</string>
     <string name="content_description_favourite">Favourite</string>
+    <string name="content_description_edit">Edit</string>
     <string name="welcome_title">Welcome to FootieScore!</string>
     <string name="welcome_description">Your one stop to get all the live scores of ongoing football matches</string>
     <string name="login_title">Please login to continue</string>
@@ -42,4 +44,7 @@
     <string name="home_dashboard_browse_live_matches_desc">Get all the live scores of ongoing matches all over the world</string>
     <string name="home_dashboard_browse_competitions_title">All competitions</string>
     <string name="home_dashboard_browse_competitions_desc">Checkout teams, players, standings and matches of different leagues and competitions</string>
+    <string name="profile_personal_details">Personal Details</string>
+    <string name="profile_add_team">Follow your \u2665 team</string>
+    <string name="profile_team_details">Team Details</string>
 </resources>

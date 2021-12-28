@@ -1,12 +1,13 @@
 package com.ruben.footiescore.core.data.remote.rest
 
-import com.ruben.footiescore.core.data.remote.model.request.GetRecentMatchesRequest
+import com.ruben.footiescore.core.data.remote.model.request.TeamRequest
 import com.ruben.footiescore.shared.remote.ktor.KtorService
 import com.ruben.footiescore.shared.remote.model.ApiResponse
 import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
+import com.ruben.footiescore.core.data.remote.model.response.GetUserTeamResponse
 import com.ruben.footiescore.core.data.remote.model.response.UserResponse
 import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
 import com.ruben.footiescore.core.data.remote.model.response.SearchTeamResponse
@@ -42,9 +43,15 @@ class RestApiImpl(private val ktorService: KtorService): RestApi {
         }
     }
 
-    override suspend fun getRecentMatches(getRecentMatchesRequest: GetRecentMatchesRequest): ApiResponse<RecentMatchesResponse, JsonObject> {
+    override suspend fun getRecentMatches(getRecentMatchesRequest: TeamRequest): ApiResponse<RecentMatchesResponse, JsonObject> {
         return ktorService.client.get(path = "recent_matches") {
             parameter("team_id", getRecentMatchesRequest.teamId)
+        }
+    }
+
+    override suspend fun getUserTeam(getUserTeamRequest: TeamRequest): ApiResponse<GetUserTeamResponse, JsonObject> {
+        return ktorService.client.get(path = "get_user_team") {
+            parameter("team_id", getUserTeamRequest.teamId)
         }
     }
 }

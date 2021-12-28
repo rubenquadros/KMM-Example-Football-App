@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 class GetUserDataUseCase(private val repository: FootballRepository): BaseUseCase<Unit, UserEntity, Nothing>() {
 
     override suspend fun execute(request: Unit): Flow<BaseEntity<UserEntity, Nothing>> = flow {
+        emit(BaseEntity.Loading)
         when (val result =  repository.getUserData()) {
             is DBResponse.Success -> {
                 emit(BaseEntity.Success(result.data.toUIEntity()))

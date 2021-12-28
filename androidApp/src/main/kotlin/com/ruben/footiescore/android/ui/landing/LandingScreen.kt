@@ -6,6 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -17,6 +18,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.LandingBackHandler
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
@@ -24,6 +27,8 @@ import com.ruben.footiescore.android.ui.competitions.AllCompetitionsScreen
 import com.ruben.footiescore.android.ui.competitions.CompetitionsViewModel
 import com.ruben.footiescore.android.ui.home.HomeScreen
 import com.ruben.footiescore.android.ui.home.HomeViewModel
+import com.ruben.footiescore.android.ui.profile.ProfileScreen
+import com.ruben.footiescore.android.ui.profile.ProfileViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.compose.getViewModel
@@ -37,6 +42,7 @@ fun LandingScreen(
     landingViewModel: LandingViewModel = getViewModel(),
     homeViewModel: HomeViewModel = getViewModel(),
     competitionsViewModel: CompetitionsViewModel = getViewModel(),
+    profileViewModel: ProfileViewModel = getViewModel(),
     navigateToLogin: (isBackAllowed: Boolean) -> Unit
 ) {
 
@@ -109,7 +115,7 @@ fun LandingScreen(
             }
 
             composable(route = NavigationItem.PROFILE_ROUTE) {
-                AllCompetitionsScreen(competitionsViewModel = competitionsViewModel)
+                ProfileScreen(profileViewModel = profileViewModel)
             }
         }
     }

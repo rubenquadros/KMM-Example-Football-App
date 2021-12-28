@@ -1,7 +1,7 @@
 package com.ruben.footiescore.core.data.repository
 
 import com.ruben.footiescore.core.data.DataSource
-import com.ruben.footiescore.core.data.remote.model.request.GetRecentMatchesRequest
+import com.ruben.footiescore.core.data.remote.model.request.TeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
@@ -104,7 +104,7 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
             } else -1
 
             dataSource.api().restApi().getRecentMatches(
-                getRecentMatchesRequest = GetRecentMatchesRequest(teamId = teamId.toInt())
+                getRecentMatchesRequest = TeamRequest(teamId = teamId.toInt())
             )
         }
     }
@@ -124,6 +124,46 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
                         teamId = response.team?.toInt()
                     )
                 )
+            }
+        }
+    }
+
+    override suspend fun getUserProfile(): ApiResponse<UserProfileResponse, JsonObject> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            val dbResponse = dataSource.database().userQueries.getUser().executeAsOneOrNull()
+            when {
+                dbResponse == null -> {
+                    ApiResponse.DatabaseError
+                }
+                dbResponse.team == null -> {
+                    ApiResponse.Success(UserProfileResponse(
+                        userDetails = UserResponse(
+                            userId = dbResponse.id,
+                            name = dbResponse.name,
+                            email = dbResponse.email,
+                            profilePic = dbResponse.profile_pic,
+                            teamId = dbResponse.team?.toInt()
+                        )
+                    ))
+                }
+                else -> {
+                    val apiResponse = dataSource.api().restApi()
+                        .getUserTeam(getUserTeamRequest = TeamRequest(teamId = dbResponse.team!!.toInt()))
+                    if (apiResponse is ApiResponse.Success) {
+                        ApiResponse.Success(UserProfileResponse(
+                            userDetails = UserResponse(
+                                userId = dbResponse.id,
+                                name = dbResponse.name,
+                                email = dbResponse.email,
+                                profilePic = dbResponse.profile_pic,
+                                teamId = dbResponse.team?.toInt()
+                            ),
+                            teamDetails = apiResponse.body
+                        ))
+                    } else {
+                        ApiResponse.UnknownError
+                    }
+                }
             }
         }
     }

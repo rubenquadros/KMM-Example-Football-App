@@ -43,6 +43,7 @@ dependencies {
     implementation(Dependencies.Android.Accompanist.navigationAnimation)
     implementation(Dependencies.Android.Accompanist.insets)
     implementation(Dependencies.Android.Accompanist.insetsUi)
+    implementation(Dependencies.Android.Accompanist.systemUi)
 
     //firebase
     implementation(Dependencies.Android.Firebase.crashlytics)

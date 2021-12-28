@@ -26,7 +26,7 @@ class LandingViewModel(
     private fun getLoginStatus() = intent {
         val isLoggedIn = loginStateUseCase.invoke(Unit)
         reduce {
-            state.copy(isLoggedIn = isLoggedIn)
+            state.copy(isLoggedIn = true)
         }
     }
 }

@@ -76,7 +76,7 @@ fun AnimatedVisibilityScope.HomeScreen(
                 ErrorView(
                     modifier = Modifier
                         .padding(top = 8.dp)
-                        .align(Alignment.TopCenter),
+                        .align(Alignment.Center),
                     errorMessage = stringResource(id = R.string.all_generic_error),
                     enterTransition = slideInVerticallyAnim(
                         offset = with(density) { -100.dp.roundToPx() },

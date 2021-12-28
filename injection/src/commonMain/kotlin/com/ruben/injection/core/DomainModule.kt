@@ -26,4 +26,6 @@ internal val coreUseCaseModule = module {
     factory { GetRecentMatchesUseCase(get()) }
 
     factory { GetUserDataUseCase(get()) }
+
+    factory { GetUserProfileUseCase(get()) }
 }
