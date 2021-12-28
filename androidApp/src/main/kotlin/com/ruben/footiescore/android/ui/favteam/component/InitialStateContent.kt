@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.common.fadeInAnim
+import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 
@@ -40,11 +42,11 @@ fun AnimatedVisibilityScope.InitialStateContent(
                 enter = slideInVerticallyAnim(
                     offset = with(density) { -100.dp.roundToPx() },
                     duration = 600
-                ) + fadeIn(),
+                ) + fadeInAnim(),
                 exit = slideOutVerticallyAnim(
                     offset = with(density) { 100.dp.roundToPx() },
                     duration = 300
-                ) + fadeOut()
+                ) + fadeOutAnim()
             )
     ) {
         Text(

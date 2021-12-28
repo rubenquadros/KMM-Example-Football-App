@@ -5,8 +5,6 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -99,8 +97,8 @@ fun PreviewErrorView(@PreviewParameter(ClickProvider::class) onClick: (() -> Uni
     AnimatedVisibility(modifier = Modifier.background(FootieScoreTheme.colors.onPrimary), visible = true) {
         ErrorView(
             errorMessage = stringResource(id = R.string.all_generic_error),
-            enterTransition = fadeIn(),
-            exitTransition = fadeOut(),
+            enterTransition = fadeInAnim(),
+            exitTransition = fadeOutAnim(),
             onClick = onClick
         )
     }

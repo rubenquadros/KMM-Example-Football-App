@@ -43,6 +43,8 @@ import com.ruben.footiescore.android.ui.common.EmptyBackHandler
 import com.ruben.footiescore.android.ui.common.ErrorView
 import com.ruben.footiescore.android.ui.common.NoResultsView
 import com.ruben.footiescore.android.ui.common.TopSearchBar
+import com.ruben.footiescore.android.ui.common.fadeInAnim
+import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 import com.ruben.footiescore.android.ui.favteam.component.InitialStateContent
@@ -142,11 +144,11 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
                             enterTransition = slideInVerticallyAnim(
                                 offset = with(density) { -100.dp.roundToPx() },
                                 duration = 600
-                            ) + fadeIn(),
+                            ) + fadeInAnim(),
                             exitTransition = slideOutVerticallyAnim(
                                 offset = with(density) { 100.dp.roundToPx() },
                                 duration = 300
-                            ) + fadeOut()
+                            ) + fadeOutAnim()
                         )
                     }
 
@@ -159,11 +161,11 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
                             enterTransition = slideInVerticallyAnim(
                                 offset = with(density) { -100.dp.roundToPx() },
                                 duration = 600
-                            ) + fadeIn(),
+                            ) + fadeInAnim(),
                             exitTransition = slideOutVerticallyAnim(
                                 offset = with(density) { 100.dp.roundToPx() },
                                 duration = 300
-                            ) + fadeOut()
+                            ) + fadeOutAnim()
                         )
                     }
                 }

@@ -5,6 +5,7 @@ import com.ruben.footiescore.core.data.repository.FootballRepository
 import com.ruben.footiescore.core.domain.entity.AllCompetitionEntity
 import com.ruben.footiescore.core.domain.entity.ErrorEntity
 import com.ruben.footiescore.shared.domain.entity.BaseEntity
+import com.ruben.footiescore.shared.domain.entity.mapErrorEntity
 import com.ruben.footiescore.shared.domain.usecase.BaseUseCase
 import com.ruben.footiescore.shared.remote.model.ApiResponse
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,9 @@ class GetAllCompetitionsUseCase(private val repository: FootballRepository) :
             is ApiResponse.Success -> {
                 emit(BaseEntity.Success(result.body.toUIEntity()))
             }
+            is ApiResponse.ErrorNoBody -> {
+                emit(mapErrorEntity(result.code))
+            }
             else -> emit(BaseEntity.UnknownError)
         }
     }
@@ -34,7 +38,7 @@ internal fun GetAllCompetitionsResponse.toUIEntity(): List<AllCompetitionEntity>
         AllCompetitionEntity(
             id = this.id,
             name = this.name,
-            image = this.emblemUrl ?: this.area.ensignUrl ?: this.currentSeason.winner?.crestUrl ?: ""
+            image = this.competitionCrest ?: this.areaCrest.orEmpty()
         )
 
     return this.competitions.map {

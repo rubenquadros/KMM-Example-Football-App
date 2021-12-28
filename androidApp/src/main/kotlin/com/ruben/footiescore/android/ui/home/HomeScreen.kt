@@ -3,8 +3,6 @@ package com.ruben.footiescore.android.ui.home
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +26,8 @@ import androidx.lifecycle.flowWithLifecycle
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.common.ErrorView
 import com.ruben.footiescore.android.ui.common.PitchLoader
+import com.ruben.footiescore.android.ui.common.fadeInAnim
+import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 import com.ruben.footiescore.android.ui.home.component.FeedContent
@@ -81,11 +81,11 @@ fun AnimatedVisibilityScope.HomeScreen(
                     enterTransition = slideInVerticallyAnim(
                         offset = with(density) { -100.dp.roundToPx() },
                         duration = 600
-                    ) + fadeIn(),
+                    ) + fadeInAnim(),
                     exitTransition = slideOutVerticallyAnim(
                         offset = with(density) { 100.dp.roundToPx() },
                         duration = 300
-                    ) + fadeOut(),
+                    ) + fadeOutAnim(),
                     onClick = { homeViewModel.initData() }
                 )
             }

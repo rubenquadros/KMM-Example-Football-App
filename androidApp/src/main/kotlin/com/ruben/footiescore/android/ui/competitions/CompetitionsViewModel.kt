@@ -11,7 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
  * Created by Ruben Quadros on 15/10/21
  **/
 class CompetitionsViewModel(
-    private val useCase: GetAllCompetitionsUseCase
+    private val getAllCompetitionsUseCase: GetAllCompetitionsUseCase
 ): BaseViewModel<CompetitionsState, CompetitionsSideEffect>() {
 
     override fun createInitialState(): CompetitionsState = CompetitionsState.InitialState
@@ -22,7 +22,7 @@ class CompetitionsViewModel(
     }
 
     private fun getAllCompetitions() = intent {
-        useCase.invoke(Unit).collect { result ->
+        getAllCompetitionsUseCase.invoke(Unit).collect { result ->
             reduce {
                 when (result) {
                     is BaseEntity.Loading -> CompetitionsState.LoadingState

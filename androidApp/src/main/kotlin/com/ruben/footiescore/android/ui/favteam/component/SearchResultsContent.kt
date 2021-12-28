@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.common.fadeInAnim
+import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.core.domain.entity.SearchTeamEntity
 
 /**
@@ -133,8 +135,8 @@ fun PreviewSelectTeamScreen() {
     AnimatedVisibility(visible = true) {
         SearchResults(
             modifier = Modifier.background(FootieScoreTheme.colors.onPrimary),
-            enterTransition = fadeIn(),
-            exitTransition = fadeOut(),
+            enterTransition = fadeInAnim(),
+            exitTransition = fadeOutAnim(),
             lazyListState = rememberLazyListState(),
             searchResults = listOf(
                 SearchTeamEntity(

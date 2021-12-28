@@ -5,8 +5,6 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -47,6 +45,6 @@ fun AnimatedVisibilityScope.NoResultsView(
 @Composable
 fun PreviewNoResultsView() {
     AnimatedVisibility(visible = true) {
-        NoResultsView(enterTransition = fadeIn(), exitTransition = fadeOut())
+        NoResultsView(enterTransition = fadeInAnim(), exitTransition = fadeOutAnim())
     }
 }

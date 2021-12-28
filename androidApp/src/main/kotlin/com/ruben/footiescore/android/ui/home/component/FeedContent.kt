@@ -5,8 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,6 +27,8 @@ import androidx.constraintlayout.compose.Dimension
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.base.theme.Gray100
+import com.ruben.footiescore.android.ui.common.fadeInAnim
+import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
 
@@ -51,11 +51,11 @@ fun AnimatedVisibilityScope.FeedContent(
                 enter = slideInHorizontallyAnim(
                     offset = with(density) { -100.dp.roundToPx() },
                     duration = 800
-                ) + fadeIn(),
+                ) + fadeInAnim(),
                 exit = slideOutHorizontallyAnim(
                     offset = with(density) { 100.dp.roundToPx() },
                     duration = 400
-                ) + fadeOut()
+                ) + fadeOutAnim()
             ),
         constraintSet = ConstraintSet {
             val title = createRefFor("title")
