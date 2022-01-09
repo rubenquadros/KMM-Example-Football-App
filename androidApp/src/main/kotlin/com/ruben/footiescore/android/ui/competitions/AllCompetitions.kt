@@ -35,11 +35,14 @@ import androidx.lifecycle.flowWithLifecycle
 import coil.compose.rememberImagePainter
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
+import com.ruben.footiescore.android.ui.common.ErrorView
 import com.ruben.footiescore.android.ui.common.PitchLoader
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
+import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
+import com.ruben.footiescore.android.ui.common.slideOutVerticallyAnim
 import com.ruben.footiescore.core.domain.entity.AllCompetitionEntity
 
 /**
@@ -51,6 +54,8 @@ fun AnimatedVisibilityScope.AllCompetitionsScreen(
     competitionsViewModel: CompetitionsViewModel
 ) {
 
+    val density = LocalDensity.current
+
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = competitionsViewModel.uiState()
     val stateLifecycleAware = remember(lifecycleOwner, stateFlow) {
@@ -58,25 +63,40 @@ fun AnimatedVisibilityScope.AllCompetitionsScreen(
     }
     val state by stateLifecycleAware.collectAsState(initial = competitionsViewModel.createInitialState())
 
-    when (state) {
-        is CompetitionsState.AllCompetitionsState -> {
-            (state as? CompetitionsState.AllCompetitionsState)?.competitions?.let {
-                AllCompetitionsContent(
-                    modifier = Modifier.fillMaxSize(),
-                    competitions = it
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (state) {
+            is CompetitionsState.AllCompetitionsState -> {
+                (state as? CompetitionsState.AllCompetitionsState)?.competitions?.let {
+                    AllCompetitionsContent(
+                        modifier = Modifier.fillMaxSize(),
+                        competitions = it
+                    )
+                }
+            }
+            is CompetitionsState.ErrorState -> {
+                ErrorView(
+                    modifier = Modifier.align(Alignment.Center),
+                    errorMessage = stringResource(id = R.string.all_generic_error),
+                    enterTransition = slideInVerticallyAnim(
+                        offset = with(density) { -100.dp.roundToPx() },
+                        duration = 600
+                    ) + fadeInAnim(),
+                    exitTransition = slideOutVerticallyAnim(
+                        offset = with(density) { 100.dp.roundToPx() },
+                        duration = 300
+                    ) + fadeOutAnim(),
+                    onClick = { competitionsViewModel.initData() }
                 )
             }
+            else -> { /*do nothing*/
+            }
         }
-        is CompetitionsState.ErrorState -> {
 
-        }
-        else -> { /*do nothing*/ }
+        PitchLoader(
+            modifier = Modifier.fillMaxSize(),
+            isVisible = state is CompetitionsState.LoadingState
+        )
     }
-
-    PitchLoader(
-        modifier = Modifier.fillMaxSize(),
-        isVisible = state is CompetitionsState.LoadingState
-    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -85,24 +105,19 @@ fun AnimatedVisibilityScope.AllCompetitionsContent(
     modifier: Modifier = Modifier,
     competitions: List<AllCompetitionEntity>
 ) {
-    Box(
+    LazyVerticalGrid(
         modifier = modifier
+            .padding(top = 16.dp),
+        cells = GridCells.Fixed(count = 2)
     ) {
-        LazyVerticalGrid(
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxSize(),
-            cells = GridCells.Fixed(count = 2)
-        ) {
-            itemsIndexed(items = competitions) { index, competition ->
-                CompetitionItem(
-                    modifier = Modifier
-                        .height(220.dp)
-                        .fillMaxWidth(),
-                    index = index,
-                    competition = competition
-                )
-            }
+        itemsIndexed(items = competitions) { index, competition ->
+            CompetitionItem(
+                modifier = Modifier
+                    .height(220.dp)
+                    .fillMaxWidth(),
+                index = index,
+                competition = competition
+            )
         }
     }
 }
