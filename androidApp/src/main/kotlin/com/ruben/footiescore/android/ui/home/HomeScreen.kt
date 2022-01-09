@@ -67,7 +67,8 @@ fun AnimatedVisibilityScope.HomeScreen(
                         scrollState = scrollState,
                         isUserLoggedIn = it.isUserLoggedIn,
                         userDetails = it.userDetails,
-                        teamMatches = it.teamMatchesDetails
+                        teamMatches = it.teamMatchesDetails,
+
                     )
                 }
             }
@@ -120,6 +121,7 @@ fun AnimatedVisibilityScope.DashboardContent(
         FeedContent(
             isNotLoggedIn  = userDetails == null,
             isTeamNotSelected = userDetails?.teamId == null,
+            competition = teamMatches.first().competitionEntity
         )
     }
 }

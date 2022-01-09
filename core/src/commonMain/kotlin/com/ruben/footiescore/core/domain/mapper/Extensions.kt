@@ -9,5 +9,5 @@ import kotlinx.datetime.toLocalDateTime
  **/
 fun String.toDate(): String {
     val localDateTime = this.toInstant().toLocalDateTime(TimeZone.UTC)
-    return "${localDateTime.dayOfMonth}-${localDateTime.monthNumber}-${localDateTime.year}"
+    return "${localDateTime.month.name.lowercase().replaceFirstChar { it.titlecase() }} ${localDateTime.dayOfMonth}"
 }

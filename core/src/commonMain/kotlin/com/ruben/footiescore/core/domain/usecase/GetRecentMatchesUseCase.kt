@@ -65,7 +65,7 @@ internal fun RecentMatchesResponse.toUIEntity(): List<RecentMatchesEntity> {
             awayTeam = this.fullTime.awayTeam
         )
 
-    return this.matches.map {
+    return this.matches.reversed().map {
         RecentMatchesEntity(
             id = it.id,
             date = it.utcDate.toDate(),

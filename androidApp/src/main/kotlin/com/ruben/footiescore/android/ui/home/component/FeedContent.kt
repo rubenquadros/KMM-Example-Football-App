@@ -31,6 +31,8 @@ import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
+import com.ruben.footiescore.core.domain.entity.AreaEntity
+import com.ruben.footiescore.core.domain.entity.CompetitionEntity
 
 /**
  * Created by Ruben Quadros on 28/11/21
@@ -40,7 +42,8 @@ import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
 fun AnimatedVisibilityScope.FeedContent(
     modifier: Modifier = Modifier,
     isNotLoggedIn: Boolean,
-    isTeamNotSelected: Boolean
+    isTeamNotSelected: Boolean,
+    competition: CompetitionEntity
 ) {
     val density = LocalDensity.current
 
@@ -97,29 +100,27 @@ fun AnimatedVisibilityScope.FeedContent(
                 if (isNotLoggedIn) {
                     ContentItem(
                         image = R.drawable.ic_login,
-                        title = R.string.home_dashboard_feed_login_title,
-                        description = R.string.home_dashboard_feed_login_desc
+                        title = stringResource(id = R.string.home_dashboard_feed_login_title),
+                        description = stringResource(id = R.string.home_dashboard_feed_login_desc)
                     )
-                } else {
-                    if (isTeamNotSelected) {
-                        ContentItem(
-                            image = R.drawable.ic_favorite,
-                            title = R.string.home_dashboard_feed_select_team_title,
-                            description = R.string.home_dashboard_feed_select_team_desc
-                        )
-                    }
+                } else if (isTeamNotSelected) {
+                    ContentItem(
+                        image = R.drawable.ic_favorite,
+                        title = stringResource(id = R.string.home_dashboard_feed_select_team_title),
+                        description = stringResource(id = R.string.home_dashboard_feed_select_team_desc)
+                    )
                 }
 
                 ContentItem(
                     image = R.drawable.ic_sports,
-                    title = R.string.home_dashboard_browse_live_matches_title,
-                    description = R.string.home_dashboard_browse_live_matches_desc
+                    title = competition.name,
+                    description = stringResource(id = R.string.home_dashboard_feed_competition_desc)
                 )
 
                 ContentItem(
                     image = R.drawable.ic_sports,
-                    title = R.string.home_dashboard_browse_competitions_title,
-                    description = R.string.home_dashboard_browse_competitions_desc,
+                    title = stringResource(id = R.string.home_dashboard_browse_competitions_title),
+                    description = stringResource(id = R.string.home_dashboard_browse_competitions_desc),
                     shouldShowDivider = false
                 )
             }
@@ -130,8 +131,8 @@ fun AnimatedVisibilityScope.FeedContent(
 @Composable
 fun ContentItem(
     @DrawableRes image: Int,
-    @StringRes title: Int,
-    @StringRes description: Int,
+    title: String,
+    description: String,
     shouldShowDivider: Boolean = true
 ) {
     ConstraintLayout(
@@ -191,14 +192,14 @@ fun ContentItem(
 
         Text(
             modifier = Modifier.layoutId("heading"),
-            text = stringResource(id = title),
+            text = title,
             style = FootieScoreTheme.typography.subtitle2,
             color = FootieScoreTheme.colors.surface
         )
 
         Text(
             modifier = Modifier.layoutId("desc"),
-            text = stringResource(id = description),
+            text = description,
             style = FootieScoreTheme.typography.body1,
             color = FootieScoreTheme.colors.surface
         )
@@ -224,7 +225,15 @@ fun ContentItem(
 @Composable
 fun PreviewBrowseContent() {
     AnimatedVisibility(visible = true) {
-        FeedContent(isTeamNotSelected = true, isNotLoggedIn = true)
+        FeedContent(
+            competition = CompetitionEntity(
+                id = 1,
+                name = "Premier League",
+                area = AreaEntity(name = "England", code = "", areaUrl = "")
+            ),
+            isTeamNotSelected = true,
+            isNotLoggedIn = true
+        )
     }
 }
 
@@ -233,7 +242,7 @@ fun PreviewBrowseContent() {
 fun PreviewContentItem() {
     ContentItem(
         image = R.drawable.ic_sports,
-        title = R.string.home_dashboard_browse_live_matches_title,
-        description = R.string.home_dashboard_browse_live_matches_desc
+        title = stringResource(id = R.string.home_dashboard_feed_login_title),
+        description = stringResource(id = R.string.home_dashboard_feed_login_desc)
     )
 }

@@ -41,7 +41,7 @@
     <string name="home_dashboard_feed_login_desc">Login to your account and start following your favourite team to get all the latest updates</string>
     <string name="home_dashboard_feed_select_team_title">Follow your team</string>
     <string name="home_dashboard_feed_select_team_desc">You can follow your favourite team to get all the latest updates</string>
-    <string name="home_dashboard_browse_live_matches_title">Live scores</string>
+    <string name="home_dashboard_feed_competition_desc">Checkout the standings, matches, players and all other updates</string>
     <string name="home_dashboard_browse_live_matches_desc">Get all the live scores of ongoing matches all over the world</string>
     <string name="home_dashboard_browse_competitions_title">All competitions</string>
     <string name="home_dashboard_browse_competitions_desc">Checkout teams, players, standings and matches of different leagues and competitions</string>
