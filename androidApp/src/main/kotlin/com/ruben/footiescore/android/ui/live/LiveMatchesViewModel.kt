@@ -19,16 +19,14 @@ class LiveMatchesViewModel(private val getLiveMatchesUseCase: GetLiveMatchesUseC
         getLiveMatchesInternal()
     }
 
-    private fun getLiveMatchesInternal() = intent {
-        getLiveMatchesUseCase.invoke(Unit).collect { entity ->
+    fun getLiveMatchesInternal(isFirstTimeLoad: Boolean = true) = intent {
+        getLiveMatchesUseCase.invoke(GetLiveMatchesUseCase.RequestValue(isFirstTimeLoad)).collect { entity ->
             reduce {
                 when (entity) {
                     is BaseEntity.Loading -> {
-                        state.handleLoading(shouldShow = true)
-                        state
+                        LiveMatchesState.LoadingState
                     }
                     is BaseEntity.Success -> {
-                        state.handleLoading(shouldShow = false)
                         if (entity.body.isEmpty()) {
                             LiveMatchesState.NoLiveMatchesState
                         } else {
@@ -36,7 +34,6 @@ class LiveMatchesViewModel(private val getLiveMatchesUseCase: GetLiveMatchesUseC
                         }
                     }
                     else -> {
-                        state.handleLoading(shouldShow = false)
                         LiveMatchesState.ErrorState
                     }
                 }

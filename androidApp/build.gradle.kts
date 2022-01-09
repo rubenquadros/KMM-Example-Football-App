@@ -44,6 +44,7 @@ dependencies {
     implementation(Dependencies.Android.Accompanist.insets)
     implementation(Dependencies.Android.Accompanist.insetsUi)
     implementation(Dependencies.Android.Accompanist.systemUi)
+    implementation(Dependencies.Android.Accompanist.swipeRefresh)
 
     //firebase
     implementation(Dependencies.Android.Firebase.crashlytics)

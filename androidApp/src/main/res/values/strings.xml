@@ -52,5 +52,5 @@
     <string name="profile_error">There was an error when getting your profile. Please try again</string>
     <string name="profile_logout_error">There was an error logging you out. Please try again</string>
     <string name="live_matches_error">There was an error when getting live matches. Please swipe down to try again</string>
-    <string name="live_matches_not_live">There are no live matches ongoing at the moment. Please swipe down to check again or you can check again later</string>
+    <string name="live_matches_not_live">There are no live matches ongoing at the moment. Please swipe down to check again or you can come back later</string>
 </resources>

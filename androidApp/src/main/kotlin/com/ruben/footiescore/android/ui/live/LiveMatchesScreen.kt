@@ -3,9 +3,12 @@ package com.ruben.footiescore.android.ui.live
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,11 +21,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ruben.footiescore.android.R
 import com.ruben.footiescore.android.ui.base.theme.FootieScoreTheme
 import com.ruben.footiescore.android.ui.common.BallLoader
 import com.ruben.footiescore.android.ui.common.ErrorView
 import com.ruben.footiescore.android.ui.common.NoLiveMatchesView
+import com.ruben.footiescore.android.ui.common.PitchLoader
 import com.ruben.footiescore.android.ui.common.fadeInAnim
 import com.ruben.footiescore.android.ui.common.fadeOutAnim
 import com.ruben.footiescore.android.ui.common.slideInVerticallyAnim
@@ -37,6 +44,8 @@ fun AnimatedVisibilityScope.LiveMatchesScreen(
     liveMatchesViewModel: LiveMatchesViewModel
 ) {
     val density = LocalDensity.current
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+    val scrollState = rememberScrollState()
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val stateFlow = liveMatchesViewModel.uiState()
@@ -45,7 +54,19 @@ fun AnimatedVisibilityScope.LiveMatchesScreen(
     }
     val state by stateLifecycleAware.collectAsState(initial = liveMatchesViewModel.createInitialState())
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    SwipeRefresh(
+        modifier = Modifier.fillMaxSize(),
+        state = swipeRefreshState,
+        onRefresh = { liveMatchesViewModel.getLiveMatchesInternal(isFirstTimeLoad = false) },
+        indicator = { refreshState, trigger ->
+            SwipeRefreshIndicator(
+                state = refreshState,
+                refreshTriggerDistance = trigger,
+                scale = true,
+                contentColor = FootieScoreTheme.colors.primary
+            )
+        }
+    ) {
         when (state) {
             is LiveMatchesState.MatchesState -> {
                 (state as? LiveMatchesState.MatchesState)?.matches?.let {
@@ -57,46 +78,50 @@ fun AnimatedVisibilityScope.LiveMatchesScreen(
             }
 
             is LiveMatchesState.NoLiveMatchesState -> {
-                NoLiveMatchesView(
-                    enterTransition = slideInVerticallyAnim(
-                        offset = with(density) { -100.dp.roundToPx() },
-                        duration = 600
-                    ) + fadeInAnim(),
-                    exitTransition = slideOutVerticallyAnim(
-                        offset = with(density) { 100.dp.roundToPx() },
-                        duration = 300
-                    ) + fadeOutAnim(),
-                    message = stringResource(id = R.string.live_matches_not_live)
-                )
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                ) {
+                    NoLiveMatchesView(
+                        modifier = Modifier.align(Alignment.Center),
+                        enterTransition = slideInVerticallyAnim(
+                            offset = with(density) { -100.dp.roundToPx() },
+                            duration = 600
+                        ) + fadeInAnim(),
+                        exitTransition = slideOutVerticallyAnim(
+                            offset = with(density) { 100.dp.roundToPx() },
+                            duration = 300
+                        ) + fadeOutAnim(),
+                        message = stringResource(id = R.string.live_matches_not_live)
+                    )
+                }
             }
 
             is LiveMatchesState.ErrorState -> {
-                ErrorView(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .align(Alignment.Center),
-                    errorMessage = stringResource(id = R.string.live_matches_error),
-                    enterTransition = slideInVerticallyAnim(
-                        offset = with(density) { -100.dp.roundToPx() },
-                        duration = 600
-                    ) + fadeInAnim(),
-                    exitTransition = slideOutVerticallyAnim(
-                        offset = with(density) { 100.dp.roundToPx() },
-                        duration = 300
-                    ) + fadeOutAnim()
-                )
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                ) {
+                    ErrorView(
+                        modifier = Modifier.align(Alignment.Center),
+                        errorMessage = stringResource(id = R.string.live_matches_error),
+                        enterTransition = slideInVerticallyAnim(
+                            offset = with(density) { -100.dp.roundToPx() },
+                            duration = 600
+                        ) + fadeInAnim(),
+                        exitTransition = slideOutVerticallyAnim(
+                            offset = with(density) { 100.dp.roundToPx() },
+                            duration = 300
+                        ) + fadeOutAnim()
+                    )
+                }
             }
             else -> { /*do nothing*/ }
         }
 
-        AnimatedVisibility(
-            modifier = Modifier.align(Alignment.Center),
-            visible = state.shouldShowLoading
-        ) {
-            BallLoader(
-                modifier = Modifier.size(40.dp),
-                ballColor = FootieScoreTheme.colors.primary
-            )
-        }
+        PitchLoader(
+            modifier = Modifier.fillMaxSize(),
+            isVisible = state is LiveMatchesState.LoadingState
+        )
     }
 }

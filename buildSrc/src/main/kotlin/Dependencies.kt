@@ -108,6 +108,7 @@ object Dependencies {
             const val insets = "com.google.accompanist:accompanist-insets:${Versions.Android.accompanist}"
             const val insetsUi = "com.google.accompanist:accompanist-insets-ui:${Versions.Android.accompanist}"
             const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:${Versions.Android.accompanist}"
+            const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.Android.accompanist}"
 
         }
 
