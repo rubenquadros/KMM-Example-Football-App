@@ -35,7 +35,7 @@ import com.ruben.footiescore.android.ui.home.component.RecentMatchesContent
 import com.ruben.footiescore.android.ui.home.component.UserDetailsContent
 import com.ruben.footiescore.core.domain.entity.AreaEntity
 import com.ruben.footiescore.core.domain.entity.CompetitionEntity
-import com.ruben.footiescore.core.domain.entity.RecentMatchesEntity
+import com.ruben.footiescore.core.domain.entity.MatchEntity
 import com.ruben.footiescore.core.domain.entity.ScoreEntity
 import com.ruben.footiescore.core.domain.entity.TeamEntity
 import com.ruben.footiescore.core.domain.entity.UserEntity
@@ -106,7 +106,7 @@ fun AnimatedVisibilityScope.DashboardContent(
     scrollState: ScrollState,
     isUserLoggedIn: Boolean,
     userDetails: UserEntity?,
-    teamMatches: List<RecentMatchesEntity>
+    teamMatches: List<MatchEntity>
 ) {
     Column(
         modifier = Modifier
@@ -136,7 +136,7 @@ fun PreviewDashboardContent() {
             isUserLoggedIn = true,
             userDetails = UserEntity("123", "Ruben Quadros", "", "", -1),
             teamMatches = listOf(
-                RecentMatchesEntity(
+                MatchEntity(
                     id = 1,
                     competitionEntity = CompetitionEntity(
                         id = 2,
@@ -161,11 +161,25 @@ fun PreviewDashboardContent() {
                         crestUrl = ""
                     ),
                     scoreEntity = ScoreEntity(
-                        homeTeam = 1,
-                        awayTeam = 1
+                        fullTime = ScoreEntity.TeamScore(
+                            homeTeam = 1,
+                            awayTeam = 1
+                        ),
+                        halfTime = ScoreEntity.TeamScore(
+                            homeTeam = 0,
+                            awayTeam = 0
+                        ),
+                        extraTime = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        ),
+                        penalties = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        )
                     )
                 ),
-                RecentMatchesEntity(
+                MatchEntity(
                     id = 5,
                     competitionEntity = CompetitionEntity(
                         id = 6,
@@ -190,8 +204,22 @@ fun PreviewDashboardContent() {
                         crestUrl = ""
                     ),
                     scoreEntity = ScoreEntity(
-                        homeTeam = 0,
-                        awayTeam = 1
+                        fullTime = ScoreEntity.TeamScore(
+                            homeTeam = 0,
+                            awayTeam = 1
+                        ),
+                        halfTime = ScoreEntity.TeamScore(
+                            homeTeam = 0,
+                            awayTeam = 1
+                        ),
+                        extraTime = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        ),
+                        penalties = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        )
                     )
                 )
             )

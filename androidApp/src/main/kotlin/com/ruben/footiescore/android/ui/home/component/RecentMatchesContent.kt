@@ -42,7 +42,7 @@ import com.ruben.footiescore.android.ui.common.slideInHorizontallyAnim
 import com.ruben.footiescore.android.ui.common.slideOutHorizontallyAnim
 import com.ruben.footiescore.core.domain.entity.AreaEntity
 import com.ruben.footiescore.core.domain.entity.CompetitionEntity
-import com.ruben.footiescore.core.domain.entity.RecentMatchesEntity
+import com.ruben.footiescore.core.domain.entity.MatchEntity
 import com.ruben.footiescore.core.domain.entity.ScoreEntity
 import com.ruben.footiescore.core.domain.entity.TeamEntity
 
@@ -53,7 +53,7 @@ import com.ruben.footiescore.core.domain.entity.TeamEntity
 @Composable
 fun AnimatedVisibilityScope.RecentMatchesContent(
     modifier: Modifier = Modifier,
-    recentMatches: List<RecentMatchesEntity>
+    recentMatches: List<MatchEntity>
 ) {
     val density = LocalDensity.current
 
@@ -107,7 +107,7 @@ fun AnimatedVisibilityScope.RecentMatchesContent(
 }
 
 @Composable
-fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
+fun RecentMatchItem(recentMatchesEntity: MatchEntity) {
     ConstraintLayout(
         modifier = Modifier.fillMaxWidth(),
         constraintSet = ConstraintSet {
@@ -242,7 +242,7 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
         Column(modifier = Modifier.layoutId("scores_date")) {
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "${recentMatchesEntity.scoreEntity.homeTeam}-${recentMatchesEntity.scoreEntity.awayTeam}",
+                text = "${recentMatchesEntity.scoreEntity.fullTime.homeTeam}-${recentMatchesEntity.scoreEntity.fullTime.awayTeam}",
                 style = FootieScoreTheme.typography.title1.copy(fontSize = 28.sp),
                 color = FootieScoreTheme.colors.surface
             )
@@ -263,7 +263,7 @@ fun RecentMatchItem(recentMatchesEntity: RecentMatchesEntity) {
 @Composable
 fun PreviewRecentMatchItem() {
     RecentMatchItem(
-        recentMatchesEntity = RecentMatchesEntity(
+        recentMatchesEntity = MatchEntity(
             id = 1,
             competitionEntity = CompetitionEntity(
                 id = 2,
@@ -288,10 +288,24 @@ fun PreviewRecentMatchItem() {
                 crestUrl = ""
             ),
             scoreEntity = ScoreEntity(
-                homeTeam = 1,
-                awayTeam = 1
+                fullTime = ScoreEntity.TeamScore(
+                    homeTeam = 1,
+                    awayTeam = 1
+                ),
+                halfTime = ScoreEntity.TeamScore(
+                    homeTeam = 0,
+                    awayTeam = 0
+                ),
+                extraTime = ScoreEntity.TeamScore(
+                    homeTeam = null,
+                    awayTeam = null
+                ),
+                penalties = ScoreEntity.TeamScore(
+                    homeTeam = null,
+                    awayTeam = null
+                )
             )
-        )
+        ),
     )
 }
 
@@ -303,7 +317,7 @@ fun PreviewRecentMatchesContent() {
         RecentMatchesContent(
             modifier = Modifier.background(color = FootieScoreTheme.colors.onPrimary),
             recentMatches = listOf(
-                RecentMatchesEntity(
+                MatchEntity(
                     id = 1,
                     competitionEntity = CompetitionEntity(
                         id = 2,
@@ -328,11 +342,25 @@ fun PreviewRecentMatchesContent() {
                         crestUrl = ""
                     ),
                     scoreEntity = ScoreEntity(
-                        homeTeam = 1,
-                        awayTeam = 1
+                       fullTime = ScoreEntity.TeamScore(
+                           homeTeam = 1,
+                           awayTeam = 1
+                       ),
+                        halfTime = ScoreEntity.TeamScore(
+                            homeTeam = 0,
+                            awayTeam = 0
+                        ),
+                        extraTime = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        ),
+                        penalties = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        )
                     )
                 ),
-                RecentMatchesEntity(
+                MatchEntity(
                     id = 5,
                     competitionEntity = CompetitionEntity(
                         id = 6,
@@ -357,8 +385,22 @@ fun PreviewRecentMatchesContent() {
                         crestUrl = ""
                     ),
                     scoreEntity = ScoreEntity(
-                        homeTeam = 0,
-                        awayTeam = 1
+                        fullTime = ScoreEntity.TeamScore(
+                            homeTeam = 0,
+                            awayTeam = 1
+                        ),
+                        halfTime = ScoreEntity.TeamScore(
+                            homeTeam = 0,
+                            awayTeam = 1
+                        ),
+                        extraTime = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        ),
+                        penalties = ScoreEntity.TeamScore(
+                            homeTeam = null,
+                            awayTeam = null
+                        )
                     )
                 )
             )

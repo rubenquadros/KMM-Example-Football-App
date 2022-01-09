@@ -1,6 +1,6 @@
 package com.ruben.footiescore.android.ui.home
 
-import com.ruben.footiescore.core.domain.entity.RecentMatchesEntity
+import com.ruben.footiescore.core.domain.entity.MatchEntity
 import com.ruben.footiescore.core.domain.entity.UserEntity
 
 /**
@@ -13,6 +13,6 @@ sealed class HomeState {
     data class DashBoardState(
         val isUserLoggedIn: Boolean,
         val userDetails: UserEntity? = null,
-        val teamMatchesDetails: List<RecentMatchesEntity>
+        val teamMatchesDetails: List<MatchEntity>
     ) : HomeState()
 }

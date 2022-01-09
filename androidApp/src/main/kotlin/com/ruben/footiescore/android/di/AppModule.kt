@@ -5,6 +5,7 @@ import com.ruben.footiescore.android.ui.favteam.SelectFavTeamViewModel
 import com.ruben.footiescore.android.ui.competitions.CompetitionsViewModel
 import com.ruben.footiescore.android.ui.home.HomeViewModel
 import com.ruben.footiescore.android.ui.landing.LandingViewModel
+import com.ruben.footiescore.android.ui.live.LiveMatchesViewModel
 import com.ruben.footiescore.android.ui.login.LoginViewModel
 import com.ruben.footiescore.android.ui.profile.ProfileViewModel
 import com.ruben.footiescore.android.ui.welcome.WelcomeViewModel
@@ -23,4 +24,5 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get(), get()) }
     viewModel { LandingViewModel(get()) }
     viewModel { ProfileViewModel(get(), get()) }
+    viewModel { LiveMatchesViewModel(get()) }
 }

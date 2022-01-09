@@ -1,6 +1,6 @@
 package com.ruben.footiescore.core.domain.usecase
 
-import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
+import com.ruben.footiescore.core.data.remote.model.response.GetLiveMatchesResponse
 import com.ruben.footiescore.core.data.repository.FootballRepository
 import com.ruben.footiescore.core.domain.entity.MatchEntity
 import com.ruben.footiescore.core.domain.mapper.toUIEntity
@@ -12,12 +12,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
- * Created by Ruben Quadros on 19/12/21
+ * Created by Ruben Quadros on 09/01/22
  **/
-class GetRecentMatchesUseCase(private val repository: FootballRepository): BaseUseCase<Unit, List<MatchEntity>, Nothing>() {
+class GetLiveMatchesUseCase(private val repository: FootballRepository): BaseUseCase<Unit, List<MatchEntity>, Nothing>() {
+
     override suspend fun execute(request: Unit): Flow<BaseEntity<List<MatchEntity>, Nothing>> = flow {
         emit(BaseEntity.Loading)
-        when (val result = repository.getRecentMatches()) {
+        when (val result = repository.getLiveMatches()) {
             is ApiResponse.Success -> {
                 emit(BaseEntity.Success(result.body.toUIEntity()))
             }
@@ -29,11 +30,10 @@ class GetRecentMatchesUseCase(private val repository: FootballRepository): BaseU
             }
         }
     }
-
 }
 
-internal fun RecentMatchesResponse.toUIEntity(): List<MatchEntity> {
-    return this.matches.reversed().map {
+internal fun GetLiveMatchesResponse.toUIEntity(): List<MatchEntity> {
+    return this.matches.map {
         it.toUIEntity()
     }
 }

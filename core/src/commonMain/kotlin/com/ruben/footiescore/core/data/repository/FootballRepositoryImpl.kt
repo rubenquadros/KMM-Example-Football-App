@@ -167,4 +167,10 @@ class FootballRepositoryImpl(private val dataSource: DataSource, private val dis
             }
         }
     }
+
+    override suspend fun getLiveMatches(): ApiResponse<GetLiveMatchesResponse, JsonObject> {
+        return withContext(dispatcherProvider.dispatcherDefault) {
+            dataSource.api().restApi().getLiveMatches()
+        }
+    }
 }

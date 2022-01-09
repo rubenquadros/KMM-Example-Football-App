@@ -21,4 +21,5 @@ interface FootballRepository {
     suspend fun getRecentMatches(): ApiResponse<RecentMatchesResponse, JsonObject>
     suspend fun getUserData(): DBResponse<UserResponse>
     suspend fun getUserProfile(): ApiResponse<UserProfileResponse, JsonObject>
+    suspend fun getLiveMatches(): ApiResponse<GetLiveMatchesResponse, JsonObject>
 }

@@ -7,6 +7,7 @@ import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
+import com.ruben.footiescore.core.data.remote.model.response.GetLiveMatchesResponse
 import com.ruben.footiescore.core.data.remote.model.response.GetUserTeamResponse
 import com.ruben.footiescore.core.data.remote.model.response.UserResponse
 import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
@@ -53,5 +54,9 @@ class RestApiImpl(private val ktorService: KtorService): RestApi {
         return ktorService.client.get(path = "get_user_team") {
             parameter("team_id", getUserTeamRequest.teamId)
         }
+    }
+
+    override suspend fun getLiveMatches(): ApiResponse<GetLiveMatchesResponse, JsonObject> {
+        return ktorService.client.get(path = "live_matches")
     }
 }

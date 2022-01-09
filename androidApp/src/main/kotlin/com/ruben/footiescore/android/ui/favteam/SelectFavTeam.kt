@@ -148,7 +148,8 @@ fun AnimatedVisibilityScope.SelectTeamScreen(
                             exitTransition = slideOutVerticallyAnim(
                                 offset = with(density) { 100.dp.roundToPx() },
                                 duration = 300
-                            ) + fadeOutAnim()
+                            ) + fadeOutAnim(),
+                            message = stringResource(id = R.string.all_no_results_found)
                         )
                     }
 

@@ -19,6 +19,7 @@
     <string name="content_description_team_crest">Team Crest</string>
     <string name="content_description_favourite">Favourite</string>
     <string name="content_description_edit">Edit</string>
+    <string name="content_description_not_live">Not Live</string>
     <string name="welcome_title">Welcome to FootieScore!</string>
     <string name="welcome_description">Your one stop to get all the live scores of ongoing football matches</string>
     <string name="login_title">Please login to continue</string>
@@ -50,4 +51,6 @@
     <string name="profile_team_details">Team Details</string>
     <string name="profile_error">There was an error when getting your profile. Please try again</string>
     <string name="profile_logout_error">There was an error logging you out. Please try again</string>
+    <string name="live_matches_error">There was an error when getting live matches. Please swipe down to try again</string>
+    <string name="live_matches_not_live">There are no live matches ongoing at the moment. Please swipe down to check again or you can check again later</string>
 </resources>

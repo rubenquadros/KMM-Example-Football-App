@@ -27,6 +27,8 @@ import com.ruben.footiescore.android.ui.competitions.AllCompetitionsScreen
 import com.ruben.footiescore.android.ui.competitions.CompetitionsViewModel
 import com.ruben.footiescore.android.ui.home.HomeScreen
 import com.ruben.footiescore.android.ui.home.HomeViewModel
+import com.ruben.footiescore.android.ui.live.LiveMatchesScreen
+import com.ruben.footiescore.android.ui.live.LiveMatchesViewModel
 import com.ruben.footiescore.android.ui.profile.ProfileScreen
 import com.ruben.footiescore.android.ui.profile.ProfileViewModel
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +44,7 @@ fun LandingScreen(
     landingViewModel: LandingViewModel = getViewModel(),
     homeViewModel: HomeViewModel = getViewModel(),
     competitionsViewModel: CompetitionsViewModel = getViewModel(),
+    liveMatchesViewModel: LiveMatchesViewModel = getViewModel(),
     profileViewModel: ProfileViewModel = getViewModel(),
     navigateToLogin: (isBackAllowed: Boolean) -> Unit,
     navigateToHome: () -> Unit
@@ -119,7 +122,7 @@ fun LandingScreen(
             }
 
             composable(route = NavigationItem.LIVE_ROUTE) {
-                AllCompetitionsScreen(competitionsViewModel = competitionsViewModel)
+                LiveMatchesScreen(liveMatchesViewModel = liveMatchesViewModel)
             }
 
             composable(route = NavigationItem.PROFILE_ROUTE) {

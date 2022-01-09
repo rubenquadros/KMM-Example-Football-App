@@ -28,4 +28,6 @@ internal val coreUseCaseModule = module {
     factory { GetUserDataUseCase(get()) }
 
     factory { GetUserProfileUseCase(get()) }
+
+    factory { GetLiveMatchesUseCase(get()) }
 }

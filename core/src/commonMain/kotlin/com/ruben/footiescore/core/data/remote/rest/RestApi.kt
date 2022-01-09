@@ -6,6 +6,7 @@ import com.ruben.footiescore.core.data.remote.model.request.LoginRequest
 import com.ruben.footiescore.core.data.remote.model.request.SaveTeamRequest
 import com.ruben.footiescore.core.data.remote.model.request.SearchRequest
 import com.ruben.footiescore.core.data.remote.model.response.GetAllCompetitionsResponse
+import com.ruben.footiescore.core.data.remote.model.response.GetLiveMatchesResponse
 import com.ruben.footiescore.core.data.remote.model.response.GetUserTeamResponse
 import com.ruben.footiescore.core.data.remote.model.response.UserResponse
 import com.ruben.footiescore.core.data.remote.model.response.RecentMatchesResponse
@@ -22,4 +23,5 @@ interface RestApi {
     suspend fun saveTeam(saveTeamRequest: SaveTeamRequest): ApiResponse<Nothing, Nothing>
     suspend fun getRecentMatches(getRecentMatchesRequest: TeamRequest): ApiResponse<RecentMatchesResponse, JsonObject>
     suspend fun getUserTeam(getUserTeamRequest: TeamRequest): ApiResponse<GetUserTeamResponse, JsonObject>
+    suspend fun getLiveMatches(): ApiResponse<GetLiveMatchesResponse, JsonObject>
 }

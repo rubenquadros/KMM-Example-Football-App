@@ -60,10 +60,12 @@ fun AnimatedVisibilityScope.AllCompetitionsScreen(
 
     when (state) {
         is CompetitionsState.AllCompetitionsState -> {
-            AllCompetitionsContent(
-                modifier = Modifier.fillMaxSize(),
-                competitions = (state as CompetitionsState.AllCompetitionsState).competitions
-            )
+            (state as? CompetitionsState.AllCompetitionsState)?.competitions?.let {
+                AllCompetitionsContent(
+                    modifier = Modifier.fillMaxSize(),
+                    competitions = it
+                )
+            }
         }
         is CompetitionsState.ErrorState -> {
 
@@ -93,7 +95,7 @@ fun AnimatedVisibilityScope.AllCompetitionsContent(
             cells = GridCells.Fixed(count = 2)
         ) {
             itemsIndexed(items = competitions) { index, competition ->
-                CompetitionRow(
+                CompetitionItem(
                     modifier = Modifier
                         .height(220.dp)
                         .fillMaxWidth(),
@@ -107,7 +109,7 @@ fun AnimatedVisibilityScope.AllCompetitionsContent(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedVisibilityScope.CompetitionRow(modifier: Modifier = Modifier, index: Int, competition: AllCompetitionEntity) {
+fun AnimatedVisibilityScope.CompetitionItem(modifier: Modifier = Modifier, index: Int, competition: AllCompetitionEntity) {
     val density = LocalDensity.current
 
     val (enterAnim, exitAnim) = if (index%2 == 0) {
@@ -183,7 +185,7 @@ fun AnimatedVisibilityScope.CompetitionRow(modifier: Modifier = Modifier, index:
 @Composable
 fun PreviewCompetitionRow() {
     AnimatedVisibility(visible = true) {
-        CompetitionRow(
+        CompetitionItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp),
